@@ -1,9 +1,7 @@
 ---
 id: preface
-title: preface
+title: Preface
 ---
-
-**Preface**
 
 LLM inference has become one of the most consequential infrastructure engineering problems in the industry. The individual techniques are well-documented \- quantization, parallelism, batching, KV cache optimization each have deep literature behind them. What is harder to find is a single framework that shows how these pieces fit together, in what order to apply them, and how to turn the output into a GPU count and cost estimate you can stand behind.
 

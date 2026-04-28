@@ -1,11 +1,7 @@
 ---
 id: why-inference-sizing
-title: why-inference-sizing
+title: Why Inference Sizing Is Now a Capital Allocation Problem
 ---
-
-# why-inference-sizing
-
-## **Why Inference Sizing Is Now a Capital Allocation Problem** {#why-inference-sizing-is-now-a-capital-allocation-problem}
 
 There is a version of the AI infrastructure conversation that peaked around 2022: which cluster to train on, how many GPUs the training run needs, how to parallelize the backward pass. That conversation was important. It is also largely finished for most organizations.
 

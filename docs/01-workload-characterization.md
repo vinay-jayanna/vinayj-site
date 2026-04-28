@@ -1,11 +1,7 @@
 ---
 id: 01-workload-characterization
-title: 01-workload-characterization
+title: "1 · Workload Characterization: Know What You're Serving"
 ---
-
-# 01-workload-characterization
-
-## **1 \- Workload Characterization: Know What You're Serving** {#1---workload-characterization:-know-what-you're-serving}
 
 The expensive sizing mistake in production LLM infrastructure is not a wrong GPU choice or a misconfigured parallelism setting. It is skipping workload characterization entirely and jumping straight to hardware selection. Decisions that follow \- memory budget, quantization strategy, parallelism degree, batching configuration \- is downstream of understanding what you are actually serving. 
 
