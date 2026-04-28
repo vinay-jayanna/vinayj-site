@@ -22,10 +22,15 @@ On precision: neural network weights can be stored at different levels of numeri
 
 **Online streaming or offline batch?** These are not different points on the same spectrum \- they are fundamentally different optimization targets that call for different architectures entirely.
 
-![][image1]
+![Figure 1.1 — Request lifecycle: TTFT, ITL, and end-to-end latency](/img/figures/fig-1-1-request-lifecycle-ttft-itl.png)
 
-**Figure 1.1 \- Request lifecycle: TTFT, ITL, and end-to-end latency**  
-*A single request passes through three distinct phases. It first waits in queue \- this time is often invisible in benchmarks but fully visible to users. Prefill then processes the entire prompt in one compute-bound pass (O(N²) attention), producing the first token; the time from request arrival to this first token is TTFT \- time to first token. Each subsequent token is generated one at a time in the decode phase, which is memory-bandwidth-bound rather than compute-bound because the full model weights must be loaded from HBM on every step; the time between consecutive tokens is ITL \- inter-token latency. End-to-end latency spans the entire journey from queue entry to the final EOS token. TTFT, ITL, and E2E are three distinct metrics driven by three different system properties \- optimizing one can actively degrade another.*
+<figcaption>
+
+**Figure 1.1 — Request lifecycle: TTFT, ITL, and end-to-end latency**
+
+*A single request passes through three distinct phases. It first waits in queue — this time is often invisible in benchmarks but fully visible to users. Prefill then processes the entire prompt in one compute-bound pass (O(N²) attention), producing the first token; the time from request arrival to this first token is TTFT — time to first token. Each subsequent token is generated one at a time in the decode phase, which is memory-bandwidth-bound rather than compute-bound because the full model weights must be loaded from HBM on every step; the time between consecutive tokens is ITL — inter-token latency. End-to-end latency spans the entire journey from queue entry to the final EOS token. TTFT, ITL, and E2E are three distinct metrics driven by three different system properties — optimizing one can actively degrade another.*
+
+</figcaption>
 
 ### **1.1 Why P99 Input Length Matters More Than P50** {#1.1-why-p99-input-length-matters-more-than-p50}
 
@@ -47,10 +52,15 @@ Not all LLM workloads stress the system the same way. There are four distinct ar
 
 **Agentic and multi-step workflows** \- the archetype that breaks every simple sizing model. A single user action triggers a chain of sequential LLM calls: planning, tool invocation, result interpretation, re-planning. Context accumulates across turns. Total token consumption per user session is an order of magnitude higher than a single-turn interaction. The challenge here is not peak RPS in the traditional sense \- it is sustained GPU occupancy across a session with variable-length, dependent calls. Sizing for agentic workloads requires modeling the entire session token budget, not just individual request characteristics.
 
-![][image2]
+![Figure 1.2 — Four workload archetypes: input/output length determines your bottleneck](/img/figures/fig-1-2-four-workload-archetypes.png)
 
-**Figure 1.2 \- Four workload archetypes: input/output length determines your bottleneck**  
-*Position on this grid tells you which hardware resource will constrain you first. Moving right increases prefill cost \- longer prompts mean more compute and higher TTFT risk. Moving up increases decode cost \- longer outputs mean more HBM bandwidth pressure and ITL risk. Chat/Q\&A sits at the origin: balanced and forgiving, both phases cheap. RAG/Summarization moves right: prefill-dominated, TTFT is the SLO that breaks first. Code Generation moves up: decode-dominated, ITL and sustained throughput are what matter. Agentic Workflows occupy the top-right corner: both phases expensive, KV cache pressure highest, and the standard per-request sizing model breaks down entirely.*
+<figcaption>
+
+**Figure 1.2 — Four workload archetypes: input/output length determines your bottleneck**
+
+*Position on this grid tells you which hardware resource will constrain you first. Moving right increases prefill cost — longer prompts mean more compute and higher TTFT risk. Moving up increases decode cost — longer outputs mean more HBM bandwidth pressure and ITL risk. Chat/Q&A sits at the origin: balanced and forgiving, both phases cheap. RAG/Summarization moves right: prefill-dominated, TTFT is the SLO that breaks first. Code Generation moves up: decode-dominated, ITL and sustained throughput are what matter. Agentic Workflows occupy the top-right corner: both phases expensive, KV cache pressure highest, and the standard per-request sizing model breaks down entirely.*
+
+</figcaption>
 
 ### **1.3 Sizing for Peak, Not Average: Request Arrival Patterns** {#1.3-sizing-for-peak,-not-average:-request-arrival-patterns}
 
@@ -58,9 +68,15 @@ Production traffic is bursty. The [Poisson distribution](https://www.geeksforgee
 
 A representative enterprise deployment illustrates how badly this plays out in practice. At an average of 65 requests per second, the P95 peak is 160 RPS \- roughly 2.5× the mean, and P99 reaches 180 RPS. The overnight trough pulls the daily average down significantly while the business hours peaks drive the actual capacity requirement. Sizing for the average means your fleet is undersized for approximately 8 hours every working day.
 
-![][image3]
+![Figure 1.3 — Real enterprise traffic over 24 hours](/img/figures/fig-1-3-enterprise-traffic-24hrs.png)
 
-***Figure 1.3 \- Real enterprise traffic over 24 hours.** The gap between average RPS (orange) and P95 RPS (red) is the zone where sizing for average guarantees SLO violations. Both peaks \- morning and afternoon \- exceed P95 while the overnight trough pulls the average down significantly.*
+<figcaption>
+
+**Figure 1.3 — Real enterprise traffic over 24 hours**
+
+*The gap between average RPS (orange) and P95 RPS (red) is the zone where sizing for average guarantees SLO violations. Both peaks — morning and afternoon — exceed P95 while the overnight trough pulls the average down significantly.*
+
+</figcaption>
 
 The practical implication: gather actual traffic data, compute the P95 or P99 peak, and size GPU capacity to sustain that peak without SLO degradation. Every downstream calculation in this guide \- memory budget, parallelism degree, batch size \- assumes P95 as the input, not the average. Sizing for average is not a conservative choice; it is a scheduled outage.
 

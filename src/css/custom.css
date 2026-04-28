@@ -871,3 +871,35 @@ pre code {
     margin-top: 0 !important;
   }
 }
+
+/* ── Figure Captions ──────────────────────────────────────── */
+figcaption {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--ifm-color-content-secondary);
+  background: var(--ifm-background-surface-color);
+  border-left: 3px solid var(--ifm-color-emphasis-300);
+  border-radius: 0 4px 4px 0;
+  padding: 0.75rem 1rem;
+  margin: -0.5rem 0 2rem 0;
+  line-height: 1.6;
+}
+
+figcaption strong {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-content);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+figcaption em {
+  font-style: italic;
+  color: var(--ifm-color-content-secondary);
+}
+
+.markdown img + figcaption {
+  margin-top: -1rem;
+}
