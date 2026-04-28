@@ -23,13 +23,12 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
-
-      - name: Check docusaurus binary
-        run: ls node_modules/.bin/docusaurus && echo "Binary found" || echo "Binary NOT found"
+        run: |
+          npm install -g npm@10.8.2
+          npm install --legacy-peer-deps
 
       - name: Build website
-        run: ./node_modules/.bin/docusaurus build
+        run: npm run build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
 
