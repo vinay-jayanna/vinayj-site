@@ -1,0 +1,79 @@
+.callout {
+  border-radius: 6px;
+  border: 1px solid;
+  margin: 1.75rem 0;
+  padding: 1rem 1.25rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+
+.calloutLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.6rem;
+}
+
+.calloutBody p:last-child {
+  margin-bottom: 0;
+}
+
+.calloutBody code {
+  font-size: 13px;
+}
+
+/* Insight — blue */
+.insight {
+  background: var(--callout-insight-bg);
+  border-color: var(--callout-insight-border);
+  color: var(--callout-insight-text);
+}
+.insight .calloutLabel {
+  color: var(--callout-insight-border);
+}
+
+/* Warning — amber */
+.warning {
+  background: var(--callout-warning-bg);
+  border-color: var(--callout-warning-border);
+  color: var(--callout-warning-text);
+}
+.warning .calloutLabel {
+  color: var(--callout-warning-border);
+}
+
+/* Formula — green */
+.formula {
+  background: var(--callout-formula-bg);
+  border-color: var(--callout-formula-border);
+  color: var(--callout-formula-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+}
+.formula .calloutLabel {
+  color: var(--callout-formula-border);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Tip — purple */
+.tip {
+  background: var(--callout-tip-bg);
+  border-color: var(--callout-tip-border);
+  color: var(--callout-tip-text);
+}
+.tip .calloutLabel {
+  color: var(--callout-tip-border);
+}
+
+/* Definition — gray */
+.definition {
+  background: var(--ifm-background-surface-color);
+  border-color: var(--ifm-color-emphasis-300);
+  border-left: 3px solid var(--ifm-color-content-secondary);
+  color: var(--ifm-color-content);
+}
+.definition .calloutLabel {
+  color: var(--ifm-color-content-secondary);
+}
