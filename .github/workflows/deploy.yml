@@ -23,12 +23,10 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
-
+        run: yarn install --frozen-lockfile
+        
       - name: Build website
-        run: npm run build
-        env:
-          NODE_OPTIONS: --max-old-space-size=4096
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
