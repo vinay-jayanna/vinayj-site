@@ -21,13 +21,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build website
-        run: node_modules/.bin/docusaurus build
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
