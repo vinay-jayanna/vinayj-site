@@ -6,41 +6,38 @@ slug: /
 
 import Link from '@docusaurus/Link';
 
-<div className="field-guide-cover">
+<div style={{display:'flex', gap:'1.5rem', alignItems:'flex-start', margin:'0 0 2.5rem 0', flexWrap:'wrap'}}>
+  <a href="/pdf/sizing-llm-inference-systems.pdf" target="_blank" rel="noopener noreferrer">
+    <img src="/img/covers/cover-front.png" alt="Sizing LLM Inference for Production — Cover" style={{width:'210px', borderRadius:'8px', boxShadow:'0 16px 48px rgba(0,0,0,0.35)', border:'none', display:'block', cursor:'pointer', transition:'transform 0.2s'}} />
+  </a>
+  <a href="/img/covers/cover-contents.png" target="_blank" rel="noopener noreferrer">
+    <img src="/img/covers/cover-contents.png" alt="What's Inside" style={{width:'175px', borderRadius:'8px', boxShadow:'0 12px 36px rgba(0,0,0,0.25)', border:'none', display:'block', marginTop:'1rem', cursor:'pointer'}} />
+  </a>
+  <a href="/img/covers/cover-author.png" target="_blank" rel="noopener noreferrer">
+    <img src="/img/covers/cover-author.png" alt="About the Author" style={{width:'175px', borderRadius:'8px', boxShadow:'0 12px 36px rgba(0,0,0,0.25)', border:'none', display:'block', marginTop:'2rem', cursor:'pointer'}} />
+  </a>
+</div>
 
-<div className="field-guide-eyebrow">Field Guide · v1.0 · April 2026</div>
+<p style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'12px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.1em', color:'#2563EB', marginBottom:'0.75rem'}}>Field Guide · v1.0 · April 2026</p>
 
 # Sizing LLM Inference for Production
 
-<div className="field-guide-subtitle">
+<p style={{fontFamily:"'Source Serif 4',Georgia,serif", fontSize:'1.15rem', color:'var(--ifm-color-content-secondary)', lineHeight:'1.65', maxWidth:'640px', margin:'0.5rem 0 2rem'}}>
 From first principles to cost-efficient scale. A complete decision framework for GPU capacity planning — workload characterization, memory budgeting, parallelism, KV cache, and a 13-step sizing algorithm.
-</div>
+</p>
 
-<div className="field-guide-actions">
-  <Link
-    to="/pdf/sizing-llm-inference-systems.pdf"
-    className="field-guide-btn-primary"
-    target="_blank">
+<div style={{display:'flex', gap:'1rem', margin:'1.5rem 0', flexWrap:'wrap'}}>
+  <a href="/pdf/sizing-llm-inference-systems.pdf" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#FFFFFF', background:'#2563EB', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
     ↓ Download PDF (107 pages)
-  </Link>
-  <Link
-    to="/sizing/preface"
-    className="field-guide-btn-secondary">
+  </a>
+  <Link to="/sizing/preface" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#2563EB', background:'transparent', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
     Read Online →
   </Link>
 </div>
 
-<div className="field-guide-meta">
-  <span>107 pages</span>
-  <span>·</span>
-  <span>9 chapters</span>
-  <span>·</span>
-  <span>13-step sizing algorithm</span>
-  <span>·</span>
-  <span>Staff / Principal ML Engineers</span>
-</div>
-
-</div>
+<p style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'12.5px', color:'var(--ifm-color-content-secondary)', margin:'0 0 0.5rem'}}>
+  107 pages · 9 chapters · 13-step sizing algorithm · Staff / Principal ML Engineers
+</p>
 
 ---
 
@@ -52,9 +49,7 @@ This guide is built around that framework. Every decision covered here — memor
 
 **Who this is for.** Staff and Principal ML Engineers, ML Platform Engineers, AI Infrastructure Architects, and Applied Scientists moving into production ownership. It assumes you are comfortable with transformer fundamentals, have hands-on GPU experience, and understand distributed systems concepts like memory hierarchies, throughput, and latency. Prior inference optimization experience is not required — that is what the guide builds from the ground up.
 
-Engineers coming from adjacent areas — distributed systems, cloud infrastructure, or ML platform work — will find the systems reasoning familiar even if the LLM-specific concepts are new. Researchers and applied scientists who want to understand what happens to their models after training — why production behavior differs from evaluation, what drives serving cost, and how architectural choices like Mixture-of-Experts affect deployment economics — will find this a practical bridge between model design and system reality.
-
-**How to use this guide.** The sections form a decision sequence — each one produces an output that feeds the next. Workload characterization informs memory sizing. Memory sizing constrains parallelism selection. Parallelism selection determines the benchmark configuration. The benchmark produces the operating point. The operating point sizes the fleet. Reading in order builds the full reasoning chain. After that the guide works as a reference — each section stands alone for readers returning to a specific production problem.
+**How to use this guide.** The sections form a decision sequence — each one produces an output that feeds the next. Workload characterization informs memory sizing. Memory sizing constrains parallelism selection. Parallelism selection determines the benchmark configuration. The benchmark produces the operating point. The operating point sizes the fleet.
 
 **A note on the pace of change.** This field moves fast — specific numbers, framework defaults, and GPU specs will age. The reasoning framework will not. Read the numbers as illustrations of the method, not as configuration targets to copy verbatim.
 
@@ -78,6 +73,6 @@ Engineers coming from adjacent areas — distributed systems, cloud infrastructu
 
 ---
 
-<div className="field-guide-note">
+<div style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'13.5px', color:'var(--ifm-color-content-secondary)', background:'var(--ifm-background-surface-color)', border:'1px solid var(--ifm-color-emphasis-300)', borderLeft:'3px solid var(--ifm-color-emphasis-300)', borderRadius:'0 6px 6px 0', padding:'0.85rem 1.1rem', lineHeight:'1.6', fontStyle:'italic'}}>
 This field moves fast — specific numbers, framework defaults, and GPU specs will age. The reasoning framework will not. Read the numbers as illustrations of the method, not as configuration targets to copy verbatim.
 </div>

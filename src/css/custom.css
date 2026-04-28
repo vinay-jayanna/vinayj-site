@@ -807,116 +807,67 @@ pre code {
   margin: 0.75rem 0.85rem;
 }
 
-
-/* ── Field Guide Cover Page ───────────────────────────────── */
-.field-guide-cover {
-  padding-bottom: 0.5rem;
-}
-
-.field-guide-eyebrow {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ifm-color-primary);
-  margin-bottom: 0.75rem;
-}
-
-.field-guide-subtitle {
-  font-family: 'Source Serif 4', Georgia, serif;
-  font-size: 1.15rem;
-  color: var(--ifm-color-content-secondary);
-  line-height: 1.65;
-  max-width: 640px;
-  margin: 0.5rem 0 2rem;
-}
-
-.field-guide-actions {
+/* ── Field Guide Book Showcase ────────────────────────────── */
+.field-guide-book-showcase {
   display: flex;
-  gap: 1rem;
-  margin: 1.5rem 0;
-  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin: 0 0 2.5rem 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
-.field-guide-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: #FFFFFF !important;
-  background: var(--ifm-color-primary);
-  border: 2px solid var(--ifm-color-primary);
-  border-radius: 6px;
-  padding: 0.6rem 1.25rem;
-  text-decoration: none !important;
-  transition: background 0.15s ease, border-color 0.15s ease;
+.field-guide-book-cover {
+  width: 220px !important;
+  min-width: 220px;
+  border-radius: 8px !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.2) !important;
+  border: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.field-guide-btn-primary:hover {
-  background: var(--ifm-color-primary-dark);
-  border-color: var(--ifm-color-primary-dark);
-  text-decoration: none !important;
+.field-guide-book-cover:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.4) !important;
 }
 
-.field-guide-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ifm-color-primary) !important;
-  background: transparent;
-  border: 2px solid var(--ifm-color-primary);
-  border-radius: 6px;
-  padding: 0.6rem 1.25rem;
-  text-decoration: none !important;
-  transition: background 0.15s ease;
+.field-guide-book-contents {
+  width: 180px !important;
+  min-width: 180px;
+  border-radius: 8px !important;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25) !important;
+  border: none !important;
+  margin-top: 1rem;
+  transition: transform 0.2s ease;
 }
 
-.field-guide-btn-secondary:hover {
-  background: rgba(37, 99, 235, 0.06);
-  text-decoration: none !important;
+.field-guide-book-contents:hover {
+  transform: translateY(-3px);
 }
 
-[data-theme='dark'] .field-guide-btn-secondary:hover {
-  background: rgba(96, 165, 250, 0.1);
+.field-guide-book-author {
+  width: 180px !important;
+  min-width: 180px;
+  border-radius: 8px !important;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.25) !important;
+  border: none !important;
+  margin-top: 2rem;
+  transition: transform 0.2s ease;
 }
 
-.field-guide-meta {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12.5px;
-  color: var(--ifm-color-content-secondary);
-  margin-bottom: 0.5rem;
-  flex-wrap: wrap;
+.field-guide-book-author:hover {
+  transform: translateY(-3px);
 }
 
-.field-guide-note {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 13.5px;
-  color: var(--ifm-color-content-secondary);
-  background: var(--ifm-background-surface-color);
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-left: 3px solid var(--ifm-color-emphasis-300);
-  border-radius: 0 6px 6px 0;
-  padding: 0.85rem 1.1rem;
-  line-height: 1.6;
-  font-style: italic;
-}
-
-.sidebar-section-label {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ifm-color-content-secondary);
-  padding: 1rem 0.85rem 0.35rem;
-  opacity: 0.6;
+@media (max-width: 768px) {
+  .field-guide-book-showcase {
+    flex-wrap: wrap;
+  }
+  .field-guide-book-cover,
+  .field-guide-book-contents,
+  .field-guide-book-author {
+    width: 160px !important;
+    min-width: 160px;
+    margin-top: 0 !important;
+  }
 }
