@@ -99,7 +99,7 @@ const config: Config = {
           position: "left",
           items: [
             {
-              label: "Sizing LLM Inference Systems",
+              label: "Sizing LLM Inference for Production",
               to: "/sizing",
             },
             {
