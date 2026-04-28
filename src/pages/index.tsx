@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+import React from 'react';
+import type { ReactNode } from 'react';
+
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";

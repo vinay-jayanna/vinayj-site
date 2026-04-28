@@ -1,3 +1,4 @@
+import React from 'react';
 import type { ReactNode } from 'react';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
