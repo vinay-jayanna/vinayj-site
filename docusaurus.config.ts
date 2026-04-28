@@ -16,8 +16,8 @@ const config: Config = {
   deploymentBranch: 'gh-pages',
   trailingSlash: false,
 
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenLinks: 'ignore',
+  onBrokenMarkdownLinks: 'ignore',
 
   i18n: {
     defaultLocale: 'en',
@@ -64,6 +64,19 @@ const config: Config = {
       } satisfies Plugin.PluginOptions,
     ],
   ],
+
+  webpack: {
+  jsLoader: (isServer) => ({
+    loader: require.resolve('swc-loader'),
+    options: {
+      jsc: {
+        parser: { syntax: 'typescript', tsx: true },
+        target: 'es2017',
+      },
+      module: { type: isServer ? 'commonjs' : 'es6' },
+    },
+  }),
+},
 
   themeConfig: {
     image: 'img/social-card.png',

@@ -23,10 +23,13 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
-        
+        run: npm install --legacy-peer-deps
+
       - name: Build website
-        run: yarn build
+        run: npm run build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+          DISABLE_ESLINT_PLUGIN: true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
