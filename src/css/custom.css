@@ -903,3 +903,88 @@ figcaption em {
 .markdown img + figcaption {
   margin-top: -1rem;
 }
+
+/* ── Figure Caption spacing fix ───────────────────────────── */
+figcaption {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--ifm-color-content-secondary);
+  background: var(--ifm-background-surface-color);
+  border-left: 3px solid var(--ifm-color-emphasis-300);
+  border-radius: 0 4px 4px 0;
+  padding: 0.6rem 1rem;
+  margin: -0.5rem 0 1.75rem 0;
+  line-height: 1.5;
+}
+
+figcaption strong {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-content);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+figcaption em {
+  font-style: italic;
+  color: var(--ifm-color-content-secondary);
+}
+
+figcaption p {
+  margin: 0 !important;
+}
+
+/* ── Tables — principal engineer style ────────────────────── */
+.markdown table {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.markdown table th {
+  background: var(--ifm-color-primary);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 0.65rem 1rem;
+  text-align: left;
+  border-bottom: none;
+}
+
+.markdown table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  vertical-align: top;
+  line-height: 1.55;
+  color: var(--ifm-color-content);
+}
+
+.markdown table tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown table tr:nth-child(even) td {
+  background: var(--ifm-background-surface-color);
+}
+
+.markdown table tr:hover td {
+  background: rgba(37, 99, 235, 0.04);
+}
+
+[data-theme='dark'] .markdown table th {
+  background: var(--ifm-color-primary-dark);
+}
+
+[data-theme='dark'] .markdown table tr:hover td {
+  background: rgba(96, 165, 250, 0.06);
+}
