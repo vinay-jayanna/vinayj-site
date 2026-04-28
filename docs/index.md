@@ -18,7 +18,7 @@ import Link from '@docusaurus/Link';
   </a>
 </div>
 
-<p style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'12px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.1em', color:'#2563EB', marginBottom:'0.75rem'}}>Field Guide · v1.0 · April 2026</p>
+<p style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'12px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.1em', color:'#2563EB', marginBottom:'0.75rem'}}>Field Guide · v1.1 · May 2026</p>
 
 # Sizing LLM Inference for Production
 
