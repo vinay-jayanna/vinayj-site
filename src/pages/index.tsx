@@ -171,39 +171,64 @@ function GuidesSection(): ReactNode {
 }
 
 function WritingSection(): ReactNode {
+  const articles = [
+    {
+      title: "The Great LLM Inference Showdown: TensorRT-LLM vs vLLM",
+      meta: "LinkedIn · 2024",
+      to: "https://www.linkedin.com/pulse/great-llm-inference-showdown-tensorrt-llm-vs-vllm-vinay-jayanna-9o9pc",
+    },
+    {
+      title: "The Challenge of Production LLM Serving: A Ray Serve Perspective",
+      meta: "LinkedIn · 2024",
+      to: "https://www.linkedin.com/pulse/challenge-production-llm-serving-ray-serve-vinay-jayanna-08syc",
+    },
+    {
+      title: "Multi-Tenant LLM Inference: Bridging Research and Reality",
+      meta: "LinkedIn · 2024",
+      to: "https://www.linkedin.com/pulse/multi-tenant-llm-inference-bridging-research-reality-vinay-jayanna-lpmtc",
+    },
+    {
+      title: "KV Cache: The Hidden Optimization Behind Real-Time AI",
+      meta: "LinkedIn · 2024",
+      to: "https://www.linkedin.com/pulse/kv-cache-hidden-optimization-behind-real-time-ai-vinay-jayanna-cvfec",
+    },
+    {
+      title: "The Infrastructure No One Talks About: How Vector Search Makes Gen AI Work",
+      meta: "LinkedIn · 2024",
+      to: "https://www.linkedin.com/pulse/infrastructure-one-talks-how-vector-search-makes-gen-ai-vinay-jayanna-ka2bc",
+    },
+  ];
+
   return (
     <section className={styles.writingSection}>
       <div className={styles.sectionInner}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Writing</h2>
           <p className={styles.sectionSubtitle}>
-            Shorter technical pieces on LinkedIn and Substack.
+            Technical articles on LLM inference, ML infrastructure, and production AI systems.
           </p>
         </div>
         <div className={styles.writingGrid}>
+          {articles.map((a) => (
+            <Link key={a.to} to={a.to} className={styles.writingCard}>
+              <div className={styles.writingCardTitle}>{a.title}</div>
+              <div className={styles.writingCardMeta}>{a.meta}</div>
+            </Link>
+          ))}
+        </div>
+        <div style={{marginTop: '1.5rem'}}>
           <Link
-            to="https://linkedin.com/in/vinayjayanna"
-            className={styles.writingCard}
+            to="https://www.linkedin.com/in/vinayjayanna/recent-activity/articles/"
+            style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'13.5px', color:'var(--ifm-color-primary)', textDecoration:'none', fontWeight:600}}
           >
-            <div className={styles.writingCardTitle}>
-              TensorRT-LLM vs. vLLM: A Production Comparison
-            </div>
-            <div className={styles.writingCardMeta}>LinkedIn · 2024</div>
-          </Link>
-          <Link
-            to="https://linkedin.com/in/vinayjayanna"
-            className={styles.writingCard}
-          >
-            <div className={styles.writingCardTitle}>
-              Ray Serve for Production LLM Serving
-            </div>
-            <div className={styles.writingCardMeta}>LinkedIn · 2024</div>
+            All articles on LinkedIn →
           </Link>
         </div>
       </div>
     </section>
   );
 }
+
 
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();

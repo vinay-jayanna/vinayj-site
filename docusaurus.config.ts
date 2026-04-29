@@ -6,7 +6,7 @@ import type * as Plugin from "@docusaurus/types/src/plugin";
 const config: Config = {
   title: "Vinay Jayanna",
   tagline: "LLM Inference · ML Infrastructure · Distributed Systems",
-  favicon: "img/favicon.ico",
+  favicon: 'img/favicon.svg',
 
   url: "https://vinayj.com",
   baseUrl: "/",
