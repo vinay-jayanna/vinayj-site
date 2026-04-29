@@ -58,88 +58,66 @@ function TimelineItem({
 export default function About(): ReactNode {
   return (
     <Layout
-      title="About — Vinay Jayanna"
-      description="Staff ML Engineer specializing in LLM inference optimization and production AI systems. Led engineering on AWS SageMaker. Founded Vipas.AI.">
+      title="About - Vinay Jayanna"
+      description="Staff ML Engineer specializing in LLM inference optimization and production AI systems. Built AWS SageMaker. Founded Vipas.AI.">
       <div className={styles.page}>
         <div className={styles.inner}>
 
-          {/* Header */}
           <div className={styles.header}>
             <div className={styles.headerText}>
               <p className={styles.headerEyebrow}>About</p>
               <h1 className={styles.headerTitle}>Vinay Jayanna</h1>
               <p className={styles.headerSubtitle}>
-                Staff ML Engineer with 17+ years building production AI systems.
-                I specialize in LLM inference optimization, GPU capacity planning,
-                and the systems decisions that determine whether AI deployments
-                are cost-efficient at scale. I write field guides to make
-                rigorous engineering frameworks accessible to the engineers
-                who need them.
+                Staff ML Engineer specializing in LLM inference optimization,
+                GPU capacity planning, and the systems decisions that determine
+                whether AI deployments are cost-efficient at scale. Currently
+                leading inference optimization for one of the most consequential
+                AI systems in the world - reaching hundreds of millions of users.
+                I write field guides to make rigorous engineering frameworks
+                accessible to the engineers who need them.
               </p>
               <div className={styles.headerLinks}>
-                <Link
-                  to="https://github.com/vinay-jayanna"
-                  className={styles.headerLink}>
-                  GitHub →
-                </Link>
-                <Link
-                  to="https://linkedin.com/in/vinayjayanna"
-                  className={styles.headerLink}>
-                  LinkedIn →
-                </Link>
+                <Link to="https://github.com/vinay-jayanna" className={styles.headerLink}>GitHub →</Link>
+                <Link to="https://linkedin.com/in/vinayjayanna" className={styles.headerLink}>LinkedIn →</Link>
               </div>
             </div>
           </div>
 
           <div className={styles.body}>
 
-            {/* Experience */}
             <Section title="Experience">
               <div className={styles.timeline}>
                 <TimelineItem
-                  period="2025 — Present"
+                  period="2025 - Present"
                   role="Staff ML Engineer"
                   org="Large-scale Generative AI Platform"
-                  description="Leading LLM inference optimization and GenAI platform engineering at scale. Focus areas include GPU memory architecture, KV cache optimization, serving framework evaluation (vLLM, TensorRT-LLM), parallelism strategy for frontier-class models, latency-throughput operating point selection, and production monitoring for LLM serving systems."
-                  tags={[
-                    'LLM Inference',
-                    'GenAI Platform',
-                    'GPU Optimization',
-                    'vLLM',
-                    'TensorRT-LLM',
-                    'Ray Serve',
-                  ]}
+                  description="Leading LLM inference optimization and GenAI platform engineering for one of the most consequential AI systems in the world - reaching hundreds of millions of users. Focus areas include GPU memory architecture, KV cache optimization, serving framework evaluation (vLLM, TensorRT-LLM), parallelism strategy for frontier-class models, latency-throughput operating point selection, and production monitoring for LLM serving systems."
+                  tags={['LLM Inference', 'GenAI Platform', 'GPU Optimization', 'vLLM', 'TensorRT-LLM', 'Ray Serve']}
                 />
                 <TimelineItem
-                  period="2024 — 2025"
-                  role="Founder & CEO"
-                  org="Vipas.AI — AI Inference Marketplace"
-                  description="Founded and led an AI inference marketplace enabling model creators to host and monetize industry-specific AI models with IP protection, monitoring, and pay-per-prediction APIs. Grew to 25K daily active visitors. Received VC term sheet. Built end-to-end across engineering, product, and go-to-market."
-                  tags={[
-                    'Founder',
-                    'LLM Serving',
-                    'Inference Marketplace',
-                    'Product',
-                    'Go-to-Market',
-                  ]}
+                  period="2024 - 2025"
+                  role="Founder"
+                  org="Vipas.AI - AI Inference Marketplace"
+                  description="Founded and built an AI inference marketplace enabling model creators to host and monetize industry-specific AI models with IP protection, monitoring, and pay-per-prediction APIs. Grew to 25K daily visitors within 90 days. Received a VC term sheet. Selected into NVIDIA Inception, AWS Activate, and Google Cloud Scale programs."
+                  tags={['Founder', 'LLM Serving', 'Inference Marketplace', 'Product', 'Go-to-Market']}
                 />
                 <TimelineItem
                   period="~8 years"
+                  role="AI Engineering Leader"
+                  org="AWS SageMaker - Amazon Web Services"
+                  description="Built core inference infrastructure for AWS SageMaker from its earliest days - scaling it to serve production ML workloads for enterprises across finance, healthcare, and telecom. Drove the full ML platform stack: AI inference, training infrastructure, MLOps infra, and the abstractions that became the industry standard for managed ML at scale."
+                  tags={['AWS SageMaker', 'ML Platform', 'AI Inference', 'Distributed Systems', 'Enterprise Scale']}
+                />
+                <TimelineItem
+                  period="Earlier career"
                   role="Engineering Leader"
-                  org="AWS SageMaker — Amazon Web Services"
-                  description="Led engineering on AWS SageMaker from the 2017 launch through eight years of scale. Drove AI inference infrastructure serving production ML workloads across thousands of enterprise customers. Worked across the full ML platform stack — model hosting, training infrastructure, and the core abstractions that became the industry standard for managed ML. The experience that shaped how I think about production AI systems at scale."
-                  tags={[
-                    'AWS SageMaker',
-                    'ML Platform',
-                    'AI Inference',
-                    'Distributed Systems',
-                    'Enterprise Scale',
-                  ]}
+                  org="Ericsson · Pegasystems · Global Enterprises"
+                  description="Built large-scale distributed systems and cloud infrastructure across global enterprises. Designed and delivered systems operating at significant scale - from real-time network infrastructure at Ericsson to enterprise platform engineering at Pegasystems. This work established the distributed systems foundations in my career that underpin everything that followed in AI infrastructure."
+                  tags={['Distributed Systems', 'Cloud Infrastructure', 'Enterprise Engineering', 'Global Scale']}
                 />
               </div>
             </Section>
 
-            {/* Focus Areas */}
             <Section title="Technical Focus">
               <div className={styles.focusGrid}>
                 <div className={styles.focusCard}>
@@ -167,7 +145,7 @@ export default function About(): ReactNode {
                   <p className={styles.focusDesc}>
                     LLM serving framework selection and evaluation,
                     multi-LoRA serving architectures, production guardrails,
-                    rate limiting strategies, SLA-aware scheduling,
+                    rate limiting strategies, SLO-aware scheduling,
                     and the operational engineering that keeps
                     GenAI systems reliable at scale.
                   </p>
@@ -185,11 +163,10 @@ export default function About(): ReactNode {
               </div>
             </Section>
 
-            {/* Patents & Publications */}
             <Section title="Patents & Publications">
               <div className={styles.pubList}>
                 <div className={styles.pubItem}>
-                  <div className={styles.pubType}>USPTO Patent — Pending</div>
+                  <div className={styles.pubType}>USPTO Patent - Pending</div>
                   <div className={styles.pubTitle}>
                     Dynamic Hierarchical Storage and GPU Optimization for LLM Serving
                   </div>
@@ -197,15 +174,12 @@ export default function About(): ReactNode {
                     A system and method for dynamic tiered memory management
                     across GPU VRAM, CPU DRAM, and NVMe storage for large
                     language model inference workloads, with adaptive
-                    scheduling based on request priority and latency
-                    constraints.
+                    scheduling based on request priority and latency constraints.
                   </p>
                 </div>
                 <div className={styles.pubItem}>
-                  <div className={styles.pubType}>Field Guide — v1.0 · 107 pages</div>
-                  <div className={styles.pubTitle}>
-                    Sizing LLM Inference Systems at Scale
-                  </div>
+                  <div className={styles.pubType}>Field Guide - v1.1 · 107 pages</div>
+                  <div className={styles.pubTitle}>Sizing LLM Inference for Production</div>
                   <p className={styles.pubDesc}>
                     A complete decision framework for GPU capacity planning:
                     workload characterization, memory budgeting, roofline
@@ -218,57 +192,97 @@ export default function About(): ReactNode {
               </div>
             </Section>
 
-            {/* Selected Writing */}
             <Section title="Selected Writing">
               <div className={styles.pubList}>
                 <div className={styles.pubItem}>
                   <div className={styles.pubType}>Technical Comparison · LinkedIn</div>
                   <div className={styles.pubTitle}>
-                    TensorRT-LLM vs. vLLM: A Production Comparison
+                    <Link to="https://www.linkedin.com/pulse/great-llm-inference-showdown-tensorrt-llm-vs-vllm-vinay-jayanna-9o9pc">
+                      The Great LLM Inference Showdown: TensorRT-LLM vs vLLM
+                    </Link>
                   </div>
                   <p className={styles.pubDesc}>
-                    A framework-level comparison of the two dominant LLM
-                    serving stacks — throughput characteristics, memory
-                    efficiency, ease of deployment, and the workload
-                    profiles where each excels in production.
+                    A framework-level comparison of the two dominant LLM serving stacks -
+                    throughput characteristics, memory efficiency, ease of deployment,
+                    and the workload profiles where each excels in production.
                   </p>
                 </div>
                 <div className={styles.pubItem}>
                   <div className={styles.pubType}>Production Guide · LinkedIn</div>
                   <div className={styles.pubTitle}>
-                    Ray Serve for Production LLM Serving
+                    <Link to="https://www.linkedin.com/pulse/challenge-production-llm-serving-ray-serve-vinay-jayanna-08syc">
+                      The Challenge of Production LLM Serving: A Ray Serve Perspective
+                    </Link>
                   </div>
                   <p className={styles.pubDesc}>
-                    Architecture patterns for deploying LLMs on Ray Serve
-                    at scale — autoscaling configuration, batching strategy,
-                    multi-model routing, and operational lessons from
-                    production deployments.
+                    Architecture patterns for deploying LLMs on Ray Serve at scale -
+                    autoscaling configuration, batching strategy, multi-model routing,
+                    and operational lessons from production deployments.
                   </p>
                 </div>
                 <div className={styles.pubItem}>
-                  <div className={styles.pubType}>More on LinkedIn</div>
+                  <div className={styles.pubType}>Deep Dive · LinkedIn</div>
                   <div className={styles.pubTitle}>
-                    <Link to="https://linkedin.com/in/vinayjayanna">
+                    <Link to="https://www.linkedin.com/pulse/multi-tenant-llm-inference-bridging-research-reality-vinay-jayanna-lpmtc">
+                      Multi-Tenant LLM Inference: Bridging Research and Reality
+                    </Link>
+                  </div>
+                  <p className={styles.pubDesc}>
+                    How multi-LoRA serving, prefix caching, and cache-aware routing
+                    combine to make multi-tenant inference economically viable -
+                    and where the production engineering challenges diverge from
+                    the research framing.
+                  </p>
+                </div>
+                <div className={styles.pubItem}>
+                  <div className={styles.pubType}>Technical Explainer · LinkedIn</div>
+                  <div className={styles.pubTitle}>
+                    <Link to="https://www.linkedin.com/pulse/kv-cache-hidden-optimization-behind-real-time-ai-vinay-jayanna-cvfec">
+                      KV Cache: The Hidden Optimization Behind Real-Time AI
+                    </Link>
+                  </div>
+                  <p className={styles.pubDesc}>
+                    Why KV cache is the most under-used lever in production LLM serving -
+                    and how PagedAttention, prefix caching, and quantization combine
+                    to turn it into a concurrency multiplier.
+                  </p>
+                </div>
+                <div className={styles.pubItem}>
+                  <div className={styles.pubType}>Infrastructure · LinkedIn</div>
+                  <div className={styles.pubTitle}>
+                    <Link to="https://www.linkedin.com/pulse/infrastructure-one-talks-how-vector-search-makes-gen-ai-vinay-jayanna-ka2bc">
+                      The Infrastructure No One Talks About: How Vector Search Makes Gen AI Work
+                    </Link>
+                  </div>
+                  <p className={styles.pubDesc}>
+                    The retrieval infrastructure underneath RAG systems -
+                    why vector search is a production engineering problem,
+                    not just an algorithm selection.
+                  </p>
+                </div>
+                <div className={styles.pubItem}>
+                  <div className={styles.pubType}>All writing</div>
+                  <div className={styles.pubTitle}>
+                    <Link to="https://www.linkedin.com/in/vinayjayanna/recent-activity/articles/">
                       View all articles on LinkedIn →
                     </Link>
                   </div>
                   <p className={styles.pubDesc}>
                     Additional writing on GenAI platform engineering,
-                    MLOps, LLM fine-tuning, and production AI strategy.
+                    vector search infrastructure, MLOps, and production AI strategy.
                   </p>
                 </div>
               </div>
             </Section>
 
-            {/* Contact */}
             <Section title="Contact">
               <p className={styles.contactText}>
-                I'm reachable on{' '}
+                Reachable on{' '}
                 <Link to="https://linkedin.com/in/vinayjayanna">LinkedIn</Link>{' '}
                 and{' '}
                 <Link to="https://github.com/vinay-jayanna">GitHub</Link>.
-                For substantive technical discussions — inference sizing,
-                GenAI platform architecture, or field guide feedback —
+                For substantive technical discussions - inference sizing,
+                GenAI platform architecture, or field guide feedback -
                 LinkedIn DMs work best.
               </p>
             </Section>

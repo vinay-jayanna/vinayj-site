@@ -161,6 +161,11 @@ function GuidesSection(): ReactNode {
 function WritingSection(): ReactNode {
   const articles = [
     {
+      title: "Multi-Tenant LLM Inference: Bridging Research and Reality",
+      meta: "LinkedIn · 2024",
+      to: "https://www.linkedin.com/pulse/multi-tenant-llm-inference-bridging-research-reality-vinay-jayanna-lpmtc",
+    },
+    {
       title: "The Great LLM Inference Showdown: TensorRT-LLM vs vLLM",
       meta: "LinkedIn · 2024",
       to: "https://www.linkedin.com/pulse/great-llm-inference-showdown-tensorrt-llm-vs-vllm-vinay-jayanna-9o9pc",
@@ -169,11 +174,6 @@ function WritingSection(): ReactNode {
       title: "The Challenge of Production LLM Serving: A Ray Serve Perspective",
       meta: "LinkedIn · 2024",
       to: "https://www.linkedin.com/pulse/challenge-production-llm-serving-ray-serve-vinay-jayanna-08syc",
-    },
-    {
-      title: "Multi-Tenant LLM Inference: Bridging Research and Reality",
-      meta: "LinkedIn · 2024",
-      to: "https://www.linkedin.com/pulse/multi-tenant-llm-inference-bridging-research-reality-vinay-jayanna-lpmtc",
     },
     {
       title: "KV Cache: The Hidden Optimization Behind Real-Time AI",
