@@ -23,11 +23,11 @@ The formula is simple. The difficulty is that three of the four terms are functi
 
 To make this concrete, consider Llama-3 70B - one of the most commonly deployed frontier-class models - at 50 concurrent requests with 8K context. The numbers are representative of what a real production sizing exercise produces. Here is what the four components actually produce:
 
-![Figure 2.1 — GPU memory breakdown: FP16 vs FP8 for Llama-3 70B](/img/figures/fig-2-1-gpu-memory-breakdown-fp16-fp8.png)
+![Figure 2.1 - GPU memory breakdown: FP16 vs FP8 for Llama-3 70B](/img/figures/fig-2-1-gpu-memory-breakdown-fp16-fp8.png)
 
 <figcaption>
 
-**Figure 2.1 — GPU memory breakdown: FP16 vs FP8 for Llama-3 70B (50 concurrent requests, 8K context)**
+**Figure 2.1 - GPU memory breakdown: FP16 vs FP8 for Llama-3 70B (50 concurrent requests, 8K context)**
 
 *Quantization from FP16 to FP8 halves both model weights and KV cache, reducing total memory from 287 GB to 165 GB. Activations and framework overhead are unaffected by weight precision. The GPU count drops from 4-6 H100s to 2-3 - the single highest-leverage memory decision available before touching throughput.*
 
@@ -96,11 +96,11 @@ At a typical production load of 50 concurrent requests with 8K-token inputs, tha
 
 Now extend the context. At 32K tokens the KV cache grows to 416 GB at the same concurrency - three times the model weights. At 128K context, just 4 concurrent requests push KV cache past model weights entirely. The diagram below makes this viscerally clear: short-context workloads stay manageable, but as context length grows the KV cache stops being overhead and becomes the dominant memory consumer in the system.
 
-![Figure 2.2 — KV cache memory vs concurrency for Llama-3 70B (FP16)](/img/figures/fig-2-2-kv-cache-memory-vs-concurrency.png)
+![Figure 2.2 - KV cache memory vs concurrency for Llama-3 70B (FP16)](/img/figures/fig-2-2-kv-cache-memory-vs-concurrency.png)
 
 <figcaption>
 
-**Figure 2.2 — KV cache memory vs concurrency for Llama-3 70B (FP16)**
+**Figure 2.2 - KV cache memory vs concurrency for Llama-3 70B (FP16)**
 
 *Each line represents a different context length. KV cache grows linearly with concurrency - but the slope scales directly with context length, making long-context workloads disproportionately memory-intensive. At 128K context, model weights are exceeded at just 4 concurrent requests. At 32K context, the crossover happens at 16. Only short-context workloads (4K-8K) stay below model weight memory at typical production concurrency. Size for your P95 context length, not your average.*
 
@@ -130,11 +130,11 @@ The historical problem was severe. In standard attention, every token must atten
 
 The memory consequence is that activation scaling drops from `O(seq²)` to approximately `O(seq)` - linear rather than quadratic. Doubling context length roughly doubles activation memory rather than quadrupling it. This is what makes 32K and 128K context workloads operationally viable on real hardware.
 
-![Figure 2.3 — Standard attention vs FlashAttention memory model](/img/figures/fig-2-3-standard-vs-flashattention.png)
+![Figure 2.3 - Standard attention vs FlashAttention memory model](/img/figures/fig-2-3-standard-vs-flashattention.png)
 
 <figcaption>
 
-**Figure 2.3 — Standard attention vs FlashAttention memory model**
+**Figure 2.3 - Standard attention vs FlashAttention memory model**
 
 *Standard attention materializes the full N×N score matrix in HBM before softmax can run - memory grows quadratically with sequence length. At 32K tokens that is roughly 4 billion matrix entries. FlashAttention eliminates this by computing attention in tiles that fit entirely in on-chip SRAM, maintaining only two running scalars per row - a running maximum and a running sum of exponentials - that allow softmax to be computed correctly without ever seeing the full matrix. Memory drops from `O(N²)` to `O(N)`. The N×N matrix is never written anywhere. This is what makes 32K and 128K context workloads physically viable on current hardware.*
 
@@ -180,11 +180,11 @@ Most production deployments use `r=8` to `r=64`. Crucially, only the adapters fo
 
 **The failure mode teams hit in production.** A deployment serving 100 LoRA adapters assumes adapter memory is negligible because each adapter is small. Under bursty traffic, requests for many distinct adapters arrive simultaneously, all 100 adapters get loaded into GPU memory concurrently, and the deployment OOMs - not because of the base model or KV cache, but because of adapter accumulation. The fix is to cap `max_simultaneous_adapters` in your serving configuration and implement LRU eviction for inactive adapters.
 
-![Figure 2.5 — Multi-LoRA serving memory architecture](/img/figures/fig-2-5-multi-lora-serving-memory.png)
+![Figure 2.5 - Multi-LoRA serving memory architecture](/img/figures/fig-2-5-multi-lora-serving-memory.png)
 
 <figcaption>
 
-**Figure 2.5 — Multi-LoRA serving memory architecture**
+**Figure 2.5 - Multi-LoRA serving memory architecture**
 
 *The base model loads once and is shared across all tenants. Only adapters for currently active requests reside in GPU memory - inactive adapters are paged to CPU DRAM and loaded on demand via LRU eviction. The binding constraint is not the total number of adapters but the maximum number simultaneously active in the batch. The failure mode: bursty traffic causes all adapters to load concurrently, exhausting GPU memory - not from the base model or KV cache, but from adapter accumulation.*
 
