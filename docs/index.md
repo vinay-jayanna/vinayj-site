@@ -25,7 +25,7 @@ import Link from '@docusaurus/Link';
 # Sizing LLM Inference for Production
 
 <p style={{fontFamily:"'Source Serif 4',Georgia,serif", fontSize:'1.15rem', color:'var(--ifm-color-content-secondary)', lineHeight:'1.65', maxWidth:'640px', margin:'0.5rem 0 1.75rem'}}>
-From first principles to cost-efficient scale. A complete decision framework for GPU capacity planning — workload characterization, memory budgeting, parallelism, KV cache, and a 13-step sizing algorithm.
+Inference is where AI infrastructure spend compounds indefinitely with usage growth. Most production LLM fleets are paying 2-3× what they need to, not from hardware limits but from sizing decisions made without a disciplined framework. This guide provides that framework: a complete decision sequence from workload characterization to production fleet sizing, grounded in the roofline model, queueing theory, and empirical benchmarking.
 </p>
 
 <div style={{display:'flex', gap:'1rem', margin:'0 0 1rem', flexWrap:'wrap'}}>
@@ -45,19 +45,19 @@ From first principles to cost-efficient scale. A complete decision framework for
 
 ## Contents
 
-| | Chapter | Key Question |
+| | Chapter | What you'll be able to do |
 |---|---------|-------------|
-| → | [Why Inference Sizing Is a Capital Allocation Problem](/sizing/why-inference-sizing) | Why GPU spend is now an engineering decision |
-| 1 | [Workload Characterization](/sizing/01-workload-characterization) | What exactly am I serving? |
-| 2 | [GPU Memory Sizing](/sizing/02-gpu-memory-sizing) | How many GPUs do I need at minimum? |
-| 3 | [The Roofline Model](/sizing/03-roofline-model) | Why do prefill and decode behave differently? |
-| 4 | [Quantization](/sizing/04-quantization) | How do I trade precision for scale? |
-| 5 | [Parallelism Strategy](/sizing/05-parallelism-strategy) | How do I split the model across GPUs? |
-| 6 | [Batching Strategy](/sizing/06-batching-strategy) | How do I maximize throughput without hurting latency? |
-| 7 | [KV Cache Optimization](/sizing/07-kv-cache-optimization) | What is my most under-used lever? |
-| 8 | [Latency-Throughput Curve](/sizing/08-latency-throughput-curve) | Where is my operating point? |
-| 9 | [Sizing Algorithm & Monitoring](/sizing/09-sizing-algorithm) | How do I put it all together? |
-| ✦ | [First Principles, Last](/sizing/first-principles) | The mental model underneath it all |
+| → | [Why Inference Sizing Is a Capital Allocation Problem](/sizing/why-inference-sizing) | Understand why inference — not training — now dominates AI infrastructure spend, and why "just add GPUs" is a compounding financial mistake |
+| 1 | [Workload Characterization](/sizing/01-workload-characterization) | Derive the P95 input/output length distributions, peak RPS, and latency targets that every downstream calculation depends on — before touching a single config parameter |
+| 2 | [GPU Memory Sizing](/sizing/02-gpu-memory-sizing) | Calculate the minimum GPU count from first principles: model weights, KV cache at peak concurrency, activations, and framework overhead — using your workload numbers, not model card estimates |
+| 3 | [The Roofline Model](/sizing/03-roofline-model) | Explain precisely why prefill and decode require different hardware, and why buying H100s for their TFLOPS fails decode-dominated workloads |
+| 4 | [Quantization](/sizing/04-quantization) | Sequence weight, activation, and KV cache quantization decisions correctly — and understand why FP8 is a GPU count decision, not a quality tuning decision |
+| 5 | [Parallelism Strategy](/sizing/05-parallelism-strategy) | Select TP, PP, DP, and EP degrees in the right order, understand why TP=4 on PCIe can be slower than TP=2 on NVLink, and size MoE models correctly |
+| 6 | [Batching Strategy](/sizing/06-batching-strategy) | Choose between continuous batching, chunked prefill, disaggregated P/D, and speculative decoding based on your specific TTFT/ITL tradeoff — not framework defaults |
+| 7 | [KV Cache Optimization](/sizing/07-kv-cache-optimization) | Deploy PagedAttention, prefix caching, and cache-aware routing as a coordinated stack — and diagnose the memory pressure cascade before it presents as a latency problem |
+| 8 | [Latency-Throughput Curve](/sizing/08-latency-throughput-curve) | Generate the empirical curve for your deployment, find the SLO-constrained operating point, and size the fleet from measured data rather than theoretical peaks |
+| 9 | [Sizing Algorithm & Monitoring](/sizing/09-sizing-algorithm) | Execute the full 13-step sizing sequence in the correct dependency order, instrument the metrics that fire early enough to intervene, and avoid the utilization trap in TCO |
+| ✦ | [First Principles, Last](/sizing/first-principles) | The reasoning framework that outlasts every hardware generation and framework version in this guide |
 
 ---
 
