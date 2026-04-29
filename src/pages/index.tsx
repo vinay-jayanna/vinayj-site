@@ -63,6 +63,7 @@ function GuideCard({
   );
 }
 
+
 function Hero(): ReactNode {
   return (
     <div className={styles.hero}>
@@ -80,14 +81,17 @@ function Hero(): ReactNode {
           </p>
           <div className={styles.heroBio}>
             <p>
-              Led engineering on <strong>AWS SageMaker</strong> from the 2017
-              launch through eight years of scale — driving AI inference
-              infrastructure for thousands of enterprise customers. Founded{" "}
-              <strong>Vipas.AI</strong>, an AI inference marketplace that
-              reached 25K daily visitors and received a VC term sheet. Currently
-              leading LLM inference optimization and GenAI platform engineering
-              at scale. Holder of a USPTO-pending patent in dynamic hierarchical
-              storage and GPU optimization for LLM serving.
+              Currently a Staff ML Engineer leading LLM inference optimization
+              for one of the most consequential AI systems in the world —
+              reaching hundreds of millions of users. Before that, spent nearly
+              a decade at <strong>AWS</strong> building and scaling core
+              inference infrastructure for <strong>SageMaker</strong> from its
+              earliest days. Founded <strong>Vipas.AI</strong>, an AI inference
+              marketplace that reached 25K daily visitors and received a VC term
+              sheet. Earlier career spans building large-scale distributed
+              systems and cloud infrastructure at Ericsson, Pegasystems, and
+              global enterprises. Holder of a USPTO-pending patent in dynamic
+              hierarchical storage and GPU optimization for LLM serving.
             </p>
           </div>
           <div className={styles.heroLinks}>
@@ -108,28 +112,11 @@ function Hero(): ReactNode {
             </Link>
           </div>
         </div>
-        <div className={styles.heroStats}>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>107</span>
-            <span className={styles.statLabel}>pages, guide 1</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>9</span>
-            <span className={styles.statLabel}>chapters</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>13</span>
-            <span className={styles.statLabel}>step sizing algorithm</span>
-          </div>
-          <div className={styles.statItem}>
-            <span className={styles.statNumber}>17+</span>
-            <span className={styles.statLabel}>years ML infrastructure</span>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
+
 
 function GuidesSection(): ReactNode {
   return (
