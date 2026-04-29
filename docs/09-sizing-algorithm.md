@@ -1,8 +1,142 @@
 ---
 id: 09-sizing-algorithm
-title: 09-sizing-algorithm
+title: "9 · Putting It All Together: Sizing Algorithm and Production Monitoring"
 ---
 
-# 09-sizing-algorithm
+Section 8 showed how to read the latency-throughput curve and size from it. Every section before that covered an individual lever. This section assembles the full decision sequence - the order in which those levers must be pulled, why the order matters, and how to verify in production that the result is correct.
 
-Content coming soon.
+---
+
+## 9.1 The Sizing Algorithm: Decision Sequence and Dependencies
+
+The order of decisions matters because each step constrains the next. Getting the sequence wrong means re-doing work. The most common mistake: selecting parallelism degree before quantizing. Quantization changes the memory floor - which determines whether the model fits on N GPUs or requires more. If you select TP degree against an FP16 memory floor and then quantize to FP8, your TP choice was made against a constraint that no longer exists. You may have chosen `TP=4` to fit the model when `TP=2` would have been sufficient after quantization - with twice the replicas, half the all-reduce overhead, and better aggregate throughput.
+
+| Step | Decision | Key output | Why this order |
+|---|---|---|---|
+| 1 | **Characterize workload** - measure or estimate P50/P95/P99 input and output lengths, peak RPS vs average RPS, TTFT and ITL SLO targets, online streaming vs offline batch split, and traffic complexity distribution. Reference Section 1 in full - this step is underestimated more than any other. | Workload profile: length distributions, peak load, SLO targets, workload archetype | Nothing else can be calculated without this. Every downstream decision is parameterized by these inputs. Errors here propagate through every subsequent step. |
+| 2 | **Hardware selection** - based on workload archetype from Step 1, select GPU optimizing for TFLOPS (prefill-heavy: H100/B200) or HBM bandwidth (decode-heavy: MI300X/H200). Verify interconnect: NVLink required for `TP > 2`; PCIe limits viable TP degree. | Target GPU model, [interconnect topology](https://cloudification.io/cloud-blog/the-secret-highways-of-ai-a-friendly-guide-to-gpu-networking-roce-infiniband-nvlink-ualink/) | Must precede memory sizing - memory floor and parallelism options both depend on GPU HBM capacity and bandwidth. Wrong hardware selection cannot be fixed by software optimization. |
+| 3 | **Routing decision** - does traffic complexity skew justify model routing or cascading? Evaluate if the large model fleet would exceed 8 GPUs and traffic has measurable simple-request skew. If yes, define tier boundaries and run Steps 4-10 independently per tier. | Single-fleet or multi-tier architecture | Must precede memory sizing - routing determines how many fleets you are sizing and what traffic volume each fleet sees. |
+| 4 | **Calculate memory floor** - model weights at target precision + KV cache at P95 concurrency and P95 input length + activations (~20% of weight memory) + framework overhead (5–10% of total VRAM) + adapter memory if serving LoRA variants (`max_simultaneous_adapters × adapter_size_at_target_rank`). | Minimum GPU count before optimization | Establishes the hard memory constraint. Cannot be estimated - must be calculated from actual workload parameters. |
+| 5 | **Apply quantization and sparsity** - select precision (FP8 recommended default on H100/Blackwell, INT4 via AWQ for maximum compression on tolerant workloads). Apply KV cache quantization independently. Evaluate sparsity (2:4 structured) only if compute throughput on prefill-heavy workloads remains the binding constraint after weight quantization. | Reduced memory footprint, revised minimum GPU count, revised compute profile | Must precede parallelism selection - quantization often moves from 2 nodes to 1 or 8 GPUs to 4, completely changing the parallelism design space. Applying after parallelism selection wastes the sizing work. |
+| 6 | **Select parallelism strategy** - TP degree to fit model within a node (lowest degree that fits after Step 5), PP only if model cannot fit within single node's NVLink domain, DP replica count deferred to Step 9. Verify all-reduce overhead is acceptable at chosen TP degree on available interconnect. | TP degree, PP degree if needed, interconnect validation | Depends on memory floor after quantization (Step 5) and latency SLO (Step 1). TP degree determines replica count and therefore aggregate throughput capacity. |
+| 7 | **Benchmark single instance** - run concurrency sweep with realistic P50/P95 input/output length distribution. Record P50/P99 TTFT and ITL alongside RPS and tokens/sec. Identify `C_max` (SLO-constrained concurrency) and usable RPS per instance. Validate with Little's Law - gap over 2× means benchmark inputs do not match production. | Latency-throughput curve, usable RPS per instance at SLO | Must use actual configuration from Steps 5+6. Benchmarking unquantized or differently parallelized configuration produces a curve that does not reflect production behavior. |
+| 8 | **Configure KV cache strategy** - in order: verify PagedAttention is active (default in all major frameworks), apply KV cache quantization (FP8 default, NVFP4 on Blackwell for maximum concurrency), enable prefix caching if workload has shared prefixes, configure cache-aware routing for multi-replica deployments, set eviction policy (LRU default; frequency-based if high-frequency prefixes are repeatedly evicted), evaluate KV cache offloading only for long-context batch workloads where KV cache structurally exceeds GPU HBM after quantization. | KV cache hit rate, effective concurrency headroom, eviction rate | After baseline benchmark - these optimizations shift the curve and the Step 7 benchmark establishes the baseline to measure improvement against. |
+| 9 | **Configure batching and decode acceleration** - in order: verify continuous batching is active, configure SLO-aware scheduler for mixed workloads, evaluate chunked prefill if ITL P99 spikes under mixed input lengths, evaluate speculative decoding for latency-sensitive low-concurrency workloads with measurable acceptance rate, evaluate P/D disaggregation for large fleets where TTFT and ITL SLOs cannot simultaneously be met on colocated system. | Final serving configuration | After Step 8 - KV cache strategy affects which batching configurations are viable. Disaggregation decision depends on whether KV cache optimization alone resolves the TTFT/ITL tension. |
+| 10 | **Re-benchmark with full optimization stack** - repeat Step 7 with all optimizations from Steps 8+9 active. Each optimization shifts the curve - the Step 7 baseline is no longer valid. Fleet size must be calculated from the final curve. | Final latency-throughput curve, final usable RPS per instance | The Step 7 benchmark is a baseline, not the final number. Skipping this step means sizing from a curve that does not reflect the actual production configuration. |
+| 11 | **Calculate fleet size and DP degree** - `ceil(peak_RPS / usable_RPS_per_instance) × safety factor` (20% for predictable workloads, 50% for new deployments or high variance). `Total GPUs = instances × TP_degree`. | Total instance count, total GPU count, DP degree | Depends on Step 10 (final usable RPS) and Step 1 (peak RPS target and traffic variance). |
+| 12 | **Calculate TCO** - `GPU count × GPU hourly rate ÷ utilization-adjusted token output rate`. Average utilization - not peak - determines real cost per token. A fleet sized for P95 peak running at 40% average utilization costs 2× per token versus one running at 80%. | Cost per token, utilization-adjusted annual cost | Depends on Step 11 (GPU count) and measured or estimated average utilization. |
+| 13 | **Deploy and validate** - within the first week of production traffic, compare actual TTFT P99, ITL P99, GPU utilization, KV cache hit rate, and eviction rate against Step 10 benchmark predictions. If production TTFT P99 runs more than 30% above benchmark, or GPU utilization runs more than 20 points below benchmark at equivalent RPS - return to Step 1 and re-characterize the workload. Production traffic almost always differs from benchmark assumptions in input length distribution or arrival patterns. Section 9.3 covers the full ongoing monitoring framework. | Validation that sizing matches real traffic. Trigger for re-sizing if divergence is significant. | The algorithm is complete only when production data confirms the benchmark was representative. Sizing is not a one-time event - it closes a loop back to Step 1. |
+
+Average utilization - not peak - is the hidden variable in TCO. A fleet sized correctly for peak traffic can still have 2-3× higher cost per token than expected due to off-peak idle time. Section 9.2 covers this in full.
+
+---
+
+## 9.2 The Utilization Trap: The Hidden Variable in TCO
+
+GPU count from the sizing algorithm tells you the hardware you need at peak load. TCO depends on a different question: *what fraction of that hardware is doing useful work on average?*
+
+Think of it like an airline. A plane flying at 40% seat occupancy pays full fuel and crew costs regardless - empty seats do not get a discount. GPU fleets have exactly the same dynamic. You pay for the GPU whether it is serving a request or sitting idle. The GPU does not know the difference. Your invoice does not either.
+
+Most production LLM deployments run at 30-60% average GPU utilization due to traffic burstiness - high during business hours, near-zero overnight. A fleet sized correctly for P95 peak but running at 40% average utilization is paying 2.5× the efficient cost per token compared to a fleet running at full utilization on the same hardware.
+
+`Cost per token = (GPU-hour cost × GPU count) ÷ (tokens generated × utilization rate)`
+
+For most deployments running below 60% average utilization - which describes the majority of production LLM fleets - utilization rate has more leverage on cost per token than any infrastructure optimization. A jump from 40% to 70% utilization cuts cost per token nearly in half without touching the model, the serving stack, or the hardware. Quantization saves memory. Batching improves throughput. Utilization determines what fraction of your bill is producing anything at all.
+
+**Levers to improve utilization, in rough order of operational complexity:**
+
+**Model colocation** shares GPU capacity across multiple models or tenants on the same fleet. NVIDIA [Multi-Instance GPU (MIG)](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/latest/) partitions a single H100 into up to seven independent GPU instances each with dedicated HBM and compute - allowing multiple smaller models or tenants to share one physical GPU without memory interference or noisy-neighbor effects. Time-sharing without MIG is also viable for latency-tolerant workloads where tenants do not need guaranteed isolation. Either approach converts a fleet serving one model at 40% utilization into one serving multiple workloads at 70–80%.
+
+**Offline batch fill** routes non-latency-sensitive jobs - nightly summarization, embedding generation, dataset annotation, fine-tuning data preparation - to fill idle capacity during off-peak hours. The fleet is already warm and already paid for. Offline batch work at 2am costs almost nothing marginal beyond the incremental electricity. This is the easiest utilization lever for any team that has batch workloads sitting in a queue.
+
+**Aggressive autoscaling** scales down faster than feels comfortable. The cost of over-scaling - paying for idle GPUs overnight - almost always dwarfs the occasional cold-start latency penalty. Most teams scale down too conservatively because cold starts feel expensive and risky. But a fleet running at 30% utilization overnight is paying 3.3× per token for the comfort of instant scale-up readiness. The math rarely justifies it.
+
+**Request-level token reduction** trims system prompts, caps max output tokens, and compresses RAG context. Fewer tokens per request means more requests per GPU-hour - the same fleet serves more traffic without adding hardware. This is an application-level lever, not an infrastructure lever, and it is often the highest-ROI intervention available to teams that have already optimized their serving stack. A 30% reduction in average prompt length translates directly to a 30% improvement in effective throughput at constant GPU count.
+
+**Model routing** directs simple requests to a small model on commodity hardware, reserving large model GPU capacity for requests that genuinely need it. This is the only lever on this list that reduces large model traffic volume rather than filling idle capacity - it improves utilization economics by shrinking the fleet that needs to be kept warm, not by filling gaps in an oversized one. A large model fleet serving 40% simple requests that a 7B model could handle is paying frontier model rates for commodity work.
+
+**A note on LLM autoscaling mechanics - why reactive scaling fails and what to do instead.**
+
+LLM serving instances have GPU cold start times of 2–5 minutes - the time required to load model weights from NVMe storage into GPU HBM. A 70B FP8 model loading at typical NVMe bandwidth takes 30-60 seconds for the transfer alone, before the serving framework initializes. This is orders of magnitude longer than web service cold starts, which typically complete in seconds.
+
+Reactive autoscaling - scale up when GPU utilization crosses a threshold - responds too slowly for bursty LLM traffic. The sequence plays out the same way every time: traffic spikes, utilization threshold is crossed, autoscaler triggers new instance provisioning, 2-5 minutes pass, new instances become ready, traffic spike has already peaked and is subsiding, SLO violations have already occurred. The autoscaler fixed a problem that is already over.
+
+The production pattern is predictive scaling. Use historical traffic patterns - time-of-day curves, day-of-week seasonality, known event spikes - to pre-warm instances before anticipated peaks rather than reacting to them. Kubernetes HPA on GPU utilization alone is insufficient for LLM fleets. The right architecture pairs HPA with two additional layers: scheduled scaling rules that pre-warm instances ahead of known traffic patterns, and a minimum warm instance count that guarantees at least one instance is always available to absorb sudden unscheduled spikes without waiting for cold start.
+
+The minimum warm instance count is not waste - it is the premium you pay for responsive scaling. At most traffic levels, the cost of keeping one warm standby instance overnight is significantly less than the SLO violation cost of a 3-minute cold start during an unexpected traffic event. Size the minimum based on your SLO sensitivity and your traffic unpredictability, not on the instinct to minimize idle GPU cost at all times.
+
+---
+
+## 9.3 Production Monitoring: Validating Your Sizing
+
+Step 13 covers the initial validation. What follows is the ongoing monitoring framework - the metrics that tell you whether your fleet remains correctly sized as traffic evolves, and what each signal means for your next optimization decision.
+
+| Metric | Target | What it tells you |
+|---|---|---|
+| **GPU memory utilization** | 80-90% | Below 70% - over-provisioned on memory. Above 95% - OOM risk on traffic spikes. |
+| **GPU compute utilization** | 60-85% during active serving | Consistently low during active requests - batch size too small or decode-dominated; batching improvement opportunity. Pegged at 100% with stable TTFT - prefill-bound but healthy. Pegged at 100% with rising TTFT - prefill-bound and saturated; consider chunked prefill or P/D disaggregation. |
+| **Adapter cache hit rate (if Multi-LoRA)** | Above 80% for stable traffic | Below 60% - too many simultaneous adapter variants competing for GPU memory; increase `max_loras` budget or reduce adapter rank. |
+| **Adapter eviction rate (Multi-LoRA)** | Near zero | Rising eviction rate - adapters are being paged to CPU and reloaded on demand, adding hidden latency. Symptom: TTFT spikes on specific tenants that look like prefill interference but do not respond to chunked prefill tuning. |
+| **KV cache utilization** | 75-90% | Near 100% - KV cache approaching ceiling; evaluate quantization or offloading before it becomes the bottleneck. |
+| **KV cache eviction rate** | Below 5% | 5–20% warning - KV budget undersized for current traffic. Above 20% - system in degraded state, presenting as a latency problem rather than a memory problem. This is the memory pressure cascade from Section 7 - instrument this metric from day one. |
+| **Fleet utilization** | 60-80% | Below 40% - you are in the utilization trap. Above 90% - no headroom for traffic spikes; size up or apply quantization to move the knee right. |
+| **Prefix cache hit rate** | Workload-dependent | Below 30% on a workload with known prefix reuse - routing misconfiguration or cache too small. Single-instance deployments should hit 80%+ on RAG workloads with shared context. |
+| **TTFT P50 / P99** | Within SLO | P99 violating but P50 fine - queue depth or prefill interference causing tail latency. Both violating - fleet undersized or workload has shifted beyond benchmark assumptions. |
+| **ITL / TPOT P50 / P99** | Within SLO | P99 ITL spikes - prefill interference; try chunked prefill. Consistently elevated across all percentiles - decode batch too large or decode hardware undersized. |
+| **Queue depth** | Near zero | Consistently growing - fleet undersized; requests are queueing faster than they are being served. Consistently zero at low GPU utilization - oversized fleet. |
+| **Tokens/GPU-hour** | Maximize | Your core efficiency metric - reflects the combined effect of quantization, batching strategy, KV cache efficiency, and fleet utilization in one number. |
+| **Speculative decoding acceptance rate** *(if enabled)* | Above 60% | Below 50% - draft model poorly matched to current traffic distribution; speculative decoding is adding overhead without benefit. Disable or retune before it becomes a latency liability. |
+
+Tokens/GPU-hour is the metric that connects everything. It is the single number that reflects your quantization choice, batching strategy, KV cache efficiency, and fleet utilization combined. If it is improving over time, your optimization work is paying off. If it is flat or declining as traffic grows, something is saturating - and the other metrics in this table will tell you what.
+
+**How to collect these metrics in practice.** GPU memory utilization and compute utilization are available via [nvidia-smi](https://docs.nvidia.com/deploy/nvidia-smi/) for single-node inspection and [DCGM (Data Center GPU Manager)](https://developer.nvidia.com/dcgm) for fleet-level collection at scale - DCGM exposes Prometheus metrics that feed directly into Grafana dashboards. vLLM exposes a [/metrics](https://docs.vllm.ai/en/stable/design/metrics/) Prometheus endpoint natively covering TTFT, ITL, queue depth, KV cache utilization, prefix cache hit rate, and adapter eviction rate - enabling the entire monitoring table above with no custom instrumentation. SGLang exposes equivalent metrics. For distributed tracing across prefill and decode nodes in disaggregated deployments, OpenTelemetry is the standard - trace context propagated from the prefill instance through the KV transfer to the decode instance lets you attribute latency to the correct phase rather than seeing an opaque end-to-end number.
+
+Monitoring tells you whether your sizing was right. Guardrails determine what happens when traffic exceeds it.
+
+---
+
+## 9.4 Production Guardrails: Rate Limiting and Input Controls
+
+Monitoring tells you when the fleet is stressed. Guardrails determine what happens to incoming traffic when it is. Without guardrails, a traffic spike that exceeds capacity does not produce clean 429 errors - it produces OOM cascades, runaway queue depth, and latency degradation that affects every active request simultaneously. The goal is to fail fast and cleanly at the edge rather than slowly and expensively inside the serving stack.
+
+These are standard distributed systems patterns, but each has LLM-specific nuances worth making explicit.
+
+**Input token limits** are the most LLM-specific guardrail. An unbounded input can consume the entire KV cache capacity of an instance in a single request, starving every other concurrent user. A model with a 128K context window set as the API limit will accept requests that consume 10 GB of KV cache per request at FP16 - exhausting an H100's entire KV cache budget in a single request at high concurrency. Your operational context limit and your model's architectural context limit are different numbers and must be set independently.
+
+Set hard `max_input_tokens` limits at the API gateway layer - not inside the serving framework - so oversized requests are rejected before they consume GPU resources. The limit should reflect your P99 input length with reasonable headroom, not the model's maximum context length. For most production workloads, setting the operational limit at 2-3× your P95 input length provides enough headroom for legitimate long requests while preventing pathological cases from exhausting the KV cache.
+
+**Output token limits** (`max_new_tokens`) prevent runaway generation from holding a decode slot indefinitely. A request generating 100K tokens occupies a decode slot for minutes - blocking other requests in disaggregated deployments and inflating queue depth in colocated ones. Set per-request output limits appropriate to your use case and enforce them at the gateway. For workloads where output length is genuinely unbounded - open-ended reasoning chains, agentic tasks - set a generous but finite limit and monitor P99 output length to detect drift.
+
+**Prompt injection and runaway generation detection** is an operational guardrail that rate limiting alone does not catch. Adversarial or malformed inputs designed to force maximum output length - repetition loops, unbounded list generation, recursive reasoning prompts - can occupy decode slots for minutes and are not prevented by per-user rate limits if the user is within their RPS budget. In practice, detection at the gateway works through two complementary mechanisms. First, rule-based pattern matching on the input - regex or keyword detection for known runaway patterns like "repeat X N times," "list all," or recursive self-reference constructs - catches the most common cases at near-zero latency cost. Second, a small output length predictor - typically a fine-tuned classifier on your historical request distribution that predicts whether a given input is likely to produce a long output - can flag statistically anomalous requests for either rejection or rerouting to a dedicated long-generation pool where they cannot starve interactive traffic. Neither mechanism is perfect. The rule-based approach misses novel patterns; the predictor adds 5-20ms of gateway latency and requires training data. For most teams, rule-based detection alone catches enough pathological cases to be worth the implementation cost, with the predictor added only if runaway generation becomes a measurable production problem.
+
+**Per-tenant rate limiting** at the RPS level prevents a single tenant from monopolizing fleet capacity. Standard [token bucket](https://www.geeksforgeeks.org/computer-networks/token-bucket-algorithm/) or [leaky bucket](https://www.geeksforgeeks.org/computer-networks/leaky-bucket-algorithm/) algorithms apply - nothing LLM-specific beyond ensuring limits are enforced before requests enter the serving queue, not after. Enforcing inside the queue means the request has already consumed admission capacity and potentially KV cache budget before being rejected. Enforce at the gateway.
+
+**Circuit breaking** - shedding load when queue depth exceeds a threshold rather than letting requests accumulate indefinitely - is critical for LLM fleets because queued requests can hold memory resources in some frameworks even before execution begins. A circuit breaker that returns HTTP 429 at queue depth above a threshold prevents a traffic spike from turning into an OOM cascade.
+
+Set the threshold from your latency budget using Little's Law:
+
+`Maximum safe queue depth = maximum acceptable queue wait time × arrival rate`
+
+For a fleet with a 2-second TTFT SLO and 50 RPS arrival rate, maximum queue depth before guaranteed SLO violation is `2 × 50 = 100 requests`. Set your circuit breaker at 80–90% of that - 80 to 90 queued requests - to shed load before the guarantee is broken rather than after. Returning a 429 to 10% of requests during a spike is operationally preferable to returning degraded responses with 3× TTFT to 100% of requests.
+
+---
+
+## 9.5 Heterogeneous Fleet Composition
+
+The sizing algorithm, monitoring framework, and guardrails in the previous sections all assume a homogeneous fleet. In practice, most mature deployments are not - and the heterogeneity is rarely planned. It accumulates across procurement cycles as infrastructure evolves faster than hardware generations.
+
+Teams that deployed on A100s in 2022, added H100s in 2023, and are now evaluating MI300X for long-context workloads have three hardware generations in production simultaneously. This is not poor planning - it is the normal outcome of infrastructure that evolves faster than procurement cycles. The challenge is that each hardware tier requires its own benchmark curve, serving configuration, quantization artifact, and parallelism plan. You cannot treat heterogeneous nodes as interchangeable behind a load balancer.
+
+The practical approach is to treat each hardware tier as an independent fleet tier - the same way model routing in Section 1 treats different model sizes as independent tiers. Route requests to the appropriate hardware based on their characteristics: long-context requests to MI300X where 192 GB HBM handles them without KV offloading, latency-sensitive interactive requests to H100s where NVLink and high TFLOPS minimize TTFT, batch summarization to A100s where throughput per dollar is the objective. Each tier runs its own optimized configuration - FP8 on H100s and Blackwell, INT8 on A100s, separate quantization artifacts per tier, separate benchmark curves, separate SLO-constrained operating points.
+
+**Three failure modes specific to heterogeneous fleets:**
+
+**Mixed-tier load balancing without routing** sends requests randomly across H100s and A100s. The result is a blended latency curve where the slower hardware tier sets the P99 for the entire fleet. A single A100 in a round-robin pool with seven H100s will receive roughly 12% of traffic - enough to make your P99 TTFT look like an A100 deployment even though 88% of your hardware is H100. Route by request characteristics, not randomly.
+
+**Assuming quantization format portability** across hardware generations. FP8 Tensor Core acceleration is H100 and Blackwell-specific - an FP8 model artifact deployed on an A100 will run but will not use the dedicated hardware path, effectively running at INT8 performance without the INT8 memory footprint benefit. A100 deployments need INT8 quantization artifacts built and validated specifically for that hardware. One artifact does not serve both correctly.
+
+**Ignoring cold start asymmetry** across hardware tiers. Model load time - the time to transfer weights from NVMe into GPU HBM - scales with HBM capacity and PCIe bandwidth, both of which differ across GPU generations. An autoscaling rule calibrated on H100 cold start times of 90 seconds will systematically underestimate A100 warm-up time and cause SLO violations during scale-up events on that tier. Measure cold start time independently per tier and set autoscaling pre-warm lead times accordingly.
+
+**The monitoring implication.** The monitoring table in Section 9 must be instantiated independently per hardware tier with tier-specific targets - not aggregated across tiers. An H100 tier running at 85% GPU utilization and an A100 tier running at 55% blend to a fleet average of approximately 70% that looks healthy in aggregate dashboards. The A100 tier is in the utilization trap. The H100 tier may be approaching the memory ceiling. Neither signal is visible in the blended number. Tag all metrics by hardware tier from day one and alert on tier-specific thresholds, not fleet-wide averages.
+
+The key principle across all of this: heterogeneity is a routing problem, not a sizing problem. Once you have the routing layer correctly directing traffic to the appropriate tier, each tier becomes a standard homogeneous fleet - and the full sizing algorithm applies cleanly to each one independently.
