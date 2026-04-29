@@ -75,9 +75,8 @@ function Hero(): ReactNode {
             ML Infrastructure
           </h1>
           <p className={styles.heroSubtitle}>
-            Technical field guides written from production experience —
-            not survey articles. Each guide is a complete decision framework
-            you can apply directly to real deployments.
+            Technical field guides written from production experience. Each guide is a comprehensive decision framework
+            you can apply to production systems.
           </p>
           <div className={styles.heroLinks}>
             <Link
@@ -102,7 +101,7 @@ function Hero(): ReactNode {
           <p className={styles.heroBioLabel}>About the author</p>
           <p>
             Currently a Staff ML Engineer leading LLM inference optimization
-            for one of the most consequential AI systems in the world —
+            for one of the most consequential AI systems in the world -
             reaching hundreds of millions of users. Before that, spent nearly
             a decade at <strong>AWS</strong> building and scaling core inference
             infrastructure for <strong>SageMaker</strong> from its earliest
@@ -128,7 +127,7 @@ function GuidesSection(): ReactNode {
           <h2 className={styles.sectionTitle}>Field Guides</h2>
           <p className={styles.sectionSubtitle}>
             Each guide is a complete treatment of a production ML systems topic
-            — not a survey, not a tutorial, but a decision framework you can
+            - not a survey, not a tutorial, but a decision framework you can
             apply directly to real deployments.
           </p>
         </div>
@@ -136,7 +135,7 @@ function GuidesSection(): ReactNode {
           <GuideCard
             tag="Field Guide · v1.1"
             title="Sizing LLM Inference for Production"
-            description="Inference is where AI infrastructure spend compounds indefinitely with usage growth. Most production LLM fleets are paying 2–3× what they need to — not from hardware limits, but from sizing decisions made without a disciplined framework. This guide covers the complete decision sequence: workload characterization, GPU memory sizing, parallelism strategy, KV cache optimization, and fleet sizing from the latency-throughput curve."
+            description="Inference is where AI infrastructure spend compounds indefinitely with usage growth. Most production LLM fleets are paying 2–3× what they need to - not from hardware limits, but from sizing decisions made without a disciplined framework. This guide covers the complete decision sequence: workload characterization, GPU memory sizing, parallelism strategy, KV cache optimization, and fleet sizing from the latency-throughput curve."
             pages="107"
             chapters="9"
             audience="Staff / Principal ML Engineers"
@@ -223,7 +222,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={siteConfig.title}
-      description="Technical field guides on LLM inference systems and production ML infrastructure by Vinay Jayanna — Staff ML Engineer."
+      description="Technical field guides on LLM inference systems and production ML infrastructure by Vinay Jayanna - Staff ML Engineer."
     >
       <Hero />
       <main>
