@@ -280,3 +280,15 @@
   font-size: 12.5px;
   color: var(--ifm-color-content-secondary);
 }
+
+
+.heroBioLabel {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.75rem;
+  margin-top: 0;
+}

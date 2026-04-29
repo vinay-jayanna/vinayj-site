@@ -63,37 +63,22 @@ function GuideCard({
   );
 }
 
-
 function Hero(): ReactNode {
   return (
     <div className={styles.hero}>
       <div className={styles.heroInner}>
+
         <div className={styles.heroText}>
-          <p className={styles.heroEyebrow}>Staff ML Engineer · Field Guides</p>
+          <p className={styles.heroEyebrow}>LLM Inference · GPU Systems · Production AI</p>
           <h1 className={styles.heroTitle}>
             LLM Inference &<br />
             ML Infrastructure
           </h1>
           <p className={styles.heroSubtitle}>
-            Long-form technical field guides for Staff and Principal engineers
-            building production AI systems. Written from first principles,
-            grounded in real deployment constraints.
+            Technical field guides written from production experience —
+            not survey articles. Each guide is a complete decision framework
+            you can apply directly to real deployments.
           </p>
-          <div className={styles.heroBio}>
-            <p>
-              Currently a Staff ML Engineer leading LLM inference optimization
-              for one of the most consequential AI systems in the world —
-              reaching hundreds of millions of users. Before that, spent nearly
-              a decade at <strong>AWS</strong> building and scaling core
-              inference infrastructure for <strong>SageMaker</strong> from its
-              earliest days. Founded <strong>Vipas.AI</strong>, an AI inference
-              marketplace that reached 25K daily visitors and received a VC term
-              sheet. Earlier career spans building large-scale distributed
-              systems and cloud infrastructure at Ericsson, Pegasystems, and
-              global enterprises. Holder of a USPTO-pending patent in dynamic
-              hierarchical storage and GPU optimization for LLM serving.
-            </p>
-          </div>
           <div className={styles.heroLinks}>
             <Link
               to="https://github.com/vinay-jayanna"
@@ -112,11 +97,28 @@ function Hero(): ReactNode {
             </Link>
           </div>
         </div>
+
+        <div className={styles.heroBio}>
+          <p className={styles.heroBioLabel}>About the author</p>
+          <p>
+            Currently a Staff ML Engineer leading LLM inference optimization
+            for one of the most consequential AI systems in the world —
+            reaching hundreds of millions of users. Before that, spent nearly
+            a decade at <strong>AWS</strong> building and scaling core inference
+            infrastructure for <strong>SageMaker</strong> from its earliest
+            days. Founded <strong>Vipas.AI</strong>, an AI inference marketplace
+            that reached 25K daily visitors and received a VC term sheet.
+            Earlier career spans building large-scale distributed systems and
+            cloud infrastructure at Ericsson, Pegasystems, and global
+            enterprises. Holder of a USPTO-pending patent in dynamic
+            hierarchical storage and GPU optimization for LLM serving.
+          </p>
+        </div>
+
       </div>
     </div>
   );
 }
-
 
 function GuidesSection(): ReactNode {
   return (
@@ -132,9 +134,9 @@ function GuidesSection(): ReactNode {
         </div>
         <div className={styles.guidesGrid}>
           <GuideCard
-            tag="Field Guide · v1.0"
-            title="Sizing LLM Inference Systems at Scale"
-            description="A complete framework for GPU capacity planning: workload characterization, memory budgeting, roofline analysis, quantization, parallelism, batching, KV cache optimization, and a 13-step sizing algorithm. Written for engineers who need to produce a GPU count and cost estimate they can stand behind."
+            tag="Field Guide · v1.1"
+            title="Sizing LLM Inference for Production"
+            description="Inference is where AI infrastructure spend compounds indefinitely with usage growth. Most production LLM fleets are paying 2–3× what they need to — not from hardware limits, but from sizing decisions made without a disciplined framework. This guide covers the complete decision sequence: workload characterization, GPU memory sizing, parallelism strategy, KV cache optimization, and fleet sizing from the latency-throughput curve."
             pages="107"
             chapters="9"
             audience="Staff / Principal ML Engineers"
@@ -203,10 +205,10 @@ function WritingSection(): ReactNode {
             </Link>
           ))}
         </div>
-        <div style={{marginTop: '1.5rem'}}>
+        <div style={{ marginTop: '1.5rem' }}>
           <Link
             to="https://www.linkedin.com/in/vinayjayanna/recent-activity/articles/"
-            style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'13.5px', color:'var(--ifm-color-primary)', textDecoration:'none', fontWeight:600}}
+            style={{ fontFamily: 'Inter,system-ui,sans-serif', fontSize: '13.5px', color: 'var(--ifm-color-primary)', textDecoration: 'none', fontWeight: 600 }}
           >
             All articles on LinkedIn →
           </Link>
@@ -216,13 +218,12 @@ function WritingSection(): ReactNode {
   );
 }
 
-
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
   return (
     <Layout
       title={siteConfig.title}
-      description="Field guides on LLM inference systems and production ML infrastructure by Vinay Jayanna."
+      description="Technical field guides on LLM inference systems and production ML infrastructure by Vinay Jayanna — Staff ML Engineer."
     >
       <Hero />
       <main>
