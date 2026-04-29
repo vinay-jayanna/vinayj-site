@@ -149,7 +149,7 @@ const config: Config = {
           items: [
             {
               label: "LinkedIn Articles",
-              href: "https://linkedin.com/in/vinayjayanna",
+              href: "https://www.linkedin.com/in/vinayjayanna/recent-activity/articles/",
             },
             {
               label: "Substack",
