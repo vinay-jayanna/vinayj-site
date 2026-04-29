@@ -32,7 +32,7 @@ Inference is where AI infrastructure spend compounds indefinitely with usage gro
   <a href="/pdf/sizing-llm-inference-systems.pdf" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#FFFFFF', background:'#2563EB', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
     ↓ Download PDF (107 pages)
   </a>
-  <Link to="/sizing/why-inference-sizing" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#2563EB', background:'transparent', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
+  <Link to="/preface" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#2563EB', background:'transparent', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
     Read Online →
   </Link>
 </div>
