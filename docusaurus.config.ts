@@ -6,7 +6,7 @@ import type * as Plugin from "@docusaurus/types/src/plugin";
 const config: Config = {
   title: "Vinay Jayanna",
   tagline: "LLM Inference · ML Infrastructure · Distributed Systems",
-  favicon: "img/site/favicon.svg",          // ← was: img/favicon.svg
+  favicon: "img/site/favicon.svg", // ← was: img/favicon.svg
 
   url: "https://vinayj.com",
   baseUrl: "/",
@@ -28,7 +28,7 @@ const config: Config = {
       "classic",
       {
         docs: {
-          path: "content/sizing",            // ← was: docs
+          path: "content/sizing", // ← was: docs
           routeBasePath: "sizing",
           sidebarPath: "./sidebars-sizing.ts", // ← was: sidebars.ts
           showLastUpdateTime: true,
@@ -53,7 +53,7 @@ const config: Config = {
       "@docusaurus/plugin-content-docs",
       {
         id: "agentic",
-        path: "content/agentic",            // ← was: agentic
+        path: "content/agentic", // ← was: agentic
         routeBasePath: "agentic",
         sidebarPath: "./sidebars-agentic.ts",
         showLastUpdateTime: true,
@@ -89,6 +89,22 @@ const config: Config = {
         content:
           "LLM inference, GPU sizing, KV cache, quantization, parallelism, ML infrastructure, vLLM, TensorRT-LLM, RAG, agentic systems, production AI, vector database",
       },
+      // Open Graph — controls LinkedIn/Slack/X preview cards
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Vinay Jayanna" },
+      {
+        property: "og:image",
+        content: "https://vinayj.com/img/covers/sizing/cover-social-sizing.jpg",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      // Twitter/X card
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@vinayjayanna" },
+      {
+        name: "twitter:image",
+        content: "https://vinayj.com/img/covers/sizing/cover-social-sizing.jpg",
+      },
     ],
 
     colorMode: {
@@ -102,7 +118,7 @@ const config: Config = {
       hideOnScroll: false,
       logo: {
         alt: "Vinay Jayanna",
-        src: "img/site/logo.svg",            // ← was: img/logo.svg
+        src: "img/site/logo.svg", // ← was: img/logo.svg
       },
       items: [
         {
@@ -187,7 +203,14 @@ const config: Config = {
     prism: {
       theme: prismThemes.oneLight,
       darkTheme: prismThemes.oneDark,
-      additionalLanguages: ["bash", "python", "yaml", "json", "typescript", "docker"],
+      additionalLanguages: [
+        "bash",
+        "python",
+        "yaml",
+        "json",
+        "typescript",
+        "docker",
+      ],
     },
 
     docs: {
