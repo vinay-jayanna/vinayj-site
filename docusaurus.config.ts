@@ -23,12 +23,6 @@ const config: Config = {
     locales: ["en"],
   },
 
-  // Mermaid diagram support (free, built into Docusaurus)
-  markdown: {
-    mermaid: true,
-  },
-  themes: ["@docusaurus/theme-mermaid"],
-
   presets: [
     [
       "classic",
@@ -83,10 +77,6 @@ const config: Config = {
 
   themeConfig: {
     image: "img/site/docusaurus-social-card.jpg",
-
-    mermaid: {
-      theme: { light: "neutral", dark: "dark" },
-    },
 
     metadata: [
       {
