@@ -31,7 +31,7 @@ The memory impact is straightforward: FP16 to INT8 reduces weight memory by 50% 
 
 One important caveat: weight-only quantization captures the weight saving entirely but leaves KV cache and activation memory unchanged. At low concurrency this is sufficient - weights dominate the budget. At high concurrency with long context, KV cache grows to match or exceed weight memory, and weight-only quantization captures a shrinking fraction of the total saving. This is why KV cache quantization is a separate lever, covered in the next subsection.
 
-![Figure 4.1 - Model weight memory by precision format: Llama-3 70B](/img/figures/fig-4-1-model-weight-memory-by-precision.png)
+![Figure 4.1 - Model weight memory by precision format: Llama-3 70B](/img/sizing/fig-4-1-model-weight-memory-by-precision.png)
 
 <figcaption>
 

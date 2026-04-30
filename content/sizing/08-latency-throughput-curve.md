@@ -21,7 +21,7 @@ Operating beyond the knee is not just inefficient - it is unstable. Small increa
 
 The production operating point should sit to the left of the knee, with enough margin to absorb traffic spikes. How much margin depends on your traffic variability - a workload with predictable diurnal patterns needs less headroom than one with unpredictable burst events. Section 1's P95 vs average RPS guidance is directly relevant here: if your P95 RPS is 2.5× your average, your safe operating point must be at least 2.5× below the knee's RPS level.
 
-![Figure 8.1 - The latency-throughput curve: finding the knee](/img/figures/fig-8-1-latency-throughput-curve-knee.png)
+![Figure 8.1 - The latency-throughput curve: finding the knee](/img/sizing/fig-8-1-latency-throughput-curve-knee.png)
 
 <figcaption>
 
@@ -89,7 +89,7 @@ Add a safety buffer of 20-50% on top of the calculated capacity. This is not con
 
 **The failure mode to avoid.** The most common capacity planning mistake is sizing for average throughput - what the system delivers at P50 - rather than SLO-constrained throughput at `C_max`. The result is a system that looks healthy on dashboards, passes load tests at average traffic, and then violates P99 SLOs during peak hours - exactly when failures are most visible and most costly. The curve makes this failure mode visible before it reaches production. [Little's Law](https://en.wikipedia.org/wiki/Little%27s_law) gives you the sanity check to confirm your benchmark is actually telling you the truth about production conditions.
 
-![Figure 8.2 - SLO-constrained operating point: from benchmark to fleet size](/img/figures/fig-8-2-slo-constrained-operating-point.png)
+![Figure 8.2 - SLO-constrained operating point: from benchmark to fleet size](/img/sizing/fig-8-2-slo-constrained-operating-point.png)
 
 <figcaption>
 

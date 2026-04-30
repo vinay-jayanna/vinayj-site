@@ -17,7 +17,7 @@ PagedAttention fixes this by borrowing the virtual memory paging concept from op
 
 Block size is a configuration tradeoff worth understanding. Smaller blocks - 16 tokens - reduce internal fragmentation: a request generating 17 tokens wastes only 15 tokens of padding rather than a full slab. But smaller blocks mean larger block tables and higher metadata overhead per request. Larger blocks - 128 tokens - reduce metadata overhead but increase fragmentation for short requests. The default of 16 tokens is right for mixed workloads with variable output lengths. Increase block size only for workloads with consistently long outputs where fragmentation is negligible and metadata overhead becomes the binding cost.
 
-![Figure 7.1 - PagedAttention: contiguous allocation vs block allocation](/img/figures/fig-7-1-pagedattention-block-allocation.png)
+![Figure 7.1 - PagedAttention: contiguous allocation vs block allocation](/img/sizing/fig-7-1-pagedattention-block-allocation.png)
 
 <figcaption>
 
@@ -63,7 +63,7 @@ Prefix caching only delivers value if requests land on replicas that already hol
 
 Cache-aware routing restores locality by routing requests based on their prefix - so that repeated or similar inputs consistently land on the same replica. After the first request warms a replica's cache for a given prefix, every subsequent request for that prefix hits without recomputation. The 4K-token RAG context prefill is paid once and amortized across all subsequent requests. This is not a marginal improvement - it is the difference between a cache hit rate of ~25% under round-robin and ~90%+ under prefix-hash routing for workloads with high prefix overlap.
 
-![Figure 7.3 - Cache-aware routing: why round-robin kills your cache hit rate](/img/figures/fig-7-3-cache-aware-routing.png)
+![Figure 7.3 - Cache-aware routing: why round-robin kills your cache hit rate](/img/sizing/fig-7-3-cache-aware-routing.png)
 
 <figcaption>
 
@@ -129,7 +129,7 @@ Here is the cascade sequence. The KV cache fills. Eviction begins. Evicted activ
 
 **The practical threshold:** eviction rates above 5-10% of active requests per second indicate your KV cache budget is undersized for current traffic. Above 20%, eviction overhead is materially degrading throughput and latency. Treat this as a capacity signal - either provision more KV cache budget, apply more aggressive KV cache quantization, or reduce concurrent load.
 
-![Figure 7.4 - The KV cache memory pressure cascade](/img/figures/fig-7-4-kv-cache-memory-pressure-cascade.png)
+![Figure 7.4 - The KV cache memory pressure cascade](/img/sizing/fig-7-4-kv-cache-memory-pressure-cascade.png)
 
 <figcaption>
 

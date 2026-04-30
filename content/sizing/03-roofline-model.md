@@ -25,7 +25,7 @@ The [ridge point of the roofline](https://arxiv.org/html/2402.16363v4) is the ar
 
 For an [H100 SXM](https://www.nvidia.com/en-us/data-center/h100/): approximately `989 TFLOPS (TF32) / 3.35 TB/s = roughly 295 FLOP/byte`. Any operation above this threshold is compute-bound. Below it, memory bandwidth is the constraint. This single number is why prefill and decode require fundamentally different hardware thinking.
 
-![Figure 3.1 - The roofline model for H100 SXM](/img/figures/fig-3-1-roofline-model-h100.png)
+![Figure 3.1 - The roofline model for H100 SXM](/img/sizing/fig-3-1-roofline-model-h100.png)
 
 <figcaption>
 
@@ -45,7 +45,7 @@ Prefill lands well above the ridge point. Here is why. During prefill, the model
 
 The practical consequence is significant: prefill saturates GPU compute even at batch size 1. A single request with a 4K-token prompt will fully occupy the CUDA cores of an H100. Adding more concurrent prefill requests to the same batch does not meaningfully increase per-request throughput - the compute ceiling is already being hit. What you gain from batching prefill is amortization of the fixed overhead per forward pass, not escape from the bottleneck. This means prefill throughput scales with TFLOPS, not with batching strategy. The lever for higher prefill RPS is faster compute - either a higher-TFLOPS GPU or, for very large deployments, dedicated prefill instances separated from decode. This is the architectural motivation for prefill-decode disaggregation, covered in subsequent sections.
 
-![Figure 3.2 - Prefill: large matrix × large matrix](/img/figures/fig-3-2-prefill-matrix-multiply.png)
+![Figure 3.2 - Prefill: large matrix × large matrix](/img/sizing/fig-3-2-prefill-matrix-multiply.png)
 
 <figcaption>
 
@@ -65,7 +65,7 @@ Decode is structurally the opposite problem. If prefill is the GPU doing too muc
 
 The arithmetic intensity of this operation is extremely low. You are moving hundreds of gigabytes of weight data through the memory bus to perform a trivially small amount of arithmetic on it - one token's worth of computation per multi-gigabyte weight matrix. The compute units finish their work almost instantly and then wait for the next chunk of weights to arrive from HBM. The GPU is not doing math most of the time. It is waiting for memory.
 
-![Figure 3.3 - Decode: large matrix × single vector](/img/figures/fig-3-3-decode-matrix-vector.png)
+![Figure 3.3 - Decode: large matrix × single vector](/img/sizing/fig-3-3-decode-matrix-vector.png)
 
 <figcaption>
 
@@ -81,7 +81,7 @@ For decode-dominated workloads - code generation, long-form content creation, ex
 
 The roofline chart makes the contrast unavoidable. Placing both operating points on the same axes shows not just that prefill and decode are different - it shows *how* different, and why the gap cannot be closed by any single hardware choice or software optimization.
 
-![Figure 3.3.2 - Prefill and decode operating points on the H100 roofline](/img/figures/fig-3-3-2-prefill-decode-operating-points.png)
+![Figure 3.3.2 - Prefill and decode operating points on the H100 roofline](/img/sizing/fig-3-3-2-prefill-decode-operating-points.png)
 
 <figcaption>
 
@@ -103,7 +103,7 @@ The mechanism is straightforward. Every decode step requires loading the full we
 
 The practical consequence is substantial. At `batch=1` on a Llama-3 70B FP8 on H100, decode throughput is approximately 80 tokens per second - the memory bus is working at capacity but producing almost nothing because the compute units are nearly idle. At `batch=128`, throughput reaches approximately 4,700 tokens per second - roughly 60× higher - with the same weight-loading cost per step. The ceiling is a hardware limit, not a configuration limit. Once HBM bandwidth is fully saturated, no software optimization pushes the curve higher.
 
-![Figure 3.4 - Decode throughput vs batch size (Llama-3 70B FP8, H100 SXM)](/img/figures/fig-3-4-decode-throughput-vs-batch-size.png)
+![Figure 3.4 - Decode throughput vs batch size (Llama-3 70B FP8, H100 SXM)](/img/sizing/fig-3-4-decode-throughput-vs-batch-size.png)
 
 <figcaption>
 

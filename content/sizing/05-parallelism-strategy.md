@@ -17,7 +17,7 @@ The benefit is lower latency: each layer's compute is distributed, reducing per-
 
 The cost is communication. Each layer requires an all-reduce across GPUs, making [interconnect bandwidth](https://developer.nvidia.com/blog/scaling-deep-learning-training-nccl/#inter-node_performance) critical. On [NVLink (~900 GB/s)](https://developer.nvidia.com/blog/nvidia-hopper-architecture-in-depth/), this overhead is modest; on PCIe (~128 GB/s), it can consume 20-30% of step time, significantly reducing the gains. In practice, TP above 2 without NVLink rarely delivers the expected improvement and often makes things worse.
 
-![Figure 5.1 - Tensor parallelism (TP=4): one transformer layer](/img/figures/fig-5-1-tensor-parallelism-tp4.png)
+![Figure 5.1 - Tensor parallelism (TP=4): one transformer layer](/img/sizing/fig-5-1-tensor-parallelism-tp4.png)
 
 <figcaption>
 
@@ -45,7 +45,7 @@ The fundamental problem with PP for online serving is pipeline bubbles. When a r
 
 where m is the number of micro-batches. To halve the bubble fraction at `PP=4`, you need to roughly double the micro-batch count - which means holding twice as many micro-batches worth of activations in memory simultaneously. The memory cost of bubble reduction is real and must be factored into your sizing.
 
-![Figure 5.2 - Pipeline parallelism (PP=4): the bubble problem](/img/figures/fig-5-2-pipeline-parallelism-bubble.png)
+![Figure 5.2 - Pipeline parallelism (PP=4): the bubble problem](/img/sizing/fig-5-2-pipeline-parallelism-bubble.png)
 
 <figcaption>
 
@@ -93,7 +93,7 @@ In every parallelism strategy covered so far, every parameter participates in ev
 
 The engineering challenge is routing overhead: tokens must be dispatched to the correct expert GPU, which requires fast all-to-all communication across the expert GPU pool. [Wide Expert Parallelism (Wide-EP)](https://developer.nvidia.com/blog/scaling-large-moe-models-with-wide-expert-parallelism-on-nvl72-rack-scale-systems/), implemented in TensorRT-LLM, scales this to very large expert pools and has demonstrated [1.8x higher per-GPU](https://developer.nvidia.com/blog/scaling-large-moe-models-with-wide-expert-parallelism-on-nvl72-rack-scale-systems/) throughput than smaller EP setups on an NVL72 system. Wide-EP works because NVL72's 72-GPU NVLink domain provides the all-to-all bandwidth density needed to keep routing latency from dominating - on systems without this interconnect density, Wide-EP's gains shrink significantly. For MoE models at scale, EP is not optional - it is the mechanism that makes the economics viable.
 
-![Figure 5.4 - Expert parallelism: MoE token routing across GPU pool](/img/figures/fig-5-4-expert-parallelism-moe-routing.png)
+![Figure 5.4 - Expert parallelism: MoE token routing across GPU pool](/img/sizing/fig-5-4-expert-parallelism-moe-routing.png)
 
 <figcaption>
 
@@ -157,7 +157,7 @@ Within a [DGX or HGX H100](https://developer.nvidia.com/blog/introducing-nvidia-
 
 The practical decision rule: `TP=2` is acceptable on PCIe when NVLink is unavailable. `TP=4` on PCIe should be benchmarked carefully against `TP=2` before committing - the theoretical 2× compute benefit rarely survives the communication overhead in practice. `TP=8` on PCIe is almost never worth deploying except for the most compute-bound prefill workloads where the arithmetic intensity is high enough to tolerate the communication tax.
 
-![Figure 5.6 - NVLink vs PCIe: interconnect bandwidth and all-reduce overhead](/img/figures/fig-5-6-nvlink-vs-pcie-bandwidth.png)
+![Figure 5.6 - NVLink vs PCIe: interconnect bandwidth and all-reduce overhead](/img/sizing/fig-5-6-nvlink-vs-pcie-bandwidth.png)
 
 <figcaption>
 

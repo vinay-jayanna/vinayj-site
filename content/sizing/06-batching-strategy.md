@@ -49,7 +49,7 @@ Think of the GPU batch as a shared highway lane. The scheduler decides who gets 
 
 SLO-aware scheduling requires estimating each request's remaining generation time - which is non-trivial since output length is not known at admission in autoregressive generation. Production implementations use either output length predictors trained on historical workload distributions, or conservative deadline tracking based on worst-case output length assumptions. The prediction accuracy directly affects scheduling quality - a poor output length estimator degrades SLO-aware scheduling toward FCFS behavior in practice.
 
-![Figure 6.2 - The four scheduler policies: same three requests, four different outcomes](/img/figures/fig-6-2-four-scheduler-policies.png)
+![Figure 6.2 - The four scheduler policies: same three requests, four different outcomes](/img/sizing/fig-6-2-four-scheduler-policies.png)
 
 <figcaption>
 
@@ -69,7 +69,7 @@ The scheduler policies govern how requests compete for the batch. Continuous bat
 
 The fix - first formalized in the [Orca research paper (OSDI 2022)](https://www.usenix.org/conference/osdi22/presentation/yu) and now implemented in every serious framework under different names - is iteration-level scheduling. After every single forward pass, completed requests are evicted and new ones are admitted immediately. The GPU stays continuously occupied rather than waiting for the slowest request in each group to finish. vLLM calls it [continuous batching](https://www.anyscale.com/blog/continuous-batching-llm-inference). TensorRT-LLM calls it [in-flight batching](https://developer.nvidia.com/blog/nvidia-tensorrt-llm-now-accelerates-encoder-decoder-models-with-in-flight-batching/). SGLang and TGI use the same mechanism under their own implementations. The concept is identical across all of them.
 
-![Figure 6.3 - Static batching vs continuous batching: GPU slot utilization](/img/figures/fig-6-3-static-vs-continuous-batching.png)
+![Figure 6.3 - Static batching vs continuous batching: GPU slot utilization](/img/sizing/fig-6-3-static-vs-continuous-batching.png)
 
 <figcaption>
 
@@ -101,7 +101,7 @@ This works because of the roofline insight from earlier sections applied directl
 
 Think of it like a highway where a single articulated truck - a full 16K prefill - used to block all traffic for 300-500ms every time it entered the road. Chunked prefill breaks that truck into a convoy of smaller vehicles. Each segment takes its turn in the shared flow of traffic, and the motorcycles (decode steps) keep moving between each segment. The road is still shared - nobody gets their own lane. But no single vehicle monopolizes it long enough to cause a visible stall. That separation into dedicated lanes is what disaggregation in the next section actually does.
 
-![Figure 6.4 - Chunked prefill: ITL stability and GPU utilization](/img/figures/fig-6-4-chunked-prefill-itl-stability.png)
+![Figure 6.4 - Chunked prefill: ITL stability and GPU utilization](/img/sizing/fig-6-4-chunked-prefill-itl-stability.png)
 
 <figcaption>
 
@@ -153,7 +153,7 @@ Now flip it: a 200-token prompt generates only ~16 MB of KV cache - transfer tim
 
 [Llm-d](https://llm-d.ai/docs/guide/Installation/pd-disaggregation) (a Kubernetes-native LLM serving infrastructure project) and [NVIDIA Dynamo](https://developer.nvidia.com/blog/scaling-large-moe-models-with-wide-expert-parallelism-on-nvl72-rack-scale-systems/) (NVIDIA's production disaggregated serving runtime) both implement cache-aware routing: where possible, requests are sent to decode instances that already hold relevant prefix cache entries, avoiding redundant KV transfers for workloads with shared system prompts or repeated context.
 
-![Figure 6.5 - Disaggregated prefill-decode architecture](/img/figures/fig-6-5-disaggregated-prefill-decode.png)
+![Figure 6.5 - Disaggregated prefill-decode architecture](/img/sizing/fig-6-5-disaggregated-prefill-decode.png)
 
 <figcaption>
 
@@ -183,7 +183,7 @@ The gain is not that the forward pass gets cheaper - the target model still load
 
 **Acceptance rate is the critical variable.** If the draft model's token distribution closely matches the target model's, acceptance rates of 70-90% per token are achievable, yielding 2-4× speedups on latency-sensitive workloads. If the draft model is poorly matched to the domain or the target model's distribution, acceptance rates drop and speculative decoding becomes slower than vanilla autoregressive generation - you pay the overhead of running the draft model without the benefit. Always measure acceptance rate in production; it is the metric that tells you whether speculative decoding is helping or hurting.
 
-![Figure 6.6 - Speculative decoding: mechanism and HBM amortization](/img/figures/fig-6-6-speculative-decoding-mechanism.png)
+![Figure 6.6 - Speculative decoding: mechanism and HBM amortization](/img/sizing/fig-6-6-speculative-decoding-mechanism.png)
 
 <figcaption>
 

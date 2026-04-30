@@ -10,13 +10,13 @@ import Link from '@docusaurus/Link';
 
 <div style={{display:'flex', gap:'1.25rem', alignItems:'flex-end', margin:'0 0 2.5rem 0', flexWrap:'wrap'}}>
   <a href="/pdf/sizing-llm-inference-systems.pdf" target="_blank" rel="noopener noreferrer" title="Download the full field guide PDF">
-    <img src="/img/covers/cover-front.png" alt="Sizing LLM Inference for Production - Cover" style={{width:'195px', borderRadius:'8px', boxShadow:'0 20px 48px rgba(0,0,0,0.45)', border:'none', display:'block', cursor:'pointer'}} />
+    <img src="/img/covers/sizing/cover-front.png" alt="Sizing LLM Inference for Production - Cover" style={{width:'195px', borderRadius:'8px', boxShadow:'0 20px 48px rgba(0,0,0,0.45)', border:'none', display:'block', cursor:'pointer'}} />
   </a>
-  <a href="/img/covers/cover-contents.png" target="_blank" rel="noopener noreferrer" title="What's inside">
-    <img src="/img/covers/cover-contents.png" alt="What's Inside" style={{width:'158px', borderRadius:'8px', boxShadow:'0 14px 36px rgba(0,0,0,0.3)', border:'none', display:'block', cursor:'pointer'}} />
+  <a href="/img/covers/sizing/cover-contents.png" target="_blank" rel="noopener noreferrer" title="What's inside">
+    <img src="/img/covers/sizing/cover-contents.png" alt="What's Inside" style={{width:'158px', borderRadius:'8px', boxShadow:'0 14px 36px rgba(0,0,0,0.3)', border:'none', display:'block', cursor:'pointer'}} />
   </a>
-  <a href="/img/covers/cover-author.png" target="_blank" rel="noopener noreferrer" title="About the author">
-    <img src="/img/covers/cover-author.png" alt="About the Author" style={{width:'158px', borderRadius:'8px', boxShadow:'0 14px 36px rgba(0,0,0,0.3)', border:'none', display:'block', cursor:'pointer'}} />
+  <a href="/img/covers/sizing/cover-author.png" target="_blank" rel="noopener noreferrer" title="About the author">
+    <img src="/img/covers/sizing/cover-author.png" alt="About the Author" style={{width:'158px', borderRadius:'8px', boxShadow:'0 14px 36px rgba(0,0,0,0.3)', border:'none', display:'block', cursor:'pointer'}} />
   </a>
 </div>
 
@@ -32,7 +32,7 @@ Inference is where AI infrastructure spend compounds indefinitely with usage gro
   <a href="/pdf/sizing-llm-inference-systems.pdf" target="_blank" rel="noopener noreferrer" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#FFFFFF', background:'#2563EB', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
     ↓ Download PDF (107 pages)
   </a>
-  <Link to="/preface" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#2563EB', background:'transparent', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
+  <Link to="/sizing/preface" style={{display:'inline-flex', alignItems:'center', gap:'0.4rem', fontFamily:'Inter,system-ui,sans-serif', fontSize:'14px', fontWeight:'600', color:'#2563EB', background:'transparent', border:'2px solid #2563EB', borderRadius:'6px', padding:'0.6rem 1.25rem', textDecoration:'none'}}>
     Read Online →
   </Link>
 </div>

@@ -23,7 +23,7 @@ The formula is simple. The difficulty is that three of the four terms are functi
 
 To make this concrete, consider Llama-3 70B - one of the most commonly deployed frontier-class models - at 50 concurrent requests with 8K context. The numbers are representative of what a real production sizing exercise produces. Here is what the four components actually produce:
 
-![Figure 2.1 - GPU memory breakdown: FP16 vs FP8 for Llama-3 70B](/img/figures/fig-2-1-gpu-memory-breakdown-fp16-fp8.png)
+![Figure 2.1 - GPU memory breakdown: FP16 vs FP8 for Llama-3 70B](/img/sizing/fig-2-1-gpu-memory-breakdown-fp16-fp8.png)
 
 <figcaption>
 
@@ -96,7 +96,7 @@ At a typical production load of 50 concurrent requests with 8K-token inputs, tha
 
 Now extend the context. At 32K tokens the KV cache grows to 416 GB at the same concurrency - three times the model weights. At 128K context, just 4 concurrent requests push KV cache past model weights entirely. The diagram below makes this viscerally clear: short-context workloads stay manageable, but as context length grows the KV cache stops being overhead and becomes the dominant memory consumer in the system.
 
-![Figure 2.2 - KV cache memory vs concurrency for Llama-3 70B (FP16)](/img/figures/fig-2-2-kv-cache-memory-vs-concurrency.png)
+![Figure 2.2 - KV cache memory vs concurrency for Llama-3 70B (FP16)](/img/sizing/fig-2-2-kv-cache-memory-vs-concurrency.png)
 
 <figcaption>
 
@@ -130,7 +130,7 @@ The historical problem was severe. In standard attention, every token must atten
 
 The memory consequence is that activation scaling drops from `O(seq²)` to approximately `O(seq)` - linear rather than quadratic. Doubling context length roughly doubles activation memory rather than quadrupling it. This is what makes 32K and 128K context workloads operationally viable on real hardware.
 
-![Figure 2.3 - Standard attention vs FlashAttention memory model](/img/figures/fig-2-3-standard-vs-flashattention.png)
+![Figure 2.3 - Standard attention vs FlashAttention memory model](/img/sizing/fig-2-3-standard-vs-flashattention.png)
 
 <figcaption>
 
@@ -180,7 +180,7 @@ Most production deployments use `r=8` to `r=64`. Crucially, only the adapters fo
 
 **The failure mode teams hit in production.** A deployment serving 100 LoRA adapters assumes adapter memory is negligible because each adapter is small. Under bursty traffic, requests for many distinct adapters arrive simultaneously, all 100 adapters get loaded into GPU memory concurrently, and the deployment OOMs - not because of the base model or KV cache, but because of adapter accumulation. The fix is to cap `max_simultaneous_adapters` in your serving configuration and implement LRU eviction for inactive adapters.
 
-![Figure 2.5 - Multi-LoRA serving memory architecture](/img/figures/fig-2-5-multi-lora-serving-memory.png)
+![Figure 2.5 - Multi-LoRA serving memory architecture](/img/sizing/fig-2-5-multi-lora-serving-memory.png)
 
 <figcaption>
 

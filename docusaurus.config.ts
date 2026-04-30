@@ -6,7 +6,7 @@ import type * as Plugin from "@docusaurus/types/src/plugin";
 const config: Config = {
   title: "Vinay Jayanna",
   tagline: "LLM Inference · ML Infrastructure · Distributed Systems",
-  favicon: 'img/favicon.svg',
+  favicon: "img/site/favicon.svg",          // ← was: img/favicon.svg
 
   url: "https://vinayj.com",
   baseUrl: "/",
@@ -23,14 +23,20 @@ const config: Config = {
     locales: ["en"],
   },
 
+  // Mermaid diagram support (free, built into Docusaurus)
+  markdown: {
+    mermaid: true,
+  },
+  themes: ["@docusaurus/theme-mermaid"],
+
   presets: [
     [
       "classic",
       {
         docs: {
-          path: "docs",
+          path: "content/sizing",            // ← was: docs
           routeBasePath: "sizing",
-          sidebarPath: "./sidebars.ts",
+          sidebarPath: "./sidebars-sizing.ts", // ← was: sidebars.ts
           showLastUpdateTime: true,
           showLastUpdateAuthor: false,
           breadcrumbs: true,
@@ -53,7 +59,7 @@ const config: Config = {
       "@docusaurus/plugin-content-docs",
       {
         id: "agentic",
-        path: "agentic",
+        path: "content/agentic",            // ← was: agentic
         routeBasePath: "agentic",
         sidebarPath: "./sidebars-agentic.ts",
         showLastUpdateTime: true,
@@ -62,21 +68,36 @@ const config: Config = {
         editUrl: undefined,
       } satisfies Plugin.PluginOptions,
     ],
+    // Future field guides follow the same pattern:
+    // [
+    //   "@docusaurus/plugin-content-docs",
+    //   {
+    //     id: "platform",
+    //     path: "content/platform",
+    //     routeBasePath: "platform",
+    //     sidebarPath: "./sidebars-platform.ts",
+    //     ...
+    //   }
+    // ],
   ],
 
   themeConfig: {
-    image: "img/social-card.png",
+    image: "img/site/docusaurus-social-card.jpg",
+
+    mermaid: {
+      theme: { light: "neutral", dark: "dark" },
+    },
 
     metadata: [
       {
         name: "description",
         content:
-          "Field guides on LLM inference systems and production ML infrastructure by Vinay Jayanna — Staff ML Engineer, AWS SageMaker founding team.",
+          "Field guides on LLM inference, production RAG, and agentic systems by Vinay Jayanna — Staff ML Engineer, AWS SageMaker founding team.",
       },
       {
         name: "keywords",
         content:
-          "LLM inference, GPU sizing, KV cache, quantization, parallelism, ML infrastructure, vLLM, TensorRT-LLM",
+          "LLM inference, GPU sizing, KV cache, quantization, parallelism, ML infrastructure, vLLM, TensorRT-LLM, RAG, agentic systems, production AI, vector database",
       },
     ],
 
@@ -91,7 +112,7 @@ const config: Config = {
       hideOnScroll: false,
       logo: {
         alt: "Vinay Jayanna",
-        src: "img/logo.svg",
+        src: "img/site/logo.svg",            // ← was: img/logo.svg
       },
       items: [
         {
@@ -103,11 +124,10 @@ const config: Config = {
               to: "/sizing",
             },
             {
-              label: "Agentic Systems in Production",
+              label: "Production RAG and Agentic Systems",
               to: "/agentic",
-              // Remove this line when guide 2 is ready:
-              className: "navbar-item-coming-soon",
             },
+            // Add future guides here
           ],
         },
         {
@@ -135,11 +155,11 @@ const config: Config = {
           title: "Field Guides",
           items: [
             {
-              label: "Sizing LLM Inference Systems at Scale",
+              label: "Sizing LLM Inference for Production",
               to: "/sizing",
             },
             {
-              label: "Agentic Systems in Production",
+              label: "Production RAG and Agentic Systems",
               to: "/agentic",
             },
           ],
@@ -177,14 +197,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.oneLight,
       darkTheme: prismThemes.oneDark,
-      additionalLanguages: [
-        "bash",
-        "python",
-        "yaml",
-        "json",
-        "typescript",
-        "docker",
-      ],
+      additionalLanguages: ["bash", "python", "yaml", "json", "typescript", "docker"],
     },
 
     docs: {

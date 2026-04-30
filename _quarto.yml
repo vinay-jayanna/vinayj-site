@@ -1,0 +1,58 @@
+project:
+  type: book
+  output-dir: _quarto-output
+
+book:
+  title: "Production RAG and Agentic Systems"
+  subtitle: "An Engineering Field Guide"
+  author: "Vinay Jayanna"
+  date: "2026"
+
+  chapters:
+    - content/agentic/index.md
+    - content/agentic/why-rag-agentic-hard.md
+    - content/agentic/01-first-principles.md
+    - content/agentic/02-embedding-models.md
+    - content/agentic/03-vector-database.md
+    - content/agentic/04-chunking-context.md
+    - content/agentic/05-hybrid-search.md
+    - content/agentic/06-rag-architectures.md
+    - content/agentic/07-rag-evaluation.md
+    - content/agentic/08-rag-cost-latency.md
+    - content/agentic/09-rag-security.md
+    - content/agentic/10-agent-fundamentals.md
+    - content/agentic/11-tool-design.md
+    - content/agentic/12-memory-state.md
+    - content/agentic/13-multi-agent.md
+    - content/agentic/14-latency-cost.md
+    - content/agentic/15-agentic-security.md
+    - content/agentic/16-observability.md
+    - content/agentic/17-continuous-improvement.md
+    - content/agentic/18-guardrails.md
+    - content/agentic/19-sizing.md
+
+format:
+  pdf:
+    documentclass: scrbook
+    classoption: [11pt, twoside, openright]
+    papersize: letter
+    margin-left: 1.25in
+    margin-right: 1in
+    margin-top: 1in
+    margin-bottom: 1in
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    colorlinks: true
+    linkcolor: "2563EB"
+    urlcolor: "2563EB"
+    include-in-header:
+      text: |
+        \usepackage{fontspec}
+        \setmainfont{Source Serif 4}[Ligatures=TeX]
+        \setsansfont{Inter}[Ligatures=TeX]
+        \setmonofont{JetBrains Mono}
+
+execute:
+  echo: false
+  warning: false

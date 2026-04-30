@@ -22,7 +22,7 @@ On precision: neural network weights can be stored at different levels of numeri
 
 **Online streaming or offline batch?** These are not different points on the same spectrum \- they are fundamentally different optimization targets that call for different architectures entirely.
 
-![Figure 1.1 - Request lifecycle: TTFT, ITL, and end-to-end latency](/img/figures/fig-1-1-request-lifecycle-ttft-itl.png)
+![Figure 1.1 - Request lifecycle: TTFT, ITL, and end-to-end latency](/img/sizing/fig-1-1-request-lifecycle-ttft-itl.png)
 
 <figcaption>
 
@@ -52,7 +52,7 @@ Not all LLM workloads stress the system the same way. There are four distinct ar
 
 **Agentic and multi-step workflows** \- the archetype that breaks every simple sizing model. A single user action triggers a chain of sequential LLM calls: planning, tool invocation, result interpretation, re-planning. Context accumulates across turns. Total token consumption per user session is an order of magnitude higher than a single-turn interaction. The challenge here is not peak RPS in the traditional sense \- it is sustained GPU occupancy across a session with variable-length, dependent calls. Sizing for agentic workloads requires modeling the entire session token budget, not just individual request characteristics.
 
-![Figure 1.2 - Four workload archetypes: input/output length determines your bottleneck](/img/figures/fig-1-2-four-workload-archetypes.png)
+![Figure 1.2 - Four workload archetypes: input/output length determines your bottleneck](/img/sizing/fig-1-2-four-workload-archetypes.png)
 
 <figcaption>
 
@@ -68,7 +68,7 @@ Production traffic is bursty. The [Poisson distribution](https://www.geeksforgee
 
 A representative enterprise deployment illustrates how badly this plays out in practice. At an average of 65 requests per second, the P95 peak is 160 RPS \- roughly 2.5× the mean, and P99 reaches 180 RPS. The overnight trough pulls the daily average down significantly while the business hours peaks drive the actual capacity requirement. Sizing for the average means your fleet is undersized for approximately 8 hours every working day.
 
-![Figure 1.3 - Real enterprise traffic over 24 hours](/img/figures/fig-1-3-enterprise-traffic-24hrs.png)
+![Figure 1.3 - Real enterprise traffic over 24 hours](/img/sizing/fig-1-3-enterprise-traffic-24hrs.png)
 
 <figcaption>
 
