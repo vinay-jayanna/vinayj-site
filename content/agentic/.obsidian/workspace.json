@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "why-rag-agentic-hard.md",
+                "file": "index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "why-rag-agentic-hard"
+              "title": "index"
             }
           }
         ]
@@ -184,5 +184,7 @@
     }
   },
   "active": "e0c9d3a847298d11",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "why-rag-agentic-hard.md"
+  ]
 }
