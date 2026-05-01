@@ -1,0 +1,188 @@
+{
+  "main": {
+    "id": "a19f386ad5e4264e",
+    "type": "split",
+    "children": [
+      {
+        "id": "80af360a0a6be60b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e0c9d3a847298d11",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "why-rag-agentic-hard.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "why-rag-agentic-hard"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "ffa542dd54ee49d4",
+    "type": "split",
+    "children": [
+      {
+        "id": "f0eec4df0d95c431",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b827ea9ad08ba2fa",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "72b5d7c0b3645d3f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "69c24795c6166c66",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "414ca531f78f7b18",
+    "type": "split",
+    "children": [
+      {
+        "id": "b19abda77daa62e5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ac0969d6a3badd9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "why-rag-agentic-hard.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for why-rag-agentic-hard"
+            }
+          },
+          {
+            "id": "38b3915df12e2ffa",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "why-rag-agentic-hard.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from why-rag-agentic-hard"
+            }
+          },
+          {
+            "id": "fa5989f4e828e43b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "bf2fb7e1f6eb583e",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "f3462431777f773e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "why-rag-agentic-hard.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of why-rag-agentic-hard"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "e0c9d3a847298d11",
+  "lastOpenFiles": []
+}

@@ -6,19 +6,19 @@ slug: /
 
 import Link from '@docusaurus/Link';
 
-<p style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'12px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.1em', color:'#2563EB', marginBottom:'0.75rem'}}>Field Guide · In Progress · 2026</p>
+<p style={{fontFamily:'Inter,system-ui,sans-serif', fontSize:'12px', fontWeight:'700', textTransform:'uppercase', letterSpacing:'0.1em', color:'#2563EB', marginBottom:'0.75rem'}}>Engineering Handbook · In Progress · 2026</p>
 
 # Agentic Systems in Production
 
 <p style={{fontFamily:"'Source Serif 4',Georgia,serif", fontSize:'1.15rem', color:'var(--ifm-color-content-secondary)', lineHeight:'1.65', maxWidth:'640px', margin:'0.5rem 0 1.75rem'}}>
-A Field Guide to Reliability, Observability, and Scale
+An Engineering Handbook for Reliability, Observability, and Scale
 </p>
 
 *By Vinay Jayanna — Staff ML Engineer, LLM Inference and GenAI Platform*
 
 ---
 
-Most RAG and agentic systems work in demos. This guide is about the ones that have to work at 3am, under load, across tenants, with real money on the line.
+Most RAG and agentic systems work in demos. This handbook is about the ones that have to work at 3am, under load, across tenants, with real money on the line.
 
 Every chapter is written for engineers who hold the pager — Principal and Staff ML Engineers building systems that serve tens of thousands of queries per day, where a non-deterministic loop going wrong, a retrieval pipeline going stale, or an agent exceeding its cost budget has real consequences.
 
@@ -28,7 +28,7 @@ PDF available on publication. The web version is the live, versioned edition.
 
 ---
 
-## What This Guide Covers
+## What This Engineering Handbook Covers
 
 **Part I — The Production Landscape** establishes the failure taxonomy and the infrastructure entry point. Non-determinism as a first-class engineering problem. The LLM gateway as the foundation everything else depends on.
 
@@ -48,7 +48,7 @@ PDF available on publication. The web version is the live, versioned edition.
 - Platform engineers designing the infrastructure layer these workloads run on
 - Tech leads making architecture decisions for AI products at scale
 
-This guide assumes working knowledge of LLM inference, distributed systems, and production ML operations. It does not explain what a transformer is. It does not explain what an agent is.
+This handbook assumes working knowledge of LLM inference, distributed systems, and production ML operations. It does not explain what a transformer is. It does not explain what an agent is.
 
 ---
 
