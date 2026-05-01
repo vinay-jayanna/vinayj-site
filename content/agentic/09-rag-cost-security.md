@@ -1,5 +1,5 @@
 ---
-id: 10-rag-cost-security
+id: 09-rag-cost-security
 title: "RAG Cost, Latency, and Security"
 ---
 

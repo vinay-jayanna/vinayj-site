@@ -1,5 +1,5 @@
 ---
-id: 09-rag-evaluation
+id: 08-rag-evaluation
 title: "RAG Evaluation: Metrics That Survive Production"
 ---
 

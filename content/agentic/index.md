@@ -34,9 +34,9 @@ PDF available on publication. The web version is the live, versioned edition.
 
 **Part II - High-Throughput Retrieval** covers the full retrieval stack at production scale: embedding models, vector database internals and real-time indexing, document pipeline reliability, context engineering as a managed resource, and hybrid search with semantic caching.
 
-**Part III - RAG System Design** covers production failure modes and architecture patterns, the agentic RAG loop and its compounding failure modes, evaluation harnesses, and the cost, latency, and security concerns that multi-tenant RAG creates.
+**Part III - RAG System Design** covers production failure modes and architecture patterns, evaluation harnesses that catch regressions, and the cost, latency, and security concerns that multi-tenant RAG creates.
 
-**Part IV - Agentic System Design** covers agent loop architecture starting at state machines, tool design and the MCP protocol layer, memory and state management, multi-agent orchestration and failure isolation, and the cost and security concerns unique to agentic systems.
+**Part IV - Agentic System Design** opens with the Agentic RAG loop as the bridge between retrieval and agency, then covers agent loop architecture starting at state machines, tool design and the MCP protocol layer, memory and state management, multi-agent orchestration and failure isolation, and the cost and security concerns unique to agentic systems.
 
 **Part V - Reliability and Governance** covers DAG-based observability for non-deterministic systems, deterministic testing and agentic CI/CD, continuous improvement pipelines, and production guardrails with the full-stack sizing algorithm.
 
@@ -64,9 +64,9 @@ This handbook assumes working knowledge of LLM inference, distributed systems, a
 | 5   | [Context Engineering: Budget, Assembly, and Governance](/agentic/05-context-engineering)         | Context window as a managed resource, long context vs. RAG trade-off, budget enforcement, provenance, multi-tenant isolation |
 | 6   | [Hybrid Search, Query Routing, and Semantic Caching](/agentic/06-hybrid-search)                  | Sparse+dense fusion, semantic cache, COGS reduction                                                                          |
 | 7   | [RAG Architectures: Production Failure Modes and Design Patterns](/agentic/07-rag-architectures) | Failure taxonomy, modular RAG, GraphRAG, decision framework                                                                  |
-| 8   | [Agentic RAG: When Retrieval and Agency Interleave](/agentic/08-agentic-rag)                     | Retrieve→reason→rewrite loops, compounding failures, stopping conditions                                                     |
-| 9   | [RAG Evaluation: Metrics That Survive Production](/agentic/09-rag-evaluation)                    | RAGAS, eval pipelines, CI regression guards                                                                                  |
-| 10  | [RAG Cost, Latency, and Security](/agentic/10-rag-cost-security)                                 | End-to-end latency decomposition, token budgets, caching layers, multi-tenant access control, adversarial retrieval          |
+| 8   | [RAG Evaluation: Metrics That Survive Production](/agentic/08-rag-evaluation)                    | RAGAS, eval pipelines, CI regression guards                                                                                  |
+| 9   | [RAG Cost, Latency, and Security](/agentic/09-rag-cost-security)                                 | End-to-end latency decomposition, token budgets, caching layers, multi-tenant access control, adversarial retrieval          |
+| 10  | [Agentic RAG: When Retrieval and Agency Interleave](/agentic/10-agentic-rag)                     | Retrieve→reason→rewrite loops, compounding failures, stopping conditions                                                     |
 | 11  | [Agent Loop Design: State Machines, Re-planning, and Failure Isolation](/agentic/11-agent-loops) | State machines, re-planning, non-termination, runaway loop prevention                                                        |
 | 12  | [Tool Design, MCP, and the Agentic Protocol Layer](/agentic/12-tool-mcp)                         | MCP production infrastructure, OWASP MCP Top 10, OAuth 2.1, tool poisoning                                                   |
 | 13  | [Memory, State, and Context Across Agent Turns](/agentic/13-memory-state)                        | Memory architectures, state machines, eviction, session recovery                                                             |

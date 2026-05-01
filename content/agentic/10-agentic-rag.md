@@ -1,5 +1,5 @@
 ---
-id: 08-agentic-rag
+id: 10-agentic-rag
 title: "Agentic RAG: When Retrieval and Agency Interleave"
 ---
 
