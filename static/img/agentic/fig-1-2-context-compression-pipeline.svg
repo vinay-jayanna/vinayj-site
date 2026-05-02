@@ -1,0 +1,123 @@
+<svg viewBox="0 0 680 820" xmlns="http://www.w3.org/2000/svg" font-family="Inter, system-ui, sans-serif">
+
+  <!-- Background -->
+  <rect width="680" height="820" fill="#0D1117" rx="12"/>
+
+  <!-- Title -->
+  <text x="340" y="38" text-anchor="middle" font-size="14" font-weight="600" fill="#E2E8F0" letter-spacing="0.05em">CONTEXT COMPRESSION PIPELINE</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4ADE80"/>
+    </marker>
+    <marker id="arrow-amber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#F59E0B"/>
+    </marker>
+  </defs>
+
+  <!-- ── STEP 1: Retrieved Chunks ── -->
+  <rect x="190" y="58" width="300" height="56" rx="8" fill="#1E293B" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="340" y="80" text-anchor="middle" font-size="12" font-weight="600" fill="#93C5FD">Retrieved Chunks</text>
+  <text x="340" y="97" text-anchor="middle" font-size="11" fill="#64748B">with relevance scores from retrieval layer</text>
+  <!-- score badges -->
+  <rect x="205" y="103" width="38" height="16" rx="3" fill="#1D4ED8"/>
+  <text x="224" y="115" text-anchor="middle" font-size="9" fill="#BFDBFE">0.94</text>
+  <rect x="249" y="103" width="38" height="16" rx="3" fill="#1D4ED8"/>
+  <text x="268" y="115" text-anchor="middle" font-size="9" fill="#BFDBFE">0.87</text>
+  <rect x="293" y="103" width="38" height="16" rx="3" fill="#334155"/>
+  <text x="312" y="115" text-anchor="middle" font-size="9" fill="#94A3B8">0.61</text>
+  <rect x="337" y="103" width="38" height="16" rx="3" fill="#334155"/>
+  <text x="356" y="115" text-anchor="middle" font-size="9" fill="#94A3B8">0.58</text>
+  <rect x="381" y="103" width="38" height="16" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1"/>
+  <text x="400" y="115" text-anchor="middle" font-size="9" fill="#64748B">0.42</text>
+  <rect x="425" y="103" width="38" height="16" rx="3" fill="#1E293B" stroke="#475569" stroke-width="1"/>
+  <text x="444" y="115" text-anchor="middle" font-size="9" fill="#64748B">0.38</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="340" y1="120" x2="340" y2="148" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── STEP 2: Deduplication ── -->
+  <rect x="190" y="148" width="300" height="56" rx="8" fill="#1E293B" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="340" y="170" text-anchor="middle" font-size="12" font-weight="600" fill="#93C5FD">Deduplication</text>
+  <text x="340" y="187" text-anchor="middle" font-size="11" fill="#64748B">cosine similarity ≥ 0.97 → remove duplicate</text>
+  <text x="340" y="200" text-anchor="middle" font-size="10" fill="#475569">near-identical chunks from same source collapsed</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="340" y1="204" x2="340" y2="232" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── STEP 3: Relevance Ranking ── -->
+  <rect x="190" y="232" width="300" height="56" rx="8" fill="#1E293B" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="340" y="254" text-anchor="middle" font-size="12" font-weight="600" fill="#93C5FD">Relevance Ranking</text>
+  <text x="340" y="271" text-anchor="middle" font-size="11" fill="#64748B">sort chunks by score descending</text>
+  <text x="340" y="284" text-anchor="middle" font-size="10" fill="#475569">high-signal chunks bubble to top</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="340" y1="288" x2="340" y2="316" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── STEP 4: Budget Check diamond ── -->
+  <polygon points="340,316 490,374 340,432 190,374" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5"/>
+  <text x="340" y="366" text-anchor="middle" font-size="12" font-weight="600" fill="#FCD34D">Total tokens</text>
+  <text x="340" y="382" text-anchor="middle" font-size="12" font-weight="600" fill="#FCD34D">within budget?</text>
+
+  <!-- YES label -->
+  <text x="130" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#4ADE80">YES</text>
+  <!-- NO label -->
+  <text x="555" y="416" text-anchor="middle" font-size="11" font-weight="600" fill="#F87171">NO</text>
+
+  <!-- Arrow YES (left) -->
+  <line x1="190" y1="374" x2="110" y2="374" stroke="#4ADE80" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <line x1="110" y1="374" x2="110" y2="630" stroke="#4ADE80" stroke-width="1.5"/>
+
+  <!-- Arrow NO (right) -->
+  <line x1="490" y1="374" x2="570" y2="374" stroke="#F87171" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <line x1="570" y1="374" x2="570" y2="452" stroke="#F87171" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+
+  <!-- ── STEP 5a (NO path): Compress low-relevance chunks ── -->
+  <rect x="440" y="452" width="220" height="64" rx="8" fill="#2D1515" stroke="#F87171" stroke-width="1.5"/>
+  <text x="550" y="473" text-anchor="middle" font-size="11" font-weight="600" fill="#F87171">Compress Low-Relevance</text>
+  <text x="550" y="489" text-anchor="middle" font-size="10" fill="#FCA5A5">extractive compression on</text>
+  <text x="550" y="503" text-anchor="middle" font-size="10" fill="#FCA5A5">bottom-ranked chunks first</text>
+
+  <!-- Arrow compress → budget check 2 -->
+  <line x1="570" y1="516" x2="570" y2="556" stroke="#F87171" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+
+  <!-- ── STEP 5b: Still over budget? ── -->
+  <rect x="440" y="556" width="220" height="56" rx="8" fill="#2D1515" stroke="#F87171" stroke-width="1.5"/>
+  <text x="550" y="577" text-anchor="middle" font-size="11" font-weight="600" fill="#F87171">Still Over Budget?</text>
+  <text x="550" y="594" text-anchor="middle" font-size="10" fill="#FCA5A5">drop lowest-relevance chunks</text>
+  <text x="550" y="607" text-anchor="middle" font-size="10" fill="#FCA5A5">until budget satisfied</text>
+
+  <!-- Arrow from step 5b back to main path -->
+  <line x1="570" y1="612" x2="570" y2="640" stroke="#F87171" stroke-width="1.5"/>
+  <line x1="570" y1="640" x2="420" y2="640" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── STEP 6: Assembled Prompt ── -->
+  <rect x="190" y="612" width="300" height="56" rx="8" fill="#1E293B" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="340" y="634" text-anchor="middle" font-size="12" font-weight="600" fill="#93C5FD">Assemble Prompt</text>
+  <text x="340" y="651" text-anchor="middle" font-size="11" fill="#64748B">system prompt + ranked chunks + query</text>
+  <text x="340" y="664" text-anchor="middle" font-size="10" fill="#475569">within token budget, highest signal preserved</text>
+
+  <!-- YES path joins here -->
+  <line x1="110" y1="630" x2="190" y2="630" stroke="#4ADE80" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+
+  <!-- Arrow 6→7 -->
+  <line x1="340" y1="668" x2="340" y2="700" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── STEP 7: Model ── -->
+  <rect x="190" y="700" width="300" height="56" rx="8" fill="#052E16" stroke="#4ADE80" stroke-width="1.5"/>
+  <text x="340" y="722" text-anchor="middle" font-size="12" font-weight="600" fill="#4ADE80">Model</text>
+  <text x="340" y="739" text-anchor="middle" font-size="11" fill="#86EFAC">receives optimized, budget-bounded prompt</text>
+  <text x="340" y="752" text-anchor="middle" font-size="10" fill="#4ADE80">no redundancy · no low-signal content</text>
+
+  <!-- Red arrow marker -->
+  <defs>
+    <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#F87171"/>
+    </marker>
+  </defs>
+
+</svg>

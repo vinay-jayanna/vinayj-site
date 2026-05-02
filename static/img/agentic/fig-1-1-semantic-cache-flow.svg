@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 720" width="600" height="720">
+  <defs/>
+  <g id="Canvas_1" stroke="none" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" fill="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <path d="M 12 0 L 588 0 C 594.6274 40581225e-23 600 5.372583 600 12 L 600 708 C 600 714.6274 594.6274 720 588 720 L 12 720 C 5.372583 720 8116245e-22 714.6274 0 708 L 42632564e-21 12 C 4344419e-20 5.372583 5.372583 -8116245e-22 12 0 Z" fill="#0d1117"/>
+      </g>
+      <g id="Graphic_3">
+        <title>Text</title>
+        <text transform="translate(215.21729 26.219727)" fill="#e2e8f0">
+          <tspan font-family="Helvetica" font-size="14" fill="#e2e8f0" x="0" y="14" xml:space="preserve">SEMANTIC CACHE FLOW</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <path d="M 183 65 L 417 65 C 421.4183 65 425 68.58172 425 73 L 425 105 C 425 109.41828 421.4183 113 417 113 L 183 113 C 178.58172 113 175 109.41828 175 105 L 175 73 C 175 68.58172 178.58172 65 183 65 Z" fill="#1e293b"/>
+        <path d="M 183 65 L 417 65 C 421.4183 65 425 68.58172 425 73 L 425 105 C 425 109.41828 421.4183 113 417 113 L 183 113 C 178.58172 113 175 109.41828 175 105 L 175 73 C 175 68.58172 178.58172 65 183 65 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_5">
+        <title>Text</title>
+        <text transform="translate(257.64844 72.759766)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Incoming Query</tspan>
+        </text>
+      </g>
+      <g id="Graphic_6">
+        <title>Text</title>
+        <text transform="translate(223.26855 91.52979)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="11" fill="#64748b" x="0" y="10" xml:space="preserve">user request arrives at gateway</tspan>
+        </text>
+      </g>
+      <g id="Line_7">
+        <line x1="300" y1="113" x2="300" y2="138" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_8">
+        <path d="M 183 138 L 417 138 C 421.4183 138 425 141.58172 425 146 L 425 178 C 425 182.41828 421.4183 186 417 186 L 183 186 C 178.58172 186 175 182.41828 175 178 L 175 146 C 175 141.58172 178.58172 138 183 138 Z" fill="#1e293b"/>
+        <path d="M 183 138 L 417 138 C 421.4183 138 425 141.58172 425 146 L 425 178 C 425 182.41828 421.4183 186 417 186 L 183 186 C 178.58172 186 175 182.41828 175 178 L 175 146 C 175 141.58172 178.58172 138 183 138 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_9">
+        <title>Text</title>
+        <text transform="translate(262.9834 145.75977)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Embed Query</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <title>Text</title>
+        <text transform="translate(222.65356 164.52979)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="11" fill="#64748b" x="0" y="10" xml:space="preserve">convert to vector representation</tspan>
+        </text>
+      </g>
+      <g id="Line_11">
+        <line x1="300" y1="186" x2="300" y2="211" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_12">
+        <path d="M 183 211 L 417 211 C 421.4183 211 425 214.58172 425 219 L 425 251 C 425 255.41828 421.4183 259 417 259 L 183 259 C 178.58172 259 175 255.41828 175 251 L 175 219 C 175 214.58172 178.58172 211 183 211 Z" fill="#1e293b"/>
+        <path d="M 183 211 L 417 211 C 421.4183 211 425 214.58172 425 219 L 425 251 C 425 255.41828 421.4183 259 417 259 L 183 259 C 178.58172 259 175 255.41828 175 251 L 175 219 C 175 214.58172 178.58172 211 183 211 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_13">
+        <title>Text</title>
+        <text transform="translate(245.6338 218.75977)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Search Cache Index</tspan>
+        </text>
+      </g>
+      <g id="Graphic_14">
+        <title>Text</title>
+        <text transform="translate(240.68164 237.52979)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="11" fill="#64748b" x="0" y="10" xml:space="preserve">nearest-neighbor lookup</tspan>
+        </text>
+      </g>
+      <g id="Line_15">
+        <line x1="300" y1="259" x2="300" y2="284" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_16">
+        <path d="M 300 284 L 420 334 L 300 384 L 180 334 Z" fill="#1e293b"/>
+        <path d="M 300 284 L 420 334 L 300 384 L 180 334 Z" stroke="#f59e0b" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_17">
+        <title>Text</title>
+        <text transform="translate(258.3252 316.75977)" fill="#fcd34d">
+          <tspan font-family="Helvetica" font-size="12" fill="#fcd34d" x="0" y="11" xml:space="preserve">Similarity Score</tspan>
+        </text>
+      </g>
+      <g id="Graphic_18">
+        <title>Text</title>
+        <text transform="translate(265.12793 334.75977)" fill="#fcd34d">
+          <tspan font-family="Helvetica" font-size="12" fill="#fcd34d" x="0" y="11" xml:space="preserve">≥ Threshold?</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <title>Text</title>
+        <text transform="translate(106.99463 367.5298)" fill="#4ade80">
+          <tspan font-family="Helvetica" font-size="11" fill="#4ade80" x="0" y="10" xml:space="preserve">YES</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <title>Text</title>
+        <text transform="translate(473.75 367.5298)" fill="#f87171">
+          <tspan font-family="Helvetica" font-size="11" fill="#f87171" x="0" y="10" xml:space="preserve">NO</tspan>
+        </text>
+      </g>
+      <g id="Line_21">
+        <line x1="180" y1="334" x2="100" y2="334" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Line_22">
+        <line x1="100" y1="334" x2="100" y2="440" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Line_23">
+        <line x1="420" y1="334" x2="500" y2="334" stroke="#f87171" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Line_24">
+        <line x1="500" y1="334" x2="500" y2="440" stroke="#f87171" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_25">
+        <path d="M 33 440 L 167 440 C 171.41828 440 175 443.5817 175 448 L 175 496 C 175 500.4183 171.41828 504 167 504 L 33 504 C 28.581722 504 25 500.4183 25 496 L 25 448 C 25 443.5817 28.581722 440 33 440 Z" fill="#052e16"/>
+        <path d="M 33 440 L 167 440 C 171.41828 440 175 443.5817 175 448 L 175 496 C 175 500.4183 171.41828 504 167 504 L 33 504 C 28.581722 504 25 500.4183 25 496 L 25 448 C 25 443.5817 28.581722 440 33 440 Z" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_26">
+        <title>Text</title>
+        <text transform="translate(73.65625 450.75977)" fill="#4ade80">
+          <tspan font-family="Helvetica" font-size="12" fill="#4ade80" x="0" y="11" xml:space="preserve">Cache Hit</tspan>
+        </text>
+      </g>
+      <g id="Graphic_27">
+        <title>Text</title>
+        <text transform="translate(45.52246 469.2998)" fill="#86efac">
+          <tspan font-family="Helvetica" font-size="10" fill="#86efac" x="0" y="10" xml:space="preserve">Return cached response</tspan>
+        </text>
+      </g>
+      <g id="Graphic_28">
+        <title>Text</title>
+        <text transform="translate(47.05322 484.2998)" fill="#86efac">
+          <tspan font-family="Helvetica" font-size="10" fill="#86efac" x="0" y="10" xml:space="preserve">~0 latency · zero tokens</tspan>
+        </text>
+      </g>
+      <g id="Graphic_29">
+        <path d="M 433 440 L 567 440 C 571.4183 440 575 443.5817 575 448 L 575 496 C 575 500.4183 571.4183 504 567 504 L 433 504 C 428.5817 504 425 500.4183 425 496 L 425 448 C 425 443.5817 428.5817 440 433 440 Z" fill="#2d1515"/>
+        <path d="M 433 440 L 567 440 C 571.4183 440 575 443.5817 575 448 L 575 496 C 575 500.4183 571.4183 504 567 504 L 433 504 C 428.5817 504 425 500.4183 425 496 L 425 448 C 425 443.5817 428.5817 440 433 440 Z" stroke="#f87171" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_30">
+        <title>Text</title>
+        <text transform="translate(468.6582 450.75977)" fill="#f87171">
+          <tspan font-family="Helvetica" font-size="12" fill="#f87171" x="0" y="11" xml:space="preserve">Cache Miss</tspan>
+        </text>
+      </g>
+      <g id="Graphic_31">
+        <title>Text</title>
+        <text transform="translate(466.0913 469.2998)" fill="#fca5a5">
+          <tspan font-family="Helvetica" font-size="10" fill="#fca5a5" x="0" y="10" xml:space="preserve">Route to model</tspan>
+        </text>
+      </g>
+      <g id="Graphic_32">
+        <title>Text</title>
+        <text transform="translate(469.4287 484.2998)" fill="#fca5a5">
+          <tspan font-family="Helvetica" font-size="10" fill="#fca5a5" x="0" y="10" xml:space="preserve">full token cost</tspan>
+        </text>
+      </g>
+      <g id="Line_33">
+        <line x1="499.7824" y1="504.75" x2="499.28906" y2="579" stroke="#f87171" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Line_34">
+        <line x1="500" y1="578" x2="390" y2="578" stroke="#b34400" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_35">
+        <path d="M 233 554 L 382 554 C 386.4183 554 390 557.5817 390 562 L 390 594 C 390 598.4183 386.4183 602 382 602 L 233 602 C 228.58172 602 225 598.4183 225 594 L 225 562 C 225 557.5817 228.58172 554 233 554 Z" fill="#1e293b"/>
+        <path d="M 233 554 L 382 554 C 386.4183 554 390 557.5817 390 562 L 390 594 C 390 598.4183 386.4183 602 382 602 L 233 602 C 228.58172 602 225 598.4183 225 594 L 225 562 C 225 557.5817 228.58172 554 233 554 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_36">
+        <title>Text</title>
+        <text transform="translate(267.31152 561.75977)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Store in Cache</tspan>
+        </text>
+      </g>
+      <g id="Graphic_37">
+        <title>Text</title>
+        <text transform="translate(234.68628 580.5298)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="11" fill="#64748b" x="0" y="10" xml:space="preserve">response + embedding saved</tspan>
+        </text>
+      </g>
+      <g id="Line_38">
+        <line x1="307" y1="602" x2="307" y2="638" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_39">
+        <path d="M 183 638 L 417 638 C 421.4183 638 425 641.5817 425 646 L 425 678 C 425 682.4183 421.4183 686 417 686 L 183 686 C 178.58172 686 175 682.4183 175 678 L 175 646 C 175 641.5817 178.58172 638 183 638 Z" fill="#1e293b"/>
+        <path d="M 183 638 L 417 638 C 421.4183 638 425 641.5817 425 646 L 425 678 C 425 682.4183 421.4183 686 417 686 L 183 686 C 178.58172 686 175 682.4183 175 678 L 175 646 C 175 641.5817 178.58172 638 183 638 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_40">
+        <title>Text</title>
+        <text transform="translate(257.98242 645.7598)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Return to Caller</tspan>
+        </text>
+      </g>
+      <g id="Graphic_41">
+        <title>Text</title>
+        <text transform="translate(253.5266 664.5298)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="11" fill="#64748b" x="0" y="10" xml:space="preserve">response delivered</tspan>
+        </text>
+      </g>
+      <g id="Line_42">
+        <line x1="100" y1="504" x2="100" y2="662" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Line_43">
+        <line x1="100" y1="662" x2="175" y2="662" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>
