@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" width="760" height="560">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 8 8" markerWidth="8" markerHeight="8" color="#475569">
+      <g>
+        <path d="M 5.866667 0 L 0 -2.2 L 0 2.2 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker_2" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 8 8" markerWidth="8" markerHeight="8" color="#475569">
+      <g>
+        <path d="M 5.866667 0 L 0 -2.2 L 0 2.2 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Canvas_1" stroke="none" fill-opacity="1" stroke-opacity="1" stroke-dasharray="none" fill="none">
+    <title>Canvas 1</title>
+    <rect fill="white" x="0" y="0" width="760" height="560"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <path d="M 12 0 L 748 0 C 754.6274 40581225e-23 760 5.372583 760 12 L 760 548 C 760 554.6274 754.6274 560 748 560 L 12 560 C 5.372583 560 8116245e-22 554.6274 0 548 L 31974423e-21 12 C 32786048e-21 5.372583 5.372583 -8116245e-22 12 0 Z" fill="#0d1117"/>
+      </g>
+      <g id="Graphic_3">
+        <title>Text</title>
+        <text transform="translate(203.81396 22.219727)" fill="#e2e8f0">
+          <tspan font-family="Helvetica" font-size="14" fill="#e2e8f0" x="0" y="14" xml:space="preserve">ALIAS-BASED ZERO-DOWNTIME MODEL MIGRATION</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <title>Text</title>
+        <text transform="translate(66.29541 63.529785)" fill="#94a3b8">
+          <tspan font-family="Helvetica" font-size="14" fill="#94a3b8" x="0" y="14" xml:space="preserve">DURING MIGRATION</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <path d="M 68 92 L 202 92 C 206.41828 92 210 95.58172 210 100 L 210 136 C 210 140.41828 206.41828 144 202 144 L 68 144 C 63.58172 144 60 140.41828 60 136 L 60 100 C 60 95.58172 63.58172 92 68 92 Z" fill="#1e293b"/>
+        <path d="M 68 92 L 202 92 C 206.41828 92 210 95.58172 210 100 L 210 136 C 210 140.41828 206.41828 144 202 144 L 68 144 C 63.58172 144 60 140.41828 60 136 L 60 100 C 60 95.58172 63.58172 92 68 92 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_6">
+        <title>Text</title>
+        <text transform="translate(105.64746 102.75977)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Application</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <title>Text</title>
+        <text transform="translate(92.47803 121.2998)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="10" fill="#64748b" x="0" y="10" xml:space="preserve">reads via alias only</tspan>
+        </text>
+      </g>
+      <g id="Graphic_8">
+        <path d="M 288 92 L 452 92 C 456.4183 92 460 95.58172 460 100 L 460 136 C 460 140.41828 456.4183 144 452 144 L 288 144 C 283.58172 144 280 140.41828 280 136 L 280 100 C 280 95.58172 283.58172 92 288 92 Z" fill="#1e293b"/>
+        <path d="M 288 92 L 452 92 C 456.4183 92 460 95.58172 460 100 L 460 136 C 460 140.41828 456.4183 144 452 144 L 288 144 C 283.58172 144 280 140.41828 280 136 L 280 100 C 280 95.58172 283.58172 92 288 92 Z" stroke="#f59e0b" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_9">
+        <title>Text</title>
+        <text transform="translate(317.63477 102.75977)" fill="#fcd34d">
+          <tspan font-family="Helvetica" font-size="12" fill="#fcd34d" x="0" y="11" xml:space="preserve">docs_index_current</tspan>
+        </text>
+      </g>
+      <g id="Graphic_10">
+        <title>Text</title>
+        <text transform="translate(326.3672 121.2998)" fill="#94a3b8">
+          <tspan font-family="Helvetica" font-size="10" fill="#94a3b8" x="0" y="10" xml:space="preserve">alias </tspan>
+          <tspan font-family="Lucida Grande" font-size="10" fill="#94a3b8" y="10" xml:space="preserve">→</tspan>
+          <tspan font-family="Helvetica" font-size="10" fill="#94a3b8" y="10" xml:space="preserve"> points to v2</tspan>
+        </text>
+      </g>
+      <g id="Line_11">
+        <line x1="210" y1="118" x2="272" y2="118" stroke="#3b82f6" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_12">
+        <title>Text</title>
+        <text transform="translate(229.7434 101.06982)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="9" fill="#64748b" x="0" y="9" xml:space="preserve">reads</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <path d="M 548 70 L 712 70 C 716.4183 70 720 73.58172 720 78 L 720 122 C 720 126.41828 716.4183 130 712 130 L 548 130 C 543.5817 130 540 126.41828 540 122 L 540 78 C 540 73.58172 543.5817 70 548 70 Z" fill="#052e16"/>
+        <path d="M 548 70 L 712 70 C 716.4183 70 720 73.58172 720 78 L 720 122 C 720 126.41828 716.4183 130 712 130 L 548 130 C 543.5817 130 540 126.41828 540 122 L 540 78 C 540 73.58172 543.5817 70 548 70 Z" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_14">
+        <title>Text</title>
+        <text transform="translate(593.3074 81.52979)" fill="#4ade80">
+          <tspan font-family="Helvetica" font-size="11" fill="#4ade80" x="0" y="10" xml:space="preserve">docs_index_v2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_15">
+        <title>Text</title>
+        <text transform="translate(581.73584 97.2998)" fill="#86efac">
+          <tspan font-family="Helvetica" font-size="10" fill="#86efac" x="0" y="10" xml:space="preserve">old model · SERVING</tspan>
+        </text>
+      </g>
+      <g id="Graphic_16">
+        <title>Text</title>
+        <text transform="translate(596.7334 112.06982)" fill="#4ade80">
+          <tspan font-family="Helvetica" font-size="9" fill="#4ade80" x="0" y="9" xml:space="preserve">production traffic</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <path d="M 548 150 L 712 150 C 716.4183 150 720 153.58172 720 158 L 720 202 C 720 206.41828 716.4183 210 712 210 L 548 210 C 543.5817 210 540 206.41828 540 202 L 540 158 C 540 153.58172 543.5817 150 548 150 Z" fill="#1e293b"/>
+        <path d="M 548 150 L 712 150 C 716.4183 150 720 153.58172 720 158 L 720 202 C 720 206.41828 716.4183 210 712 210 L 548 210 C 543.5817 210 540 206.41828 540 202 L 540 158 C 540 153.58172 543.5817 150 548 150 Z" stroke="#475569" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="6.0,6.0" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_18">
+        <title>Text</title>
+        <text transform="translate(593.3074 161.52979)" fill="#94a3b8">
+          <tspan font-family="Helvetica" font-size="11" fill="#94a3b8" x="0" y="10" xml:space="preserve">docs_index_v3</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <title>Text</title>
+        <text transform="translate(578.0371 177.2998)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="10" fill="#64748b" x="0" y="10" xml:space="preserve">new model · BUILDING</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <title>Text</title>
+        <text transform="translate(601.4817 192.06982)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="9" fill="#64748b" x="0" y="9" xml:space="preserve">validation only</tspan>
+        </text>
+      </g>
+      <g id="Line_21">
+        <line x1="460" y1="112.06982" x2="539.25" y2="106.44316" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_22">
+        <path d="M 68 180 L 202 180 C 206.41828 180 210 183.58172 210 188 L 210 224 C 210 228.41828 206.41828 232 202 232 L 68 232 C 63.58172 232 60 228.41828 60 224 L 60 188 C 60 183.58172 63.58172 180 68 180 Z" fill="#1e293b"/>
+        <path d="M 68 180 L 202 180 C 206.41828 180 210 183.58172 210 188 L 210 224 C 210 228.41828 206.41828 232 202 232 L 68 232 C 63.58172 232 60 228.41828 60 224 L 60 188 C 60 183.58172 63.58172 180 68 180 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_23">
+        <title>Text</title>
+        <text transform="translate(110.64844 190.75977)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Ingestion</tspan>
+        </text>
+      </g>
+      <g id="Graphic_24">
+        <title>Text</title>
+        <text transform="translate(94.41406 209.2998)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="10" fill="#64748b" x="0" y="10" xml:space="preserve">new/updated docs</tspan>
+        </text>
+      </g>
+      <g id="Line_25">
+        <path d="M 206.1677 202.80877 C 206.1677 202.80877 310.9262 203.65602 431 174.52979 C 479.8453 162.6814 521.8815 148.13942 554.56534 135.05602" marker-end="url(#FilledArrow_Marker)" stroke="#475569" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_27">
+        <title>Text</title>
+        <text transform="translate(294.69727 220.5996)" fill="#00def9">
+          <tspan font-family="Helvetica" font-size="11" fill="#00def9" x="0" y="10" xml:space="preserve">writes go to BOTH indexes</tspan>
+        </text>
+      </g>
+      <g id="Line_28">
+        <line x1="40" y1="270" x2="720" y2="270" stroke="#1e293b" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_29">
+        <title>Text</title>
+        <text transform="translate(68.39441 285)" fill="#94a3b8">
+          <tspan font-family="Helvetica" font-size="14" fill="#94a3b8" x="0" y="14" xml:space="preserve">CUTOVER — ATOMIC ALIAS SWAP</tspan>
+        </text>
+      </g>
+      <g id="Graphic_30">
+        <path d="M 68 316 L 202 316 C 206.41828 316 210 319.58172 210 324 L 210 360 C 210 364.41828 206.41828 368 202 368 L 68 368 C 63.58172 368 60 364.41828 60 360 L 60 324 C 60 319.58172 63.58172 316 68 316 Z" fill="#1e293b"/>
+        <path d="M 68 316 L 202 316 C 206.41828 316 210 319.58172 210 324 L 210 360 C 210 364.41828 206.41828 368 202 368 L 68 368 C 63.58172 368 60 364.41828 60 360 L 60 324 C 60 319.58172 63.58172 316 68 316 Z" stroke="#2563eb" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_31">
+        <title>Text</title>
+        <text transform="translate(105.64746 326.75977)" fill="#93c5fd">
+          <tspan font-family="Helvetica" font-size="12" fill="#93c5fd" x="0" y="11" xml:space="preserve">Application</tspan>
+        </text>
+      </g>
+      <g id="Graphic_32">
+        <title>Text</title>
+        <text transform="translate(80.79102 345.2998)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="10" fill="#64748b" x="0" y="10" xml:space="preserve">unchanged — no deploy</tspan>
+        </text>
+      </g>
+      <g id="Graphic_33">
+        <path d="M 288 316 L 452 316 C 456.4183 316 460 319.58172 460 324 L 460 360 C 460 364.41828 456.4183 368 452 368 L 288 368 C 283.58172 368 280 364.41828 280 360 L 280 324 C 280 319.58172 283.58172 316 288 316 Z" fill="#1e293b"/>
+        <path d="M 288 316 L 452 316 C 456.4183 316 460 319.58172 460 324 L 460 360 C 460 364.41828 456.4183 368 452 368 L 288 368 C 283.58172 368 280 364.41828 280 360 L 280 324 C 280 319.58172 283.58172 316 288 316 Z" stroke="#f59e0b" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_34">
+        <title>Text</title>
+        <text transform="translate(317.63477 326.75977)" fill="#fcd34d">
+          <tspan font-family="Helvetica" font-size="12" fill="#fcd34d" x="0" y="11" xml:space="preserve">docs_index_current</tspan>
+        </text>
+      </g>
+      <g id="Graphic_35">
+        <title>Text</title>
+        <text transform="translate(315.80566 345.2998)" fill="#fcd34d">
+          <tspan font-family="Helvetica" font-size="10" fill="#fcd34d" x="0" y="10" xml:space="preserve">alias </tspan>
+          <tspan font-family="Lucida Grande" font-size="10" fill="#fcd34d" y="10" xml:space="preserve">→</tspan>
+          <tspan font-family="Helvetica" font-size="10" fill="#fcd34d" y="10" xml:space="preserve"> now points to v3</tspan>
+        </text>
+      </g>
+      <g id="Line_36">
+        <line x1="210" y1="342" x2="272" y2="342" stroke="#3b82f6" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_37">
+        <path d="M 548 294 L 712 294 C 716.4183 294 720 297.58172 720 302 L 720 346 C 720 350.41828 716.4183 354 712 354 L 548 354 C 543.5817 354 540 350.41828 540 346 L 540 302 C 540 297.58172 543.5817 294 548 294 Z" fill="#1e293b"/>
+        <path d="M 548 294 L 712 294 C 716.4183 294 720 297.58172 720 302 L 720 346 C 720 350.41828 716.4183 354 712 354 L 548 354 C 543.5817 354 540 350.41828 540 346 L 540 302 C 540 297.58172 543.5817 294 548 294 Z" stroke="#475569" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="6.0,6.0" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_38">
+        <title>Text</title>
+        <text transform="translate(593.3074 305.5298)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="11" fill="#64748b" x="0" y="10" xml:space="preserve">docs_index_v2</tspan>
+        </text>
+      </g>
+      <g id="Graphic_39">
+        <title>Text</title>
+        <text transform="translate(576.6431 321.2998)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="10" fill="#64748b" x="0" y="10" xml:space="preserve">kept for rollback window</tspan>
+        </text>
+      </g>
+      <g id="Graphic_40">
+        <title>Text</title>
+        <text transform="translate(607.2363 336.06982)" fill="#64748b">
+          <tspan font-family="Helvetica" font-size="9" fill="#64748b" x="0" y="9" xml:space="preserve">then retired</tspan>
+        </text>
+      </g>
+      <g id="Graphic_41">
+        <path d="M 548 374 L 712 374 C 716.4183 374 720 377.5817 720 382 L 720 426 C 720 430.4183 716.4183 434 712 434 L 548 434 C 543.5817 434 540 430.4183 540 426 L 540 382 C 540 377.5817 543.5817 374 548 374 Z" fill="#052e16"/>
+        <path d="M 548 374 L 712 374 C 716.4183 374 720 377.5817 720 382 L 720 426 C 720 430.4183 716.4183 434 712 434 L 548 434 C 543.5817 434 540 430.4183 540 426 L 540 382 C 540 377.5817 543.5817 374 548 374 Z" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Graphic_42">
+        <title>Text</title>
+        <text transform="translate(593.3074 385.5298)" fill="#4ade80">
+          <tspan font-family="Helvetica" font-size="11" fill="#4ade80" x="0" y="10" xml:space="preserve">docs_index_v3</tspan>
+        </text>
+      </g>
+      <g id="Graphic_43">
+        <title>Text</title>
+        <text transform="translate(579.23584 401.2998)" fill="#86efac">
+          <tspan font-family="Helvetica" font-size="10" fill="#86efac" x="0" y="10" xml:space="preserve">new model · SERVING</tspan>
+        </text>
+      </g>
+      <g id="Graphic_44">
+        <title>Text</title>
+        <text transform="translate(596.7334 416.0698)" fill="#4ade80">
+          <tspan font-family="Helvetica" font-size="9" fill="#4ade80" x="0" y="9" xml:space="preserve">production traffic</tspan>
+        </text>
+      </g>
+      <g id="Line_45">
+        <line x1="460" y1="355" x2="532" y2="395" stroke="#4ade80" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Line_46">
+        <line x1="460" y1="330" x2="532" y2="315" stroke="#f87171" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="4.8,4.8" stroke-width="1.2"/>
+      </g>
+      <g id="Graphic_47">
+        <title>Text</title>
+        <text transform="translate(451.9536 291.5298)" fill="#f87171">
+          <tspan font-family="Helvetica" font-size="9" fill="#f87171" x="0" y="9" xml:space="preserve">instant rollback path</tspan>
+        </text>
+      </g>
+      <g id="Graphic_48">
+        <path d="M 68 470 L 712 470 C 716.4183 470 720 473.5817 720 478 L 720 537.5 C 720 541.9183 716.4183 545.5 712 545.5 L 68 545.5 C 63.58172 545.5 60 541.9183 60 537.5 L 60 478 C 60 473.5817 63.58172 470 68 470 Z" fill="#1e293b"/>
+        <path d="M 68 470 L 712 470 C 716.4183 470 720 473.5817 720 478 L 720 537.5 C 720 541.9183 716.4183 545.5 712 545.5 L 68 545.5 C 63.58172 545.5 60 541.9183 60 537.5 L 60 478 C 60 473.5817 63.58172 470 68 470 Z" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_49">
+        <title>Text</title>
+        <text transform="translate(72.99756 481.0298)" fill="#fcd34d">
+          <tspan font-family="Helvetica" font-size="13" fill="#fcd34d" x="0" y="13" xml:space="preserve">The whole trick:</tspan>
+        </text>
+      </g>
+      <g id="Graphic_50">
+        <title>Text</title>
+        <text transform="translate(72.834595 499.4148)" fill="#94a3b8">
+          <tspan font-family="Helvetica" font-size="13" fill="#94a3b8" x="0" y="13" xml:space="preserve">The application never knows which index it reads. Cutover is one atomic pointer change —</tspan>
+        </text>
+      </g>
+      <g id="Graphic_51">
+        <title>Text</title>
+        <text transform="translate(76.60364 517.2998)" fill="#94a3b8">
+          <tspan font-family="Helvetica" font-size="13" fill="#94a3b8" x="0" y="13" xml:space="preserve">zero downtime, and rollback is the same operation in reverse.</tspan>
+        </text>
+      </g>
+      <g id="Line_52">
+        <path d="M 207.1677 203.80877 C 207.1677 203.80877 310.2095 219.81497 430 213.06982 C 466.793 210.9981 499.852 207.07927 527.9998 202.64345" marker-end="url(#FilledArrow_Marker_2)" stroke="#475569" stroke-linecap="butt" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>
