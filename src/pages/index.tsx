@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ReactNode } from 'react';
+import React from "react";
+import type { ReactNode } from "react";
 
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
@@ -67,16 +67,18 @@ function Hero(): ReactNode {
   return (
     <div className={styles.hero}>
       <div className={styles.heroInner}>
-
         <div className={styles.heroText}>
-          <p className={styles.heroEyebrow}>LLM Inference · GPU Systems · Production AI</p>
+          <p className={styles.heroEyebrow}>
+            LLM Inference · GPU Systems · Production AI
+          </p>
           <h1 className={styles.heroTitle}>
             LLM Inference &<br />
             ML Infrastructure
           </h1>
           <p className={styles.heroSubtitle}>
-            Technical field guides written from production experience. Each guide is a comprehensive decision framework
-            you can apply to production systems.
+            Rigorous field guides for designing, sizing, and operating
+            large-scale AI systems. Each guide turns complex infrastructure
+            decisions into practical engineering frameworks.
           </p>
           <div className={styles.heroLinks}>
             <Link
@@ -100,20 +102,18 @@ function Hero(): ReactNode {
         <div className={styles.heroBio}>
           <p className={styles.heroBioLabel}>About the author</p>
           <p>
-            Currently a Staff ML Engineer leading LLM inference optimization
-            for one of the most consequential AI systems in the world -
-            reaching hundreds of millions of users. Before that, spent nearly
-            a decade at <strong>AWS</strong> building and scaling core inference
-            infrastructure for <strong>SageMaker</strong> from its earliest
-            days. Founded <strong>Vipas.AI</strong>, an AI inference marketplace
-            that reached 25K daily visitors and received a VC term sheet.
-            Earlier career spans building large-scale distributed systems and
-            cloud infrastructure at Ericsson, Pegasystems, and global
-            enterprises. Holder of a USPTO-pending patent in dynamic
-            hierarchical storage and GPU optimization for LLM serving.
+            <strong>Vinay Jayanna</strong> is a Staff/Principal Machine Learning
+            Engineer specializing in LLM inference optimization, GPU capacity
+            planning, and production AI infrastructure. He currently leads
+            inference optimization and GenAI platform architecture for
+            large-scale AI systems reaching hundreds of millions of users.
+            Previously, he helped build and scale core inference infrastructure
+            for <strong>Amazon SageMaker</strong>, founded{" "}
+            <strong>Vipas.AI</strong>, and is the inventor on a pending U.S.
+            patent covering model caching, hierarchical storage, and GPU
+            optimization for LLM serving.
           </p>
         </div>
-
       </div>
     </div>
   );
@@ -126,16 +126,16 @@ function GuidesSection(): ReactNode {
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Field Guides</h2>
           <p className={styles.sectionSubtitle}>
-            Each guide is a complete treatment of a production ML systems topic
-            - not a survey, not a tutorial, but a decision framework you can
-            apply directly to real deployments.
+            Comprehensive decision frameworks for real production
+            systems—covering the architecture, trade-offs, calculations, and
+            operating decisions that short tutorials leave out.
           </p>
         </div>
         <div className={styles.guidesGrid}>
           <GuideCard
             tag="Field Guide · v1.1"
             title="Sizing LLM Inference for Production"
-            description="Inference is where AI infrastructure spend compounds indefinitely with usage growth. Most production LLM fleets are paying 2–3× what they need to - not from hardware limits, but from sizing decisions made without a disciplined framework. This guide covers the complete decision sequence: workload characterization, GPU memory sizing, parallelism strategy, KV cache optimization, and fleet sizing from the latency-throughput curve."
+            description="Inference is where AI infrastructure cost compounds with usage growth. Many production LLM fleets remain substantially overprovisioned—not because of fundamental hardware limits, but because capacity decisions are made without a disciplined sizing framework. This guide covers the complete decision sequence: workload characterization, GPU memory sizing, parallelism strategy, KV cache optimization, operating point selection, and fleet sizing from the latency-throughput curve."
             pages="107"
             chapters="9"
             audience="Staff / Principal ML Engineers"
@@ -181,7 +181,8 @@ function WritingSection(): ReactNode {
       to: "https://www.linkedin.com/pulse/kv-cache-hidden-optimization-behind-real-time-ai-vinay-jayanna-cvfec",
     },
     {
-      title: "The Infrastructure No One Talks About: How Vector Search Makes Gen AI Work",
+      title:
+        "The Infrastructure No One Talks About: How Vector Search Makes Gen AI Work",
       meta: "LinkedIn · 2024",
       to: "https://www.linkedin.com/pulse/infrastructure-one-talks-how-vector-search-makes-gen-ai-vinay-jayanna-ka2bc",
     },
@@ -193,7 +194,8 @@ function WritingSection(): ReactNode {
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Writing</h2>
           <p className={styles.sectionSubtitle}>
-            Technical articles on LLM inference, ML infrastructure, and production AI systems.
+            Technical articles on LLM inference, ML infrastructure, and
+            production AI systems.
           </p>
         </div>
         <div className={styles.writingGrid}>
@@ -204,10 +206,16 @@ function WritingSection(): ReactNode {
             </Link>
           ))}
         </div>
-        <div style={{ marginTop: '1.5rem' }}>
+        <div style={{ marginTop: "1.5rem" }}>
           <Link
             to="https://www.linkedin.com/in/vinayjayanna/recent-activity/articles/"
-            style={{ fontFamily: 'Inter,system-ui,sans-serif', fontSize: '13.5px', color: 'var(--ifm-color-primary)', textDecoration: 'none', fontWeight: 600 }}
+            style={{
+              fontFamily: "Inter,system-ui,sans-serif",
+              fontSize: "13.5px",
+              color: "var(--ifm-color-primary)",
+              textDecoration: "none",
+              fontWeight: 600,
+            }}
           >
             All articles on LinkedIn →
           </Link>
@@ -222,7 +230,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={siteConfig.title}
-      description="Technical field guides on LLM inference systems and production ML infrastructure by Vinay Jayanna - Staff ML Engineer."
+      description="Technical field guides on LLM inference, GPU capacity planning, and production AI infrastructure by Vinay Jayanna, Staff/Principal ML Engineer."
     >
       <Hero />
       <main>
