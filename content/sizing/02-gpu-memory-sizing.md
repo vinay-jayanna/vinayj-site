@@ -11,7 +11,7 @@ When an LLM inference engine starts up, it must allocate four distinct categorie
 
 **2. [KV cache](https://www.linkedin.com/pulse/kv-cache-hidden-optimization-behind-real-time-ai-vinay-jayanna-cvfec/)** is the stored key and value tensors from the attention mechanism, maintained for every token in every active request. Unlike weights, KV cache is not a property of the model - it does not appear on model cards and cannot be measured offline. It grows dynamically at runtime as a function of sequence length, concurrency, and the number of attention layers. At high concurrency with long context, KV cache routinely exceeds model weight memory by a significant margin. This is the component that will exhaust your VRAM budget before anything else does.
 
-**3. Activations** are the intermediate tensors computed during the forward pass - the layer inputs, outputs, and attention matrices that exist transiently as each token is processed. They are not stored across requests like KV cache; they exist only during the computation of a single forward pass. However at high batch sizes they accumulate across all layers simultaneously, and their memory footprint scales with batch size, sequence length, and model width. At large batch sizes they become non-trivial - typically 15-30 GB for a 70B model at production concurrency - and ignoring them produces a memory budget that is systematically optimistic.
+**3. Activations** are the intermediate tensors computed during the forward pass - the layer inputs, outputs, and attention matrices that exist transiently as each token is processed. They are not stored across requests like KV cache; they exist only during the computation of a single forward pass. However at high batch sizes they accumulate across many layers simultaneously, and their memory footprint scales with batch size, sequence length, and model width. At large batch sizes they become non-trivial - typically 15-30 GB for a 70B model at production concurrency - and ignoring them produces a memory budget that is systematically optimistic.
 
 **4. Framework overhead** is everything the serving runtime consumes that has nothing to do with the model or the requests. This includes the CUDA runtime itself, the driver context, internal memory pools and allocators maintained by the serving framework - vLLM, TensorRT-LLM, Triton - plus pre-allocated buffers for async scheduling, and the memory fragmentation that accumulates over time in long-running processes. This component is opaque, vendor-specific, and almost never documented. In practice it runs 10-20 GB for mature frameworks on H100s and should be treated as a fixed tax on every deployment regardless of model size.
 
@@ -32,6 +32,12 @@ To make this concrete, consider Llama-3 70B - one of the most commonly deployed 
 *Quantization from FP16 to FP8 halves both model weights and KV cache, reducing total memory from 287 GB to 165 GB. Activations and framework overhead are unaffected by weight precision. The GPU count drops from 4-6 H100s to 2-3 - the single highest-leverage memory decision available before touching throughput.*
 
 </figcaption>
+
+Moving model weights from BF16 to FP8 approximately halves the static weight footprint. It does not automatically halve KV-cache memory.
+
+Weight precision and KV-cache precision are separate serving decisions. An FP8-weight deployment may continue using a BF16 KV cache unless the serving runtime is explicitly configured to use an FP8 cache.
+
+If both weights and KV cache use FP8, both components are approximately halved. If only the weights are quantized, the KV-cache requirement remains unchanged.
 
 The sections that follow examine each component in detail - the formula that governs it, the runtime variables that affect it, and the mistakes teams make when they underestimate it.
 
@@ -90,21 +96,30 @@ The formula:
 
 The factor of 2 is for both the key and value vectors stored per layer. Everything else scales with your workload.
 
-A concrete example grounds the math. Llama-3 70B in FP16 has 80 layers, 8 KV heads, and a head dimension of 128 - working out to approximately `0.26 MB` of KV cache per token per request.
+Llama 3.1 70B in BF16 has 80 layers, eight KV heads, and a head dimension of 128. Its raw KV-cache requirement per cached token is therefore:
 
-At a typical production load of 50 concurrent requests with 8K-token inputs, that is 106 GB of KV cache sitting alongside the 140 GB of model weights on the same system. Already more than 70% of the model's own footprint, just from active requests.
+`2 × 80 × 8 × 128 × 2 bytes = 327,680 bytes`
 
-Now extend the context. At 32K tokens the KV cache grows to 416 GB at the same concurrency - three times the model weights. At 128K context, just 4 concurrent requests push KV cache past model weights entirely. The diagram below makes this viscerally clear: short-context workloads stay manageable, but as context length grows the KV cache stops being overhead and becomes the dominant memory consumer in the system.
+That is approximately 320 KiB, or 0.328 MB, per cached token across the complete model.
 
-![Figure 2.2 - KV cache memory vs concurrency for Llama-3 70B (FP16)](/img/sizing/fig-2-2-kv-cache-memory-vs-concurrency.png)
+At 50 simultaneously resident requests with 8,000 cached tokens each, the raw BF16 KV cache is:
+
+`50 × 8,000 × 0.328 MB ≈ 131 GB`
+
+This cache sits alongside approximately 140 GB of BF16 model weights on the same system. Already more than 90% of the model's own footprint, just from active requests.
+
+Now extend the context. At 32K tokens the KV cache grows to approximately 524 GB at the same concurrency - nearly 3.7 times the model weights. At 128K context, just 4 concurrent requests push KV cache past model weights entirely. The diagram below makes this viscerally clear: short-context workloads stay manageable, but as context length grows the KV cache stops being overhead and becomes the dominant memory consumer in the system.
+
+![Figure 2.2 - KV cache memory vs concurrency for Llama 3.1 70B (BF16)](/img/sizing/fig-2-2-kv-cache-memory-vs-concurrency.png)
 
 <figcaption>
 
-**Figure 2.2 - KV cache memory vs concurrency for Llama-3 70B (FP16)**
+**Figure 2.2 - KV cache memory vs concurrency for Llama 3.1 70B (BF16)**
 
-*Each line represents a different context length. KV cache grows linearly with concurrency - but the slope scales directly with context length, making long-context workloads disproportionately memory-intensive. At 128K context, model weights are exceeded at just 4 concurrent requests. At 32K context, the crossover happens at 16. Only short-context workloads (4K-8K) stay below model weight memory at typical production concurrency. Size for your P95 context length, not your average.*
+*Each line represents a different context length. KV cache grows linearly with concurrency - but the slope scales directly with context length, making long-context workloads disproportionately memory-intensive. At 128K context, model weights are exceeded at just 4 concurrent requests. At 32K context, the crossover happens at 14. Only 4K-context workloads keep meaningful headroom below model weight memory at typical production concurrency - 8K comes within single-digit gigabytes of matching it outright at 50 concurrent requests. Size for your P95 context length, not your average.*
 
 </figcaption>
+
 
 This is not an edge case. It is the normal operating condition for any RAG pipeline or long-context deployment running at meaningful concurrency. The system sized for the model alone will OOM under realistic load. Every production deployment must calculate both components and sum them before selecting a GPU configuration.
 
@@ -136,7 +151,7 @@ The memory consequence is that activation scaling drops from `O(seq²)` to appro
 
 **Figure 2.3 - Standard attention vs FlashAttention memory model**
 
-*Standard attention materializes the full N×N score matrix in HBM before softmax can run - memory grows quadratically with sequence length. At 32K tokens that is roughly 4 billion matrix entries. FlashAttention eliminates this by computing attention in tiles that fit entirely in on-chip SRAM, maintaining only two running scalars per row - a running maximum and a running sum of exponentials - that allow softmax to be computed correctly without ever seeing the full matrix. Memory drops from `O(N²)` to `O(N)`. The N×N matrix is never written anywhere. This is what makes 32K and 128K context workloads physically viable on current hardware.*
+*Standard attention materializes the full N×N score matrix in HBM before softmax can run - memory grows quadratically with sequence length. At 32K tokens that is roughly 1.07 billion matrix entries. FlashAttention eliminates this by computing attention in tiles that fit entirely in on-chip SRAM, maintaining only two running scalars per row - a running maximum and a running sum of exponentials - that allow softmax to be computed correctly without ever seeing the full matrix. Memory drops from `O(N²)` to `O(N)`. The N×N matrix is never written anywhere. This is what makes 32K and 128K context workloads physically viable on current hardware.*
 
 </figcaption>
 
