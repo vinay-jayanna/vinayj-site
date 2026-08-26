@@ -407,45 +407,6 @@ pre code {
   letter-spacing: 0.05em;
 }
 
-/* ── Tables ───────────────────────────────────────────────── */
-.markdown table {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 14px;
-  width: 100%;
-  border-collapse: collapse;
-  margin: 1.5rem 0 2rem;
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.markdown table th {
-  background: var(--ifm-background-surface-color);
-  font-weight: 600;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ifm-color-content-secondary);
-  padding: 0.75rem 1rem;
-  border-bottom: 2px solid var(--ifm-color-emphasis-300);
-  text-align: left;
-}
-
-.markdown table td {
-  padding: 0.7rem 1rem;
-  border-bottom: 1px solid var(--ifm-color-emphasis-200);
-  vertical-align: top;
-  line-height: 1.55;
-}
-
-.markdown table tr:last-child td {
-  border-bottom: none;
-}
-
-.markdown table tr:nth-child(even) td {
-  background: var(--ifm-background-surface-color);
-}
-
 /* ── Blockquotes ──────────────────────────────────────────── */
 .markdown blockquote {
   border-left: 3px solid var(--ifm-color-primary);
@@ -938,14 +899,16 @@ figcaption p {
 
 /* ── Tables — principal engineer style ────────────────────── */
 .markdown table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
-  width: 100%;
   border-collapse: collapse;
   margin: 1.5rem 0 2rem;
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 8px;
-  overflow: hidden;
   box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
@@ -959,6 +922,7 @@ figcaption p {
   padding: 0.65rem 1rem;
   text-align: left;
   border-bottom: none;
+  white-space: nowrap;
 }
 
 .markdown table td {
@@ -967,6 +931,7 @@ figcaption p {
   vertical-align: top;
   line-height: 1.55;
   color: var(--ifm-color-content);
+  min-width: 180px;
 }
 
 .markdown table tr:last-child td {
