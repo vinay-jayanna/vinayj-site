@@ -1277,7 +1277,7 @@ It is not necessarily how a production architecture is assembled.
 
 ---
 
-### What a Principal Engineer is actually choosing
+### What an Engineer is actually choosing
 
 At Principal Engineer level, ANN selection is no longer primarily an algorithm question.
 
