@@ -111,7 +111,7 @@ const config: Config = {
               to: "/sizing",
             },
             {
-              label: "Agentic Systems in Production",
+              label: "Agentic Systems in Production — In Progress",
               to: "/agentic",
             },
           ],
@@ -145,7 +145,7 @@ const config: Config = {
               to: "/sizing",
             },
             {
-              label: "Agentic Systems in Production",
+              label: "Agentic Systems in Production — In Progress",
               to: "/agentic",
             },
           ],

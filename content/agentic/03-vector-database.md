@@ -302,7 +302,7 @@ An ANN benchmark tells you how good an index can be under controlled conditions.
 ## ANN index selection under real workload constraints
 
 :::info New to these algorithms? 
-This section goes deep on four ANN index families — HNSW, IVF, product quantization, and DiskANN. If you've never worked with any of them, each one gets a one-sentence plain-English summary right where it's introduced, before the detailed mechanics. Read those first pass, then come back for the depth. 
+This section goes deep on four ANN index families - HNSW, IVF, product quantization, and DiskANN. If you've never worked with any of them, each one gets a one-sentence plain-English summary right where it's introduced, before the detailed mechanics. Read those first pass, then come back for the depth. 
 :::
 
 Approximate nearest-neighbor indexes all solve the same underlying problem.
@@ -357,7 +357,7 @@ That is the right mental model for index selection.
 
 _In one sentence: HNSW connects every vector to its neighbors like a road network, so a search can drive toward the right neighborhood instead of visiting every address in the city._
 
-[HNSW](https://arxiv.org/abs/1603.09320)—Hierarchical Navigable Small World—is easiest to understand by temporarily forgetting vectors.
+[HNSW](https://arxiv.org/abs/1603.09320)-Hierarchical Navigable Small World-is easiest to understand by temporarily forgetting vectors.
 
 Imagine every location in a country connected only to nearby locations.
 
@@ -477,7 +477,7 @@ update graph connectivity
 
 The same graph is simultaneously being traversed by searches.
 
-The exact concurrency mechanism depends on the implementation—locking, copy-on-write structures, mutable segments, batching, or background graph construction—but the fundamental issue does not disappear. Read traffic wants stable, cache-friendly graph traversal. Write traffic is changing that graph.
+The exact concurrency mechanism depends on the implementation-locking, copy-on-write structures, mutable segments, batching, or background graph construction-but the fundamental issue does not disappear. Read traffic wants stable, cache-friendly graph traversal. Write traffic is changing that graph.
 
 This is why a statement such as “HNSW supports incremental inserts” is insufficient for architecture selection.
 
@@ -532,7 +532,7 @@ It is a reminder that **algorithmic structure determines hardware efficiency**.
 
 _In one sentence: IVF sorts the whole corpus into neighborhoods ahead of time, so a query only has to check the handful of neighborhoods it's most likely to belong in, not the entire city._
 
-IVF—Inverted File indexing—solves the same problem using a very different idea.
+IVF-Inverted File indexing-solves the same problem using a very different idea.
 
 Instead of building connections between individual vectors, IVF divides vector space into regions.
 
@@ -732,7 +732,7 @@ The architectural takeaway is broader than any specific system: **if an index de
 
 ### Product quantization: stop carrying every coordinate at full precision
 
-_In one sentence: product quantization shrinks every vector down to a tiny compressed code, so you can compare far more candidates using the same amount of memory and bandwidth — at the cost of a small, controllable amount of precision._
+_In one sentence: product quantization shrinks every vector down to a tiny compressed code, so you can compare far more candidates using the same amount of memory and bandwidth - at the cost of a small, controllable amount of precision._
 
 IVF reduces the number of vectors that need to be examined.
 
@@ -836,7 +836,7 @@ Embedding dimensions do not necessarily cooperate.
 
 Information may be distributed unevenly across dimensions, and dimensions that interact strongly may end up split across separate groups.
 
-Optimized Product Quantization addresses this by learning a transformation—often understood as a rotation of the vector space—before PQ is applied. The goal is to find a representation in which the resulting subspaces can be quantized with lower distortion. The OPQ work explicitly optimizes both the space decomposition and quantization codebooks to reduce quantization error.
+Optimized Product Quantization addresses this by learning a transformation-often understood as a rotation of the vector space-before PQ is applied. The goal is to find a representation in which the resulting subspaces can be quantized with lower distortion. The OPQ work explicitly optimizes both the space decomposition and quantization codebooks to reduce quantization error.
 
 The intuition is similar to packing furniture into boxes.
 
@@ -1053,9 +1053,9 @@ The durable lesson is more important than the benchmark number:
 
 #### The DiskANN trade moves from memory pressure to I/O pressure
 
-Moving most of the index to SSD doesn't eliminate resource constraints — it just relocates them. For an in-memory graph, the limiting resources are DRAM capacity, memory bandwidth, CPU, and cache behavior. For a disk-oriented graph, a different set of parameters becomes first-class instead: storage latency, queue depth, cache hit rate, beam width, random-read amplification, and how many dependent I/O rounds a single query needs to complete. The original DiskANN work found something worth internalizing here — driving SSDs at their maximum advertised throughput actually _increases_ per-read latency, because queues start backing up under that kind of pressure. If tail latency matters to your system, it has to run below saturation, not at the edge of it.
+Moving most of the index to SSD doesn't eliminate resource constraints - it just relocates them. For an in-memory graph, the limiting resources are DRAM capacity, memory bandwidth, CPU, and cache behavior. For a disk-oriented graph, a different set of parameters becomes first-class instead: storage latency, queue depth, cache hit rate, beam width, random-read amplification, and how many dependent I/O rounds a single query needs to complete. The original DiskANN work found something worth internalizing here - driving SSDs at their maximum advertised throughput actually _increases_ per-read latency, because queues start backing up under that kind of pressure. If tail latency matters to your system, it has to run below saturation, not at the edge of it.
 
-This is a classic production systems tradeoff: a storage device can advertise enormous IOPS, and that number does not mean your retrieval service should try to consume all of it. Think of a highway rated for 10,000 cars an hour at maximum density — at 9,900 cars an hour, one small disturbance is already enough to create a queue, and travel time stops being predictable. Operating somewhat below theoretical capacity is what actually buys predictable latency, whether that's a highway or an SSD queue.
+This is a classic production systems tradeoff: a storage device can advertise enormous IOPS, and that number does not mean your retrieval service should try to consume all of it. Think of a highway rated for 10,000 cars an hour at maximum density - at 9,900 cars an hour, one small disturbance is already enough to create a queue, and travel time stops being predictable. Operating somewhat below theoretical capacity is what actually buys predictable latency, whether that's a highway or an SSD queue.
 
 An Engineer evaluating DiskANN-style serving needs more than one benchmark number to reason about this well. What's actually useful is a set of curves:
 
@@ -1069,7 +1069,7 @@ QPS vs cache hit rate
 DRAM footprint vs disk amplification
 ```
 
-A single "5 ms latency" figure doesn't describe the operating surface — these curves do.
+A single "5 ms latency" figure doesn't describe the operating surface - these curves do.
 
 ---
 
@@ -1107,9 +1107,9 @@ That is the connection between ANN selection and the searchable-visibility contr
 
 ### Build time is part of the index architecture
 
-All of these index structures have a construction lifecycle, and none of them are free to build. HNSW has to discover and create graph links as each vector is added. IVF has to train centroids before data can be partitioned effectively at all. PQ and OPQ have to learn codebooks — and in OPQ's case, learn the rotation that makes those codebooks work well in the first place. Vamana performs genuinely expensive graph construction, specifically engineered to produce the bounded-degree, navigable structure that disk-based serving depends on.
+All of these index structures have a construction lifecycle, and none of them are free to build. HNSW has to discover and create graph links as each vector is added. IVF has to train centroids before data can be partitioned effectively at all. PQ and OPQ have to learn codebooks - and in OPQ's case, learn the rotation that makes those codebooks work well in the first place. Vamana performs genuinely expensive graph construction, specifically engineered to produce the bounded-degree, navigable structure that disk-based serving depends on.
 
-This means index-build time doesn't belong in deployment tooling as an afterthought — it's part of the architecture itself. Eventually every index has to be rebuilt, and the trigger can be almost anything: a new graph parameter, an embedding migration, a damaged shard, accumulated tombstones, repartitioning, quantizer drift, corruption, regional expansion, or disaster recovery. Whatever the cause, the same sequence follows:
+This means index-build time doesn't belong in deployment tooling as an afterthought - it's part of the architecture itself. Eventually every index has to be rebuilt, and the trigger can be almost anything: a new graph parameter, an embedding migration, a damaged shard, accumulated tombstones, repartitioning, quantizer drift, corruption, regional expansion, or disaster recovery. Whatever the cause, the same sequence follows:
 
 text
 
@@ -1121,7 +1121,7 @@ replica provisioning time
 recovery / migration time
 ```
 
-If building a production-quality index genuinely takes twelve hours, the architecture around it has to be able to tolerate those twelve hours — and there are a few real ways to do that. Old and new index versions can coexist while the new one comes up. Replicas can be rebuilt one at a time instead of all at once. A mutable delta index can keep serving recent writes while a large immutable base index gets reconstructed in the background. Snapshots can eliminate most of the rebuild work entirely. But one way or another, the architecture has to pay this cost somewhere — it doesn't disappear just because nobody planned for it.
+If building a production-quality index genuinely takes twelve hours, the architecture around it has to be able to tolerate those twelve hours - and there are a few real ways to do that. Old and new index versions can coexist while the new one comes up. Replicas can be rebuilt one at a time instead of all at once. A mutable delta index can keep serving recent writes while a large immutable base index gets reconstructed in the background. Snapshots can eliminate most of the rebuild work entirely. But one way or another, the architecture has to pay this cost somewhere - it doesn't disappear just because nobody planned for it.
 
 This is exactly why a benchmark reporting only search latency, recall, and index size is incomplete for production selection. There's a fourth number that matters just as much: how long it takes to create or recover a serving-quality index.
 
@@ -1129,9 +1129,9 @@ This is exactly why a benchmark reporting only search latency, recall, and index
 
 ### The algorithms fail differently under mutation
 
-This is where the mechanical understanding from earlier in this section actually pays off — because each of these four algorithms fails differently once real mutation enters the picture, not just once.
+This is where the mechanical understanding from earlier in this section actually pays off - because each of these four algorithms fails differently once real mutation enters the picture, not just once.
 
-HNSW is incrementally constructed, so individual additions fit naturally into its model on the surface. But every single insertion still requires graph navigation and link maintenance, which means sustained write rates consume the same CPU and memory-bandwidth resources that searches are competing for. IVF makes insertion mechanically simpler once centroids already exist — assign the new vector to its nearest coarse centroid, append it to the corresponding inverted list, done. But repeated inserts progressively skew list sizes, and the trained centroids slowly become a worse description of whatever the corpus has actually turned into. PQ adds one more learned artifact into the mix: its codebooks. New vectors can still be encoded against the existing codebook without issue, but if the embedding distribution shifts substantially, quantization error creeps upward. DiskANN-style structures make SSD capacity economical, but graph updates are considerably more operationally involved than any of the above — which is exactly why FreshDiskANN and the work that followed it exist in the first place.
+HNSW is incrementally constructed, so individual additions fit naturally into its model on the surface. But every single insertion still requires graph navigation and link maintenance, which means sustained write rates consume the same CPU and memory-bandwidth resources that searches are competing for. IVF makes insertion mechanically simpler once centroids already exist - assign the new vector to its nearest coarse centroid, append it to the corresponding inverted list, done. But repeated inserts progressively skew list sizes, and the trained centroids slowly become a worse description of whatever the corpus has actually turned into. PQ adds one more learned artifact into the mix: its codebooks. New vectors can still be encoded against the existing codebook without issue, but if the embedding distribution shifts substantially, quantization error creeps upward. DiskANN-style structures make SSD capacity economical, but graph updates are considerably more operationally involved than any of the above - which is exactly why FreshDiskANN and the work that followed it exist in the first place.
 
 There is no mutation-free choice among any of these. Every index family carries its own form of maintenance debt, just accumulated in a different place. HNSW's debt shows up as graph updates, deleted nodes, and mounting rebuild pressure. IVF's debt shows up as partition imbalance and centroid drift. PQ's debt shows up as slowly growing quantization distortion. Disk-oriented graph debt shows up across graph maintenance, storage layout, deletion, and compaction all at once.
 
@@ -1143,24 +1143,24 @@ The practical implication is that a mature serving system can't just monitor whe
 
 Another reason there is no universal winner is that index performance depends heavily on the shape of the queries hitting it, not just the size of the corpus underneath it. Suppose two systems each hold 500 million vectors. The first receives individual interactive queries that need high recall and sub-50ms latency. The second receives batches of thousands of queries at a time from an offline recommendation pipeline. Same corpus size, completely different optimization opportunities.
 
-Graph traversal is attractive for individual low-latency searches precisely because each query can navigate selectively through a small portion of the index rather than touching everything. IVF/PQ-style scans become attractive under batching for the opposite reason — centroid lookup, list scanning, lookup-table computation, and distance calculations can all run efficiently across large, regular batches, and map naturally onto vectorized or GPU hardware. This isn't theoretical: current Faiss reflects exactly this architectural split. Its IVF and PQ families have GPU implementations, while its HNSW implementation stays CPU-oriented.
+Graph traversal is attractive for individual low-latency searches precisely because each query can navigate selectively through a small portion of the index rather than touching everything. IVF/PQ-style scans become attractive under batching for the opposite reason - centroid lookup, list scanning, lookup-table computation, and distance calculations can all run efficiently across large, regular batches, and map naturally onto vectorized or GPU hardware. This isn't theoretical: current Faiss reflects exactly this architectural split. Its IVF and PQ families have GPU implementations, while its HNSW implementation stays CPU-oriented.
 
 That leads to another rule worth internalizing: don't choose an ANN family from dataset size alone. Choose it from dataset size × query shape × update shape × hardware topology. The workload envelope matters more than the raw vector count ever will.
 
 ---
 ### The candidate-generation layer does not need to be semantically perfect
 
-There's a broader implication here for agentic systems specifically. Modern retrieval pipelines increasingly separate candidate generation from semantic judgment — the ANN index is trying to cheaply preserve enough potentially relevant evidence, while a reranker downstream examines the query-document interactions much more carefully. That separation changes how the ANN layer should actually be optimized.
+There's a broader implication here for agentic systems specifically. Modern retrieval pipelines increasingly separate candidate generation from semantic judgment - the ANN index is trying to cheaply preserve enough potentially relevant evidence, while a reranker downstream examines the query-document interactions much more carefully. That separation changes how the ANN layer should actually be optimized.
 
-If the reranker needs 40 final candidates, the vector index might retrieve 200. The ANN layer doesn't need to perfectly order those 200 — it just needs the truly relevant documents to survive into that set at all. That reframes what's worth measuring: evaluating Recall@100, Recall@200, and Recall@500 tells you far more about whether the system is working than obsessing over whether the vector index alone perfectly orders its first ten results.
+If the reranker needs 40 final candidates, the vector index might retrieve 200. The ANN layer doesn't need to perfectly order those 200 - it just needs the truly relevant documents to survive into that set at all. That reframes what's worth measuring: evaluating Recall@100, Recall@200, and Recall@500 tells you far more about whether the system is working than obsessing over whether the vector index alone perfectly orders its first ten results.
 
-HAKES's recent two-stage design — a highly compressed filtering pass followed by a more accurate refinement stage — is one contemporary example of this same broader architectural principle showing up in real systems. The principle itself is simple to state: spend cheap operations on breadth, and expensive operations on uncertainty. HNSW, IVF, PQ, DiskANN, exact refinement, and neural reranking can all take part in that same hierarchy, each doing the part it's actually good at.
+HAKES's recent two-stage design - a highly compressed filtering pass followed by a more accurate refinement stage - is one contemporary example of this same broader architectural principle showing up in real systems. The principle itself is simple to state: spend cheap operations on breadth, and expensive operations on uncertainty. HNSW, IVF, PQ, DiskANN, exact refinement, and neural reranking can all take part in that same hierarchy, each doing the part it's actually good at.
 
 ---
 
 ### There may not be one index for the entire corpus
 
-Once these mechanics are understood, another assumption falls away: every vector in the application doesn't necessarily need to live under the same ANN policy. Consider an agent platform holding three distinct classes of retrieval data. Long-lived enterprise documentation changes slowly and receives broad semantic queries. Recent agent memory changes continuously and gets queried heavily during active sessions. Historical memory is large, cold, and rarely touched at all. Running one index configuration across all three may be operationally convenient, but it's economically poor — each class wants something different from its index, and forcing them into the same policy means paying for capabilities none of them actually need most of the time.
+Once these mechanics are understood, another assumption falls away: every vector in the application doesn't necessarily need to live under the same ANN policy. Consider an agent platform holding three distinct classes of retrieval data. Long-lived enterprise documentation changes slowly and receives broad semantic queries. Recent agent memory changes continuously and gets queried heavily during active sessions. Historical memory is large, cold, and rarely touched at all. Running one index configuration across all three may be operationally convenient, but it's economically poor - each class wants something different from its index, and forcing them into the same policy means paying for capabilities none of them actually need most of the time.
 
 A more sophisticated architecture might keep recent memory in a mutable, memory-resident structure, compact older data into a more storage-efficient index once it cools off, and retain enterprise knowledge in a separate index optimized specifically for high read recall. Conceptually, the query path looks something like this:
 
@@ -1178,7 +1178,7 @@ A more sophisticated architecture might keep recent memory in a mutable, memory-
                   rerank
 ```
 
-This is closely related to LSM-tree thinking in traditional storage systems — the representation optimized for ingest doesn't have to be the same representation optimized for long-term search, and trying to make one structure do both jobs well is usually where the compromise shows up. Later sections on the write path and compaction develop this idea further.
+This is closely related to LSM-tree thinking in traditional storage systems - the representation optimized for ingest doesn't have to be the same representation optimized for long-term search, and trying to make one structure do both jobs well is usually where the compromise shows up. Later sections on the write path and compaction develop this idea further.
 
 The important point here is that "which ANN index do we use?" may itself be the wrong architectural question to start with. The right answer often depends less on the algorithm and more on the lifecycle and temperature of the data sitting underneath it.
 
@@ -1188,128 +1188,61 @@ The important point here is that "which ANN index do we use?" may itself be the 
 
 Imagine benchmarking four configurations side by side. HNSW produces excellent latency and recall on a static, read-only index. IVF-PQ uses a tenth of the memory but needs more candidate refinement to compensate. DiskANN uses far less DRAM but introduces SSD I/O directly into the tail latency. A hybrid configuration adds extra stages but holds onto higher throughput. Picking whichever one has the best Recall@10 at a single query rate misses the actual production question entirely.
 
-Now introduce realistic conditions on top of that benchmark, one at a time. Double the query concurrency. Run production ingestion at the same time as the search traffic. Apply the most selective authorization filter the system will ever see, then apply the broadest one. Warm the cache, then deliberately destroy locality. Let a realistic amount of deleted data accumulate. Rebuild another shard concurrently. Lose a replica. Shift from today's corpus distribution to the one you expect twelve months from now. Run the same four configurations through all of that, and the ranking can change completely — sometimes the winner on the clean benchmark isn't even competitive once real conditions show up.
+Now introduce realistic conditions on top of that benchmark, one at a time. Double the query concurrency. Run production ingestion at the same time as the search traffic. Apply the most selective authorization filter the system will ever see, then apply the broadest one. Warm the cache, then deliberately destroy locality. Let a realistic amount of deleted data accumulate. Rebuild another shard concurrently. Lose a replica. Shift from today's corpus distribution to the one you expect twelve months from now. Run the same four configurations through all of that, and the ranking can change completely - sometimes the winner on the clean benchmark isn't even competitive once real conditions show up.
 
-What the architecture actually needs isn't a winning point on a chart. It needs to stay inside an acceptable operating region across everything that workload envelope throws at it — a region defined by a handful of hard boundaries at once: a recall floor, a p99 latency ceiling, a memory budget, an ingestion target, a searchable-visibility SLO, and a recovery objective. The winning index isn't the one that tops any single benchmark chart. It's whichever architecture stays inside all of those boundaries simultaneously, across the workload the system will actually see — not the workload it happened to be benchmarked on.
+What the architecture actually needs isn't a winning point on a chart. It needs to stay inside an acceptable operating region across everything that workload envelope throws at it - a region defined by a handful of hard boundaries at once: a recall floor, a p99 latency ceiling, a memory budget, an ingestion target, a searchable-visibility SLO, and a recovery objective. The winning index isn't the one that tops any single benchmark chart. It's whichever architecture stays inside all of those boundaries simultaneously, across the workload the system will actually see - not the workload it happened to be benchmarked on.
 
 Here's how the specific mechanisms actually behave against the dimensions that matter most for staying inside that region:
 
 |                                                                         | Recall-vs-throughput (static, in-memory, uncontended)                                                                         | Memory footprint                                                                   | Build time                                                                                                                                                                            | Behavior when the index is being written to *while* serving queries                                                 | Read-time latency when many queries compete for disk I/O                                                                  | Precision lost to compression                                                                                                           |
 | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| **HNSW**                                                                | Best or near-best — this is exactly why it's the default choice for most people                                               | **Highest** of this group — production reports of 100+ GB are common at scale      | **Longest** to build                                                                                                                                                                  | Weak — graph link maintenance and lock contention under sustained writes                                            | N/A — fully in-memory, no disk trip during search                                                                         | None — stores full-precision vectors                                                                                                    |
-| **IVF (plain / "IVF-Flat")**                                            | Lower than HNSW at matched settings, but the loss here is purely from _not searching every cluster_ — no compression involved | High — still stores full-precision vectors, just sorted into lists                 | Fast — just clustering to find centroids, far cheaper than graph construction                                                                                                         | Weak — centroids get trained once and slowly stop matching the data as it drifts                                    | N/A — in-memory                                                                                                           | None — same reason as above                                                                                                             |
-| **PQ / OPQ** _(a compression layer, not a standalone search structure)_ | N/A on its own — PQ compresses vectors, it doesn't decide _which_ ones to compare; it's always paired with something else     | **Dramatically reduced** — this is the entire point of PQ                          | Needs to build its codebooks (and for OPQ, a rotation step) before anything can be encoded                                                                                            | Codebooks can go stale the same way centroids do, if the data shifts enough                                         | N/A on its own                                                                                                            | **This is the real cost of PQ** — OPQ exists specifically to shrink this loss below what plain PQ leaves behind                         |
-| **IVF-PQ** _(the common production pairing)_                            | Lower than HNSW at matched settings; a refinement stage added on top closes most of the gap                                   | **Low** — an order of magnitude smaller than HNSW, this is the whole selling point | Fast                                                                                                                                                                                  | Weak on two fronts at once — both centroid drift and codebook staleness                                             | N/A — in-memory                                                                                                           | Yes, inherited from PQ — this is why quantization is usually paired with a refinement stage                                             |
-| **DiskANN** _(built on the Vamana graph algorithm)_                     | Comparable to HNSW at rest                                                                                                    | **Low** — by design, most of the index lives on SSD instead of RAM                 | Moderate-to-long — Vamana deliberately builds a bounded-degree graph (every node capped at the same number of connections, which keeps navigation predictable) suited to disk serving | Static DiskANN specifically struggles here — this is the whole reason FreshDiskANN exists                           | **The established weak point** — SSD queues saturate under concurrent load, and per-read latency climbs as queues back up | Uses a compressed in-memory guide plus a full-precision pass from disk — so the final answer ends up full-precision, at the cost of I/O |
-| **FreshDiskANN**                                                        | Same ballpark as DiskANN once caught up                                                                                       | Same as DiskANN                                                                    | Same as DiskANN                                                                                                                                                                       | **Improved** — this variant exists specifically to make streaming inserts and deletes viable without a full rebuild | Same disk-bound weak point as DiskANN — this fixes update handling, not I/O contention                                    | Same as DiskANN                                                                                                                         |
+| **HNSW**                                                                | Best or near-best - this is exactly why it's the default choice for most people                                               | **Highest** of this group - production reports of 100+ GB are common at scale      | **Longest** to build                                                                                                                                                                  | Weak - graph link maintenance and lock contention under sustained writes                                            | N/A - fully in-memory, no disk trip during search                                                                         | None - stores full-precision vectors                                                                                                    |
+| **IVF (plain / "IVF-Flat")**                                            | Lower than HNSW at matched settings, but the loss here is purely from _not searching every cluster_ - no compression involved | High - still stores full-precision vectors, just sorted into lists                 | Fast - just clustering to find centroids, far cheaper than graph construction                                                                                                         | Weak - centroids get trained once and slowly stop matching the data as it drifts                                    | N/A - in-memory                                                                                                           | None - same reason as above                                                                                                             |
+| **PQ / OPQ** _(a compression layer, not a standalone search structure)_ | N/A on its own - PQ compresses vectors, it doesn't decide _which_ ones to compare; it's always paired with something else     | **Dramatically reduced** - this is the entire point of PQ                          | Needs to build its codebooks (and for OPQ, a rotation step) before anything can be encoded                                                                                            | Codebooks can go stale the same way centroids do, if the data shifts enough                                         | N/A on its own                                                                                                            | **This is the real cost of PQ** - OPQ exists specifically to shrink this loss below what plain PQ leaves behind                         |
+| **IVF-PQ** _(the common production pairing)_                            | Lower than HNSW at matched settings; a refinement stage added on top closes most of the gap                                   | **Low** - an order of magnitude smaller than HNSW, this is the whole selling point | Fast                                                                                                                                                                                  | Weak on two fronts at once - both centroid drift and codebook staleness                                             | N/A - in-memory                                                                                                           | Yes, inherited from PQ - this is why quantization is usually paired with a refinement stage                                             |
+| **DiskANN** _(built on the Vamana graph algorithm)_                     | Comparable to HNSW at rest                                                                                                    | **Low** - by design, most of the index lives on SSD instead of RAM                 | Moderate-to-long - Vamana deliberately builds a bounded-degree graph (every node capped at the same number of connections, which keeps navigation predictable) suited to disk serving | Static DiskANN specifically struggles here - this is the whole reason FreshDiskANN exists                           | **The established weak point** - SSD queues saturate under concurrent load, and per-read latency climbs as queues back up | Uses a compressed in-memory guide plus a full-precision pass from disk - so the final answer ends up full-precision, at the cost of I/O |
+| **FreshDiskANN**                                                        | Same ballpark as DiskANN once caught up                                                                                       | Same as DiskANN                                                                    | Same as DiskANN                                                                                                                                                                       | **Improved** - this variant exists specifically to make streaming inserts and deletes viable without a full rebuild | Same disk-bound weak point as DiskANN - this fixes update handling, not I/O contention                                    | Same as DiskANN                                                                                                                         |
 
-Read across any single row and one mechanism looks attractive. Read down any single column and a different one wins. That's the whole point: HNSW's memory cost only becomes disqualifying once the memory budget boundary is tight enough to bind. IVF-PQ's centroid drift only becomes disqualifying once the corpus moves far enough from what it was trained on. DiskANN's I/O weak point only becomes disqualifying once concurrency pushes queue depth into saturation. None of these are universal weaknesses — they're conditional ones, and which condition actually binds depends entirely on the specific operating point your system lives at.
+Read across any single row and one mechanism looks attractive. Read down any single column and a different one wins. That's the whole point: HNSW's memory cost only becomes disqualifying once the memory budget boundary is tight enough to bind. IVF-PQ's centroid drift only becomes disqualifying once the corpus moves far enough from what it was trained on. DiskANN's I/O weak point only becomes disqualifying once concurrency pushes queue depth into saturation. None of these are universal weaknesses - they're conditional ones, and which condition actually binds depends entirely on the specific operating point your system lives at.
 
-The best index is always conditional on the operating point — and production never stops moving that operating point.
+The best index is always conditional on the operating point - and production never stops moving that operating point.
 
 ---
 
 ### A useful way to remember the four mechanisms
 
-After all of the details, the algorithms can be reduced to four different questions.
+Everything covered in this section - HNSW, IVF, PQ, OPQ, IVF-PQ, Vamana, DiskANN, and FreshDiskANN - reduces to four architectural strategies, each attacking the same bottleneck from a different angle rather than competing to solve it the same way. IVF-PQ isn't a fifth strategy - it's the first two combined, exactly as covered earlier. Vamana is the specific graph algorithm DiskANN is built on, so it belongs to the DiskANN row here, not a separate one. FreshDiskANN is the streaming variant of DiskANN - same row, same mechanism, extended to handle continuous updates.
 
-HNSW asks:
+|Mechanism|The question it's asking|What it spends|
+|---|---|---|
+|**HNSW**|Can I build enough useful roads that the query navigates to the right neighborhood without visiting the rest of the map?|Graph memory, graph quality, traversal breadth, memory bandwidth|
+|**IVF**|Can I divide the map into regions and open only the regions likely to contain the destination?|Partition quality, `nprobe`, how much of the population gets scanned, distribution stability|
+|**Product quantization**|Can I represent each location approximately enough that I can compare far more candidates for the same memory bandwidth?|Code size, quantization distortion, candidate recall, refinement cost|
+|**DiskANN** _(built on Vamana; FreshDiskANN is its streaming variant)_|Can I design navigation so that most of the searchable corpus lives on slower, cheaper storage without putting too many I/O round trips on the critical path?|DRAM footprint, graph hops, beam width, SSD reads, cache locality, update complexity|
 
-> **Can I build enough useful roads that the query navigates to the right neighborhood without visiting the rest of the map?**
+Seen this way, these are four alternative answers to the same underlying problem, not four sequential stages a query passes through one after another:
 
-Its primary currencies are graph memory, graph quality, traversal breadth, and memory bandwidth.
+![Four answers to the same bottleneck](/img/agentic/fig-3-2-answers-bottleneck.svg)
 
-IVF asks:
+<figcaption>
 
-> **Can I divide the map into regions and open only the regions likely to contain the destination?**
+**Figure 3-2: Four Answers to the Same Bottleneck** HNSW, IVF, and product quantization each attack "too many vector comparisons" differently. DiskANN combines graph navigation with quantization rather than inventing a fifth approach. All four feed into the same downstream refinement stage - but a production system picks one path, or a specific combination.
 
-Its primary currencies are partition quality, `nprobe`, scanned population, and distribution stability.
+</figcaption>
 
-Product quantization asks:
-
-> **Can I represent each location approximately enough that I can compare far more candidates for the same memory bandwidth?**
-
-Its primary currencies are code size, quantization distortion, candidate recall, and refinement cost.
-
-DiskANN asks:
-
-> **Can I design navigation so that most of the searchable corpus lives on slower, cheaper storage without putting too many I/O round trips on the critical path?**
-
-Its primary currencies are DRAM footprint, graph hops, beam width, SSD reads, cache locality, and update complexity.
-
-Seen this way, they are not competing implementations of one trick.
-
-They attack different bottlenecks.
-
-```text
-Exact search
-    │
-    │ too many vector comparisons
-    ▼
-HNSW
-    │ avoid most comparisons through graph navigation
-    │
-IVF
-    │ avoid most comparisons through partition pruning
-    │
-PQ
-    │ make each remaining comparison dramatically cheaper
-    │
-DiskANN
-    │ move most searchable state out of DRAM
-    ▼
-Refinement / reranking
-```
-
-And production systems are free to combine them.
-
-An IVF system can use HNSW to route among centroids.
-
-IVF can store PQ-compressed residuals.
-
-DiskANN itself uses PQ-compressed vectors in memory to guide an SSD-resident graph.
-
-This composability is perhaps the most important thing for a new engineer to understand.
-
-“HNSW versus IVF versus PQ versus DiskANN” is useful for learning the mechanisms.
-
-It is not necessarily how a production architecture is assembled.
+And production systems are free to combine them rather than pick just one. An IVF system can use HNSW to route among its centroids. IVF can store PQ-compressed residuals instead of full-precision vectors. DiskANN itself already does this - it uses PQ-compressed vectors in memory specifically to guide an SSD-resident graph. This composability is probably the single most important thing for a newer engineer to internalize here: "HNSW versus IVF versus PQ versus DiskANN" is a useful frame for _learning_ the mechanisms individually. It's not how a real production architecture actually gets assembled - that's almost always some combination of them, each handling the part it's genuinely good at.
 
 ---
 
 ### What an Engineer is actually choosing
 
-At Principal Engineer level, ANN selection is no longer primarily an algorithm question.
+At this level, ANN selection stops being primarily an algorithm question. What's actually being decided is where the system will tolerate approximation, which resource ends up absorbing the cost of recovering whatever recall that approximation gives up, and how expensive it will be to change your mind later once the corpus and traffic have grown around that decision.
 
-You are deciding where the system will tolerate approximation.
+An HNSW-heavy architecture buys excellent interactive recall by spending DRAM and memory bandwidth. An IVF-PQ architecture buys density and GPU-friendly throughput by spending some partition and quantization accuracy up front, then recovering part of that loss through broader probing and a refinement stage. A DiskANN-style design buys dramatically higher vector density per machine by pushing the corpus down the storage hierarchy - at the cost of making SSD behavior, caching, beam search, and graph maintenance part of the serving SLO instead of someone else's problem. A hybrid system does all of this deliberately, placing different approximations at different stages on purpose rather than picking one mechanism and living with its single tradeoff everywhere.
 
-You are deciding which resource absorbs the cost of recovering recall.
+The architecture is worth judging against five questions, every time: where can relevant evidence disappear? Which knob increases the probability of preserving it? What resource does turning that knob actually consume? What happens while the index is changing, not just while it's sitting static? And how long does it take to rebuild or replace the structure once its underlying assumptions stop being true?
 
-You are deciding how expensive it is to change your mind later.
-
-An HNSW-heavy architecture may buy excellent interactive recall by spending DRAM and memory bandwidth.
-
-An IVF-PQ architecture may buy density and GPU-friendly throughput by spending some partition and quantization accuracy, then recovering part of it through broader probing and refinement.
-
-A DiskANN-style design may buy dramatically higher vector density per machine by moving the corpus down the storage hierarchy, while making SSD behavior, caching, beam search, and graph maintenance part of the serving SLO.
-
-And a hybrid system may intentionally place different approximations at different stages.
-
-The architecture should therefore be judged across five questions.
-
-Where can relevant evidence disappear?
-
-Which knob increases the probability of preserving it?
-
-What resource does turning that knob consume?
-
-What happens while the index is changing rather than static?
-
-How long does it take to rebuild or replace the structure when its assumptions stop being true?
-
-If those questions have explicit answers, ANN selection becomes an engineering decision.
-
-Without them, it is leaderboard shopping.
+If those five questions have explicit answers for your system, ANN selection is an engineering decision. If they don't, it's leaderboard shopping.
 
 ---
 

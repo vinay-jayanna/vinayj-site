@@ -81,6 +81,6 @@ This handbook assumes working knowledge of LLM inference, distributed systems, a
 
 ## About the Author
 
-Currently a Staff ML Engineer leading LLM inference optimization for one of the most consequential AI systems in the world - reaching hundreds of millions of users. Before that, spent nearly a decade at **AWS** building and scaling core inference infrastructure for **SageMaker** from its earliest days. Founded **Vipas.AI**, an AI inference marketplace that reached 25K daily visitors and received a VC term sheet. Earlier career spans building large-scale distributed systems and cloud infrastructure at Ericsson, Pegasystems, and global enterprises. Holder of a USPTO-pending patent in dynamic hierarchical storage and GPU optimization for LLM serving.
+Vinay Jayanna is a Staff/Principal Machine Learning Engineer specializing in LLM inference optimization, GPU capacity planning, and production AI infrastructure. He currently leads inference optimization and GenAI platform architecture for large-scale AI systems reaching hundreds of millions of users. Previously, he helped build and scale core inference infrastructure for Amazon SageMaker, founded Vipas.AI, and is the inventor on a pending U.S. patent covering model caching, hierarchical storage, and GPU optimization for LLM serving.
 
 [vinayj.com](https://vinayj.com) · [LinkedIn](https://linkedin.com/in/vinayjayanna) · [GitHub](https://github.com/vinay-jayanna)
